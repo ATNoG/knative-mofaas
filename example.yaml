@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mofaas
+---
+apiVersion: k8s.mofaas.com/v1
+kind: MoFaaSFunction
+metadata:
+  name: my-function
+  namespace: mofaas
+spec:
+  concurrency: 2
+  variants:
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: service-a
+    revisionName: revision-service-a
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: service-b
+    revisionName: revision-service-b
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: service-c
+    revisionName: revision-service-c
