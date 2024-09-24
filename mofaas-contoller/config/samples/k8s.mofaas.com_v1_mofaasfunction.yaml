@@ -1,0 +1,9 @@
+apiVersion: k8s.mofaas.com.my.domain/v1
+kind: MoFaaSFunction
+metadata:
+  labels:
+    app.kubernetes.io/name: mofaas-contoller
+    app.kubernetes.io/managed-by: kustomize
+  name: mofaasfunction-sample
+spec:
+  # TODO(user): Add fields here

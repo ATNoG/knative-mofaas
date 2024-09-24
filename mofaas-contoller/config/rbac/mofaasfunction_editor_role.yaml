@@ -1,0 +1,27 @@
+# permissions for end users to edit mofaasfunctions.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: mofaas-contoller
+    app.kubernetes.io/managed-by: kustomize
+  name: mofaasfunction-editor-role
+rules:
+- apiGroups:
+  - k8s.mofaas.com.my.domain
+  resources:
+  - mofaasfunctions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - k8s.mofaas.com.my.domain
+  resources:
+  - mofaasfunctions/status
+  verbs:
+  - get

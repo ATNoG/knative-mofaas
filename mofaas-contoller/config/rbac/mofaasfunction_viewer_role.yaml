@@ -1,0 +1,23 @@
+# permissions for end users to view mofaasfunctions.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: mofaas-contoller
+    app.kubernetes.io/managed-by: kustomize
+  name: mofaasfunction-viewer-role
+rules:
+- apiGroups:
+  - k8s.mofaas.com.my.domain
+  resources:
+  - mofaasfunctions
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - k8s.mofaas.com.my.domain
+  resources:
+  - mofaasfunctions/status
+  verbs:
+  - get
