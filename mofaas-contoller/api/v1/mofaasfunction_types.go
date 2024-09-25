@@ -26,16 +26,16 @@ import (
 // MoFaaSFunctionSpec defines the desired state of MoFaaSFunction
 type MoFaaSFunctionSpec struct {
 	// Concurrenty will default to 1 if not defined
-	Concurrency int `json:"concurrency,omitempty"`
-	Variants []VariantSpec `json:"variants,omitempty"`
+	Concurrency int           `json:"concurrency,omitempty"`
+	Variants    []VariantSpec `json:"variants,omitempty"`
 }
 
 type VariantSpec struct {
-	Kind string `json:"kind"`
-	Name string `json:"name"`
+	Kind         string `json:"kind"`
+	Name         string `json:"name"`
 	RevisionName string `json:"revisionName"`
-	APIVersion string `json:"apiVersion,omitempty"`
-	Namespace string `json:"namespace,omitempty"`
+	APIVersion   string `json:"apiVersion,omitempty"`
+	Namespace    string `json:"namespace,omitempty"`
 }
 
 // MoFaaSFunctionStatus defines the observed state of MoFaaSFunction

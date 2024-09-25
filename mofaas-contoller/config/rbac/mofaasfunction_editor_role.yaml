@@ -8,7 +8,7 @@ metadata:
   name: mofaasfunction-editor-role
 rules:
 - apiGroups:
-  - k8s.mofaas.com.my.domain
+  - mofaas.atnog
   resources:
   - mofaasfunctions
   verbs:
@@ -20,7 +20,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - k8s.mofaas.com.my.domain
+  - mofaas.atnog
   resources:
   - mofaasfunctions/status
   verbs:

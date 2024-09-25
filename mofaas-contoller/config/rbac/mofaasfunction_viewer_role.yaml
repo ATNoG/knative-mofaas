@@ -8,7 +8,7 @@ metadata:
   name: mofaasfunction-viewer-role
 rules:
 - apiGroups:
-  - k8s.mofaas.com.my.domain
+  - mofaas.atnog
   resources:
   - mofaasfunctions
   verbs:
@@ -16,7 +16,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - k8s.mofaas.com.my.domain
+  - mofaas.atnog
   resources:
   - mofaasfunctions/status
   verbs:

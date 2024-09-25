@@ -3,7 +3,21 @@ kind: Namespace
 metadata:
   name: mofaas
 ---
-apiVersion: k8s.mofaas.com/v1
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: test
+  namespace: mofaas
+spec:
+  template:
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/test
+          env:
+            - name: TARGET
+              value: "Python Sample v1"
+---
+apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: my-function
@@ -13,8 +27,8 @@ spec:
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
-    name: service-a
-    revisionName: revision-service-a
+    name: test
+    # revisionName: revision-service-a
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: service-b

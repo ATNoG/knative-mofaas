@@ -1,4 +1,4 @@
-module k8s.mofaas.com
+module mofaas
 
 go 1.22.0
 

@@ -27,7 +27,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	k8smofaascomv1 "k8s.mofaas.com/api/v1"
+	k8smofaascomv1 "mofaas/api/v1"
 )
 
 // MoFaaSFunctionReconciler reconciles a MoFaaSFunction object
@@ -36,9 +36,9 @@ type MoFaaSFunctionReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=k8s.mofaas.com.my.domain,resources=mofaasfunctions,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=k8s.mofaas.com.my.domain,resources=mofaasfunctions/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=k8s.mofaas.com.my.domain,resources=mofaasfunctions/finalizers,verbs=update
+// +kubebuilder:rbac:groups=mofaas.atnog,resources=mofaasfunctions,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=mofaas.atnog,resources=mofaasfunctions/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=mofaas.atnog,resources=mofaasfunctions/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -76,7 +76,7 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(mofaasFunc k8smofaascomv
 	service := knativeServing.Service{
 		TypeMeta: metav1.TypeMeta{APIVersion: knativeServing.SchemeGroupVersion.Group, Kind: "Service"},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "test",
+			Name:      "test",
 			Namespace: mofaasFunc.Namespace,
 		},
 		Spec: knativeServing.ServiceSpec{
@@ -86,8 +86,14 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(mofaasFunc k8smofaascomv
 						PodSpec: v1.PodSpec{
 							Containers: []v1.Container{
 								{
-									Name: "function-chooser",
+									Name:  "function-chooser",
 									Image: "10.43.67.161:5000/function-chooser",
+									Env: []v1.EnvVar{
+										{
+											Name:  "SERVICES",
+											Value: "test-00001",
+										},
+									},
 								},
 							},
 						},

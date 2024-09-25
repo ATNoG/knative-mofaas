@@ -24,7 +24,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"k8s.mofaas.com/test/utils"
+	"mofaas/test/utils"
 )
 
 const namespace = "mofaas-contoller-system"

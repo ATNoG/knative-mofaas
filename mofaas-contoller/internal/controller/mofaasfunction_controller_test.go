@@ -27,7 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	k8smofaascomv1 "k8s.mofaas.com/api/v1"
+	k8smofaascomv1 "mofaas/api/v1"
 )
 
 var _ = Describe("MoFaaSFunction Controller", func() {

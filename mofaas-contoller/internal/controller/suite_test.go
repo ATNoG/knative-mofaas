@@ -33,7 +33,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	k8smofaascomv1 "k8s.mofaas.com/api/v1"
+	k8smofaascomv1 "mofaas/api/v1"
 	// +kubebuilder:scaffold:imports
 )
 
