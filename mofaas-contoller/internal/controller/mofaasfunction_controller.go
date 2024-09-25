@@ -19,7 +19,10 @@ package controller
 import (
 	"context"
 
+	v1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	knativeServing "knative.dev/serving/pkg/apis/serving/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -50,8 +53,51 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
+	var mofaasFunc k8smofaascomv1.MoFaaSFunction
+	if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
+		log.Log.Error(err, "Unable to fetch MoFaaSFunction")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	functionChooserService, err := r.createKnativeService(mofaasFunc)
+	if err != nil {
+		log.Log.Error(err, "Failed to create the Function Chooser Knative Service")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	if err := r.Create(ctx, &functionChooserService); err != nil {
+		log.Log.Error(err, "Unable to create the Function Chooser Knative Service")
+	}
 
 	return ctrl.Result{}, nil
+}
+
+func (r *MoFaaSFunctionReconciler) createKnativeService(mofaasFunc k8smofaascomv1.MoFaaSFunction) (knativeServing.Service, error) {
+	service := knativeServing.Service{
+		TypeMeta: metav1.TypeMeta{APIVersion: knativeServing.SchemeGroupVersion.Group, Kind: "Service"},
+		ObjectMeta: metav1.ObjectMeta{
+			Name: "test",
+			Namespace: mofaasFunc.Namespace,
+		},
+		Spec: knativeServing.ServiceSpec{
+			ConfigurationSpec: knativeServing.ConfigurationSpec{
+				Template: knativeServing.RevisionTemplateSpec{
+					Spec: knativeServing.RevisionSpec{
+						PodSpec: v1.PodSpec{
+							Containers: []v1.Container{
+								{
+									Name: "function-chooser",
+									Image: "10.43.67.161:5000/function-chooser",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return service, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.

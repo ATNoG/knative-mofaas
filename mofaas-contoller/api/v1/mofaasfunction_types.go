@@ -25,11 +25,17 @@ import (
 
 // MoFaaSFunctionSpec defines the desired state of MoFaaSFunction
 type MoFaaSFunctionSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Concurrenty will default to 1 if not defined
+	Concurrency int `json:"concurrency,omitempty"`
+	Variants []VariantSpec `json:"variants,omitempty"`
+}
 
-	// Foo is an example field of MoFaaSFunction. Edit mofaasfunction_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+type VariantSpec struct {
+	Kind string `json:"kind"`
+	Name string `json:"name"`
+	RevisionName string `json:"revisionName"`
+	APIVersion string `json:"apiVersion,omitempty"`
+	Namespace string `json:"namespace,omitempty"`
 }
 
 // MoFaaSFunctionStatus defines the observed state of MoFaaSFunction
