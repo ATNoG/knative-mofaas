@@ -86,12 +86,12 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(mofaasFunc k8smofaascomv
 						PodSpec: v1.PodSpec{
 							Containers: []v1.Container{
 								{
-									Name:  "function-chooser",
+									// Name:  "function-chooser",
 									Image: "10.43.67.161:5000/function-chooser",
 									Env: []v1.EnvVar{
 										{
 											Name:  "SERVICES",
-											Value: "test-00001",
+											Value: "http://test.mofaas.svc.cluster.local",
 										},
 									},
 								},
