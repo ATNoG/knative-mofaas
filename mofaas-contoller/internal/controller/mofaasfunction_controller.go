@@ -74,9 +74,9 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 
 func (r *MoFaaSFunctionReconciler) createKnativeService(mofaasFunc k8smofaascomv1.MoFaaSFunction) (knativeServing.Service, error) {
 	service := knativeServing.Service{
-		TypeMeta: metav1.TypeMeta{APIVersion: knativeServing.SchemeGroupVersion.Group, Kind: "Service"},
+		TypeMeta: metav1.TypeMeta{APIVersion: knativeServing.Kind("Service").Group + "/v1", Kind: "Service"},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "test",
+			Name:      "mofaas-chooser",
 			Namespace: mofaasFunc.Namespace,
 		},
 		Spec: knativeServing.ServiceSpec{

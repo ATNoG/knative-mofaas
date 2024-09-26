@@ -38,6 +38,8 @@ import (
 	k8smofaascomv1 "mofaas/api/v1"
 	"mofaas/internal/controller"
 	// +kubebuilder:scaffold:imports
+
+	knativeServing "knative.dev/serving/pkg/apis/serving/v1"
 )
 
 var (
@@ -50,6 +52,8 @@ func init() {
 
 	utilruntime.Must(k8smofaascomv1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
+
+	knativeServing.AddToScheme(scheme)
 }
 
 func main() {
