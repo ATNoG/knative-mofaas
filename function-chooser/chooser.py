@@ -6,6 +6,8 @@ import signal
 import logging
 import socket
 
+import urllib
+
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("http.client").setLevel(logging.DEBUG)
 logging.getLogger("urllib3").setLevel(logging.DEBUG)
@@ -37,8 +39,8 @@ class Proxy(http.server.BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
 
-        self.services_list[0] = "https://www.google.com"
-        headers["Host"] = "www.google.com"
+        # self.services_list[0] = "https://www.google.com"
+        headers["Host"] = urllib.parse.urlparse(self.services_list[0]).netloc
         logging.debug(f"New {self.command} request")
         logging.debug(self.services_list[0])
         logging.debug(headers)
