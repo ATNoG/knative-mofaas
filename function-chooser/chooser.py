@@ -5,6 +5,7 @@ import os, requests
 import signal
 import logging
 import urllib
+import random
 
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("http.client").setLevel(logging.DEBUG)
@@ -32,8 +33,10 @@ class Proxy(http.server.BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
 
-        headers["Host"] = urllib.parse.urlparse(self.services_list[0]).netloc
-        response = requests.request(self.command, self.services_list[0], headers=headers, data=body)
+        chosen_func_i = int(random.random() * len(self.services_list))
+        logging.debug(f"Function of index <{chosen_func_i}> chosen")
+        headers["Host"] = urllib.parse.urlparse(self.services_list[chosen_func_i]).netloc
+        response = requests.request(self.command, self.services_list[chosen_func_i], headers=headers, data=body)
 
         # Send the response back to the client
         self.send_response(response.status_code)
