@@ -39,7 +39,8 @@ import (
 	"mofaas/internal/controller"
 	// +kubebuilder:scaffold:imports
 
-	knativeServing "knative.dev/serving/pkg/apis/serving/v1"
+	serving "knative.dev/serving/pkg/apis/serving/v1"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
 var (
@@ -53,7 +54,10 @@ func init() {
 	utilruntime.Must(k8smofaascomv1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
 
-	knativeServing.AddToScheme(scheme)
+	if err := serving.AddToScheme(scheme); err != nil {
+		log.Log.Error(err, "Error adding Serving v1 to scheme")
+		return
+	}
 }
 
 func main() {

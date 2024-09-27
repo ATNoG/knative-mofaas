@@ -4,8 +4,6 @@ import socketserver
 import os, requests
 import signal
 import logging
-import socket
-
 import urllib
 
 logging.basicConfig(level=logging.DEBUG)
@@ -13,11 +11,6 @@ logging.getLogger("http.client").setLevel(logging.DEBUG)
 logging.getLogger("urllib3").setLevel(logging.DEBUG)
 
 PORT = 8080
-
-
-# Force Python to use the system resolver
-def resolve_host_via_system(hostname):
-    return socket.gethostbyname(hostname)
 
 
 class Proxy(http.server.BaseHTTPRequestHandler):
@@ -39,11 +32,7 @@ class Proxy(http.server.BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
 
-        # self.services_list[0] = "https://www.google.com"
         headers["Host"] = urllib.parse.urlparse(self.services_list[0]).netloc
-        logging.debug(f"New {self.command} request")
-        logging.debug(self.services_list[0])
-        logging.debug(headers)
         response = requests.request(self.command, self.services_list[0], headers=headers, data=body)
 
         # Send the response back to the client
@@ -92,9 +81,8 @@ class Proxy(http.server.BaseHTTPRequestHandler):
             return
 
 def signal_handler(signum, frame):
-    logging.info("Exiting gracefully")    
+    logging.info("Exiting gracefully")
     exit(0)
-
 
 def main():
     signal.signal(signal.SIGTERM, signal_handler)
@@ -102,6 +90,7 @@ def main():
     with socketserver.TCPServer(("", PORT), Proxy) as httpd:
         logging.info(f"Serving proxy on port {PORT}")
         httpd.serve_forever()
+
 
 if __name__ == '__main__':
     main()
