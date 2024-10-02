@@ -41,6 +41,8 @@ import (
 type MoFaaSFunctionReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
+	// Mine
+	FunctionChooserImage string
 }
 
 // +kubebuilder:rbac:groups=mofaas.atnog,resources=mofaasfunctions,verbs=get;list;watch;create;update;patch;delete
@@ -80,6 +82,7 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 
 	currentService := serving.Service{}
 	if err := r.Get(ctx, types.NamespacedName{Name: functionChooserService.Name, Namespace: req.Namespace}, &currentService); err != nil && apierrors.IsNotFound(err) {
+		log.Info("Creating the new Function Chooser Knative Service")
 		if err := r.Create(ctx, &functionChooserService); err != nil {
 			log.Error(err, "Unable to create the Function Chooser Knative Service")
 			return ctrl.Result{}, err
@@ -155,11 +158,11 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(ctx context.Context, mof
 							Containers: []core.Container{
 								{
 									// Name:  "function-chooser",
-									Image: "10.43.67.161:5000/function-chooser",
+									Image: r.FunctionChooserImage,
 									Env: []core.EnvVar{
 										{
 											Name:  "SERVICES",
-											Value: strings.Join(srvURLs[:], ","), // "http://test.mofaas.svc.cluster.local",
+											Value: strings.Join(srvURLs[:], ","),
 										},
 									},
 								},
@@ -172,21 +175,6 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(ctx context.Context, mof
 	}
 
 	return service, nil
-}
-
-/*
-WITH THE HELP OF Llama 3.1 70B
-*/
-func updateStruct(dst, src interface{}) {
-	dstValue := reflect.ValueOf(dst).Elem()
-	srcValue := reflect.ValueOf(src)
-
-	for i := 0; i < srcValue.NumField(); i++ {
-		fieldName := srcValue.Type().Field(i).Name
-		if field := dstValue.FieldByName(fieldName); field.CanSet() {
-			field.Set(srcValue.Field(i))
-		}
-	}
 }
 
 /*
@@ -219,6 +207,21 @@ func (r *MoFaaSFunctionReconciler) listObjectsByName(ctx context.Context, kind, 
 	}
 
 	return srvObj, nil
+}
+
+/*
+WITH THE HELP OF Llama 3.1 70B
+*/
+func updateStruct(dst, src interface{}) {
+	dstValue := reflect.ValueOf(dst).Elem()
+	srcValue := reflect.ValueOf(src)
+
+	for i := 0; i < srcValue.NumField(); i++ {
+		fieldName := srcValue.Type().Field(i).Name
+		if field := dstValue.FieldByName(fieldName); field.CanSet() {
+			field.Set(srcValue.Field(i))
+		}
+	}
 }
 
 // SetupWithManager sets up the controller with the Manager.
