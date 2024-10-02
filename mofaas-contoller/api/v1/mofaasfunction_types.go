@@ -31,11 +31,10 @@ type MoFaaSFunctionSpec struct {
 }
 
 type VariantSpec struct {
-	Kind         string `json:"kind"`
-	Name         string `json:"name"`
-	RevisionName string `json:"revisionName"`
-	APIVersion   string `json:"apiVersion,omitempty"`
-	Namespace    string `json:"namespace,omitempty"`
+	Kind       string `json:"kind"`
+	Name       string `json:"name"`
+	APIVersion string `json:"apiVersion,omitempty"`
+	Namespace  string `json:"namespace,omitempty"`
 }
 
 // MoFaaSFunctionStatus defines the observed state of MoFaaSFunction

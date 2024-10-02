@@ -18,13 +18,16 @@ package controller
 
 import (
 	"context"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
 
 	core "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	serving "knative.dev/serving/pkg/apis/serving/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -54,23 +57,45 @@ type MoFaaSFunctionReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.19.0/pkg/reconcile
 func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	log := log.FromContext(ctx)
 
-	// // TODO(user): your logic here
 	var mofaasFunc k8smofaascomv1.MoFaaSFunction
 	if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
-		log.Log.Error(err, "Unable to fetch MoFaaSFunction")
+		if apierrors.IsNotFound(err) {
+			// If the custom resource is not found then it usually means that it was deleted or not created
+			// In this way, we will stop the reconciliation
+			log.Info("MoFaaSFunction resource not found. Ignoring since object must be deleted")
+			return ctrl.Result{}, nil
+		}
+		log.Error(err, "Unable to fetch MoFaaSFunction")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+	// mofaasFunc.Status
 	functionChooserService, err := r.createKnativeService(ctx, mofaasFunc)
 	if err != nil {
-		log.Log.Error(err, "Failed to create the Function Chooser Knative Service")
-		return ctrl.Result{}, client.IgnoreNotFound(err)
+		log.Error(err, "Failed to create the Function Chooser Knative Service")
+		return ctrl.Result{}, err
 	}
 
-	if err := r.Create(ctx, &functionChooserService); err != nil {
-		log.Log.Error(err, "Unable to create the Function Chooser Knative Service")
+	currentService := serving.Service{}
+	if err := r.Get(ctx, types.NamespacedName{Name: functionChooserService.Name, Namespace: req.Namespace}, &currentService); err != nil && apierrors.IsNotFound(err) {
+		if err := r.Create(ctx, &functionChooserService); err != nil {
+			log.Error(err, "Unable to create the Function Chooser Knative Service")
+			return ctrl.Result{}, err
+		}
+	} else if err != nil {
+		log.Error(err, "Failed to get Knative Service")
+		// Let's return the error for the reconciliation be re-trigged again
+		return ctrl.Result{}, err
+	} else { // There is no error, lets update!!!
+		log.Info("Updating the Function Chooser Knative Service")
+		// functionChooserService.SetResourceVersion(currentService.GetResourceVersion())
+		updateStruct(&functionChooserService, currentService)
+		if err := r.Update(ctx, &functionChooserService); err != nil {
+			log.Error(err, "Unable to update the Function Chooser Knative Service")
+			return ctrl.Result{}, err
+		}
 	}
 
 	return ctrl.Result{}, nil
@@ -88,8 +113,9 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(ctx context.Context, mof
 		// 	return serving.Service{}, err
 		// }
 		// log.Log.Info(strconv.Itoa(i))
-		// c, cancel := context.WithTimeout(context.Background(), 60)
-		// defer cancel()
+		timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60)
+		defer cancel()
+
 		for {
 			srvObj, err := r.listObjectsByName(ctx, "", kServiceName, "mofaas")
 			if err != nil {
@@ -103,11 +129,18 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(ctx context.Context, mof
 				srvURLs[i] = srvObj.Status.Address.URL.String()
 				break
 			}
-			time.Sleep(time.Second)
+
+			select {
+			case <-time.After(time.Second / 10):
+			case <-timeoutCtx.Done():
+				log.Log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service "+srvObj.Name)
+				return serving.Service{}, timeoutCtx.Err()
+			}
 		}
 
 	}
 	log.Log.Info(strings.Join(srvURLs[:], ","))
+
 	service := serving.Service{
 		TypeMeta: metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"},
 		ObjectMeta: metav1.ObjectMeta{
@@ -139,6 +172,21 @@ func (r *MoFaaSFunctionReconciler) createKnativeService(ctx context.Context, mof
 	}
 
 	return service, nil
+}
+
+/*
+WITH THE HELP OF Llama 3.1 70B
+*/
+func updateStruct(dst, src interface{}) {
+	dstValue := reflect.ValueOf(dst).Elem()
+	srcValue := reflect.ValueOf(src)
+
+	for i := 0; i < srcValue.NumField(); i++ {
+		fieldName := srcValue.Type().Field(i).Name
+		if field := dstValue.FieldByName(fieldName); field.CanSet() {
+			field.Set(srcValue.Field(i))
+		}
+	}
 }
 
 /*

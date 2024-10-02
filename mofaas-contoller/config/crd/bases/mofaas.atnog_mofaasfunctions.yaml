@@ -53,12 +53,9 @@ spec:
                       type: string
                     namespace:
                       type: string
-                    revisionName:
-                      type: string
                   required:
                   - kind
                   - name
-                  - revisionName
                   type: object
                 type: array
             type: object
