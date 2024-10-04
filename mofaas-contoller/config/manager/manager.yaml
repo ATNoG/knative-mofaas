@@ -63,6 +63,7 @@ spec:
         args:
           - --leader-elect
           - --health-probe-bind-address=:8081
+          - --function-chooser-image=10.43.67.161:5000/function-chooser
         image: controller:latest
         name: manager
         securityContext:

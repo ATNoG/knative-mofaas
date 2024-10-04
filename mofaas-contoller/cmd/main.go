@@ -69,7 +69,7 @@ func main() {
 	var tlsOpts []func(*tls.Config)
 	/* Start my flags */
 	var functionChooserImage string
-	flag.StringVar(&functionChooserImage, "function-chooser-image", "registry-docker-registry.default.svc.cluster.local:5000/function-chooser",
+	flag.StringVar(&functionChooserImage, "function-chooser-image", "default/function-chooser",
 		"Location where to find the container image for the Function Chooser controller.")
 	/* End my flags */
 	flag.StringVar(&metricsAddr, "metrics-bind-address", "0", "The address the metrics endpoint binds to. "+
@@ -160,6 +160,7 @@ func main() {
 	if err = (&controller.MoFaaSFunctionReconciler{
 		Client:               mgr.GetClient(),
 		Scheme:               mgr.GetScheme(),
+		Recorder:             mgr.GetEventRecorderFor("mofaasfunction-controller"),
 		FunctionChooserImage: functionChooserImage,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "MoFaaSFunction")
