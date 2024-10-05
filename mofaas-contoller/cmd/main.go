@@ -160,7 +160,6 @@ func main() {
 	if err = (&controller.MoFaaSFunctionReconciler{
 		Client:               mgr.GetClient(),
 		Scheme:               mgr.GetScheme(),
-		Recorder:             mgr.GetEventRecorderFor("mofaasfunction-controller"),
 		FunctionChooserImage: functionChooserImage,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "MoFaaSFunction")

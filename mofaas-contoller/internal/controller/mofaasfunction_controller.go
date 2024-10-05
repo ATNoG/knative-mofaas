@@ -29,7 +29,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/client-go/tools/record"
 	serving "knative.dev/serving/pkg/apis/serving/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -55,7 +54,6 @@ type MoFaaSFunctionReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 	// Mine
-	Recorder             record.EventRecorder
 	FunctionChooserImage string
 }
 
@@ -146,18 +144,6 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 				log.Error(err, "Failed to update MoFaaSFunction status")
 				return ctrl.Result{}, err
 			}
-
-			// Perform all operations required before removing the finalizer and allow
-			// the Kubernetes API to remove the custom resource.
-			// if err := r.doFinalizerOperationsForMoFaaSFunction(ctx, mofaasFunc); err != nil {
-			// 	log.Error(err, "Failed to cleanup MoFaaSFunction objects before its own deletion")
-			// 	return ctrl.Result{}, err
-			// }
-
-			r.Recorder.Event(&mofaasFunc, "Warning", "Deleting",
-				fmt.Sprintf("Custom Resource %s is being deleted from the namespace %s",
-					mofaasFunc.Name,
-					mofaasFunc.Namespace))
 
 			// Re-fetch the MoFaaSFunction Custom Resource before updating the status
 			// so that we have the latest state of the resource on the cluster and we will avoid
@@ -277,31 +263,30 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	return ctrl.Result{}, nil
 }
 
-func (r *MoFaaSFunctionReconciler) doFinalizerOperationsForMoFaaSFunction(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction) error {
-	log := log.FromContext(ctx)
-
-	// Cleanup
-	controller := serving.Service{}
-	if err := r.Get(ctx, types.NamespacedName{Namespace: mofaasFunc.Namespace, Name: mofaasFunc.Status.Controller}, &controller); err != nil {
-		log.Error(err, "Failed to get the MoFaaS Function Controller to delete")
-		return err
-	}
-
-	if err := r.Delete(ctx, &controller); err != nil {
-		log.Error(err, "Failed deleting the MoFaaS Function Controller")
-		return err
-	}
-
-	log.Info("MoFaaS Function Controller deleted")
-
-	return nil
-}
-
 func (r *MoFaaSFunctionReconciler) updateStatusOnCreateOrUpdate(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, controllerService serving.Service) error {
 	log := log.FromContext(ctx)
 
-	mofaasFunc.Status.Address = controllerService.Status.Address
-	mofaasFunc.Status.URL = controllerService.Status.URL
+	timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60) // TODO - MAYBE THIS SHOULD BE PASSED BY ARGUMENT
+	defer cancel()
+	for {
+		// Let's be sure we have the latest version
+		if err := r.Get(ctx, types.NamespacedName{Namespace: controllerService.Namespace, Name: controllerService.Name}, &controllerService); err != nil {
+			log.Error(err, "Failed to re-fetch the MoFaaS Function Knative Service")
+		}
+
+		if controllerService.Status.Address != nil && controllerService.Status.URL != nil {
+			mofaasFunc.Status.Address = controllerService.Status.Address.DeepCopy()
+			mofaasFunc.Status.URL = controllerService.Status.URL.DeepCopy()
+			break
+		}
+
+		select {
+		case <-time.After(time.Second / 10): // Every 100 ms
+		case <-timeoutCtx.Done():
+			log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service address")
+			return timeoutCtx.Err()
+		}
+	}
 	mofaasFunc.Status.Controller = controllerService.Name
 
 	if err := r.Status().Update(ctx, mofaasFunc); err != nil {
