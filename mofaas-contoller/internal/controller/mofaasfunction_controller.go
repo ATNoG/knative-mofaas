@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"reflect"
 	"strings"
@@ -303,7 +304,7 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	log := log.FromContext(ctx)
 
 	// First, get the Knative Services' URLs MoFaaS has to protect
-	srvURLs := make([]string, len(mofaasFunc.Spec.Variants))
+	srvEncURLs := make([]string, len(mofaasFunc.Spec.Variants))
 	for i, variant := range mofaasFunc.Spec.Variants {
 		kServiceName := variant.Name
 		timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60) // TODO - MAYBE THIS SHOULD BE PASSED BY ARGUMENT
@@ -318,7 +319,8 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 
 			if srvObj.IsReady() {
 				// log.Info(srvObj.Status.Address.URL.String())
-				srvURLs[i] = srvObj.Status.Address.URL.String()
+				currentUrl := srvObj.Status.Address.URL.String()
+				srvEncURLs[i] = base64.StdEncoding.EncodeToString([]byte(currentUrl))
 				break
 			}
 
@@ -351,7 +353,7 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 									Env: []core.EnvVar{
 										{
 											Name:  "SERVICES",
-											Value: strings.Join(srvURLs[:], ","),
+											Value: strings.Join(srvEncURLs[:], ","),
 										},
 									},
 								},

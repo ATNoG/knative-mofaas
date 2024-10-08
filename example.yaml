@@ -23,7 +23,7 @@ metadata:
   name: my-function
   namespace: mofaas
 spec:
-  concurrency: 2
+  concurrency: 3
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
