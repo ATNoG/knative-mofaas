@@ -21,6 +21,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 
@@ -303,7 +304,13 @@ func (r *MoFaaSFunctionReconciler) updateStatusOnCreateOrUpdate(ctx context.Cont
 func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction) (serving.Service, error) {
 	log := log.FromContext(ctx)
 
-	// First, get the Knative Services' URLs MoFaaS has to protect
+	// First, get the headers to ignore
+	ignoreHeadersEnc := make([]string, len(mofaasFunc.Spec.DeepCopy().IgnoreHeaders))
+	for i, header := range mofaasFunc.Spec.IgnoreHeaders {
+		ignoreHeadersEnc[i] = base64.StdEncoding.EncodeToString([]byte(header))
+	}
+
+	// Second, get the Knative Services' URLs MoFaaS has to protect
 	srvEncURLs := make([]string, len(mofaasFunc.Spec.Variants))
 	for i, variant := range mofaasFunc.Spec.Variants {
 		kServiceName := variant.Name
@@ -354,6 +361,14 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 										{
 											Name:  "SERVICES",
 											Value: strings.Join(srvEncURLs[:], ","),
+										},
+										{
+											Name:  "CONCURRENCY",
+											Value: strconv.Itoa(mofaasFunc.Spec.Concurrency),
+										},
+										{
+											Name:  "IGNORE_HEADERS",
+											Value: strings.Join(ignoreHeadersEnc[:], ","),
 										},
 									},
 								},

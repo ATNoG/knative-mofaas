@@ -28,8 +28,14 @@ import (
 // MoFaaSFunctionSpec defines the desired state of MoFaaSFunction
 type MoFaaSFunctionSpec struct {
 	// Concurrenty will default to 1 if not defined
-	Concurrency int           `json:"concurrency,omitempty"`
-	Variants    []VariantSpec `json:"variants,omitempty"`
+	// +default=1
+	Concurrency int `json:"concurrency,omitempty"`
+
+	Variants []VariantSpec `json:"variants,omitempty"`
+
+	// IgnoreHeaders will default to an empty array if not given
+	// +default=[]
+	IgnoreHeaders []string `json:"ignore-headers,omitempty"`
 }
 
 type VariantSpec struct {

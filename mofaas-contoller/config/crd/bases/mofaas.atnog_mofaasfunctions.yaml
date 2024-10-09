@@ -40,8 +40,15 @@ spec:
             description: MoFaaSFunctionSpec defines the desired state of MoFaaSFunction
             properties:
               concurrency:
+                default: 1
                 description: Concurrenty will default to 1 if not defined
                 type: integer
+              ignore-headers:
+                default: []
+                description: IgnoreHeaders will default to an empty array if not given
+                items:
+                  type: string
+                type: array
               variants:
                 items:
                   properties:

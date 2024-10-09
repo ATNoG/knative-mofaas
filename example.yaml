@@ -23,25 +23,17 @@ metadata:
   name: my-function
   namespace: mofaas
 spec:
-  concurrency: 3
+  # concurrency: 3
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: test
-    # revisionName: revision-service-a
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: test
-    # revisionName: revision-service-a
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: test
-    # revisionName: revision-service-a
-  # - apiVersion: serving.knative.dev/v1
-  #   kind: Service
-  #   name: service-b
-  #   revisionName: revision-service-b
-  # - apiVersion: serving.knative.dev/v1
-  #   kind: Service
-  #   name: service-c
-  #   revisionName: revision-service-c
+  # ignore-headers:
+  # - header-a
+  # - header-b
