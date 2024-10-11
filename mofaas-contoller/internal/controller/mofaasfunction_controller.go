@@ -180,7 +180,8 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	}
 
 	/***************************************** Generate MoFaaS Controller Knative Service structure *****************************************/
-	functionChooserService, err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc)
+	functionChooserService := serving.Service{}
+	err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc, &functionChooserService)
 	if err != nil {
 		log.Error(err, "Failed to create the Function Chooser Knative Service template")
 
@@ -201,53 +202,21 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	/***************************************** CREATE OR UPDATE *****************************************/
 	// Create or update the Knative Service for the Function Chooser
 	// TODO - MAYBE IN THE FUTURE, WE SHOULD VERIFY IF THE SERVICE WAS CREATED COMPLETELY WITH SUCCESS (E.G., IT MIGHT FAIL IF THE CONTAINER IS NOT FOUND)
-	currentService := serving.Service{}
-	if err := r.Get(ctx, types.NamespacedName{Name: functionChooserService.Name, Namespace: req.Namespace}, &currentService); err != nil && apierrors.IsNotFound(err) {
-		log.Info("Creating the new Function Chooser Knative Service")
-		if err := r.Create(ctx, &functionChooserService); err != nil {
-			log.Error(err, "Unable to create the Function Chooser Knative Service")
-			return ctrl.Result{}, err
-		}
+	result, err := controllerutil.CreateOrUpdate(ctx, r.Client, &functionChooserService, func() error {
+		err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc, &functionChooserService)
+		return err
+	})
 
-		// Let's be sure we have the latest version
-		if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
-			log.Error(err, "Failed to re-fetch MoFaaSFunction")
-			return ctrl.Result{}, err
-		}
-
-		if err := r.updateStatusOnCreateOrUpdate(ctx, &mofaasFunc, functionChooserService); err != nil {
-			log.Error(err, "Failed to update MoFaaSFunction status after Controller Knative Service creation")
-			return ctrl.Result{}, err
-		}
-	} else if err != nil {
-		log.Error(err, "Failed to get Knative Service")
-		// Let's return the error for the reconciliation be re-trigged again
+	if err != nil {
+		log.Error(err, "Unable to update or create the Function Chooser Knative Service")
 		return ctrl.Result{}, err
-	} else { // There is no error, lets update!!!
-		log.Info("Updating the Function Chooser Knative Service")
-
-		// Let's be sure we have the latest version
-		if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
-			log.Error(err, "Failed to re-fetch MoFaaSFunction")
-			return ctrl.Result{}, err
-		}
-
-		updateStruct(&functionChooserService, currentService)
-		if err := r.Update(ctx, &functionChooserService); err != nil {
-			log.Error(err, "Unable to update the Function Chooser Knative Service")
-			return ctrl.Result{}, err
-		}
-
-		// Let's be sure we have the latest version
-		if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
-			log.Error(err, "Failed to re-fetch MoFaaSFunction")
-			return ctrl.Result{}, err
-		}
-
+	} else if result == controllerutil.OperationResultCreated || result == controllerutil.OperationResultUpdated {
 		if err := r.updateStatusOnCreateOrUpdate(ctx, &mofaasFunc, functionChooserService); err != nil {
-			log.Error(err, "Failed to update MoFaaSFunction status after Controller Knative Service update")
+			log.Error(err, "Failed to update MoFaaSFunction status after Controller Knative Service "+string(result))
 			return ctrl.Result{}, err
 		}
+	} else if result == controllerutil.OperationResultNone {
+		log.Info("Did not update nor created a MoFaaSFunction object")
 	}
 
 	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
@@ -301,7 +270,7 @@ func (r *MoFaaSFunctionReconciler) updateStatusOnCreateOrUpdate(ctx context.Cont
 	return nil
 }
 
-func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction) (serving.Service, error) {
+func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, functionChooserService *serving.Service) error {
 	log := log.FromContext(ctx)
 
 	// First, get the headers to ignore
@@ -321,7 +290,7 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 			srvObj, err := r.listObjectsByName(ctx, kServiceName, "mofaas")
 			if err != nil {
 				log.Error(err, "Error while listing services")
-				return serving.Service{}, err
+				return err
 			}
 
 			if srvObj.IsReady() {
@@ -335,41 +304,37 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 			case <-time.After(time.Second / 10): // Every 100 ms
 			case <-timeoutCtx.Done():
 				log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service "+srvObj.Name)
-				return serving.Service{}, timeoutCtx.Err()
+				return timeoutCtx.Err()
 			}
 		}
 
 	}
 
 	// Knative Service definition for the Function Chooser
-	service := serving.Service{
-		TypeMeta: metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      "mofaas-chooser-" + mofaasFunc.Name,
-			Namespace: mofaasFunc.Namespace,
-		},
-		Spec: serving.ServiceSpec{
-			ConfigurationSpec: serving.ConfigurationSpec{
-				Template: serving.RevisionTemplateSpec{
-					Spec: serving.RevisionSpec{
-						PodSpec: core.PodSpec{
-							Containers: []core.Container{
-								{
-									// Name:  "function-chooser",
-									Image: r.FunctionChooserImage,
-									Env: []core.EnvVar{
-										{
-											Name:  "SERVICES",
-											Value: strings.Join(srvEncURLs[:], ","),
-										},
-										{
-											Name:  "CONCURRENCY",
-											Value: strconv.Itoa(mofaasFunc.Spec.Concurrency),
-										},
-										{
-											Name:  "IGNORE_HEADERS",
-											Value: strings.Join(ignoreHeadersEnc[:], ","),
-										},
+	functionChooserService.TypeMeta = metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"}
+	functionChooserService.ObjectMeta.Name = "mofaas-chooser-" + mofaasFunc.Name
+	functionChooserService.ObjectMeta.Namespace = mofaasFunc.Namespace
+	functionChooserService.Spec = serving.ServiceSpec{
+		ConfigurationSpec: serving.ConfigurationSpec{
+			Template: serving.RevisionTemplateSpec{
+				Spec: serving.RevisionSpec{
+					PodSpec: core.PodSpec{
+						Containers: []core.Container{
+							{
+								// Name:  "function-chooser",
+								Image: r.FunctionChooserImage,
+								Env: []core.EnvVar{
+									{
+										Name:  "SERVICES",
+										Value: strings.Join(srvEncURLs[:], ","),
+									},
+									{
+										Name:  "CONCURRENCY",
+										Value: strconv.Itoa(mofaasFunc.Spec.Concurrency),
+									},
+									{
+										Name:  "IGNORE_HEADERS",
+										Value: strings.Join(ignoreHeadersEnc[:], ","),
 									},
 								},
 							},
@@ -380,12 +345,12 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 		},
 	}
 
-	if err := ctrl.SetControllerReference(&mofaasFunc, &service, r.Scheme); err != nil {
+	if err := ctrl.SetControllerReference(&mofaasFunc, functionChooserService, r.Scheme); err != nil {
 		log.Error(err, "Error while setting controller reference")
-		return serving.Service{}, err
+		return err
 	}
 
-	return service, nil
+	return nil
 }
 
 /*

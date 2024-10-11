@@ -17,23 +17,37 @@ spec:
             - name: TARGET
               value: "Python Sample v1"
 ---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: test2
+  namespace: mofaas
+spec:
+  template:
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/test
+          env:
+            - name: TARGET
+              value: "Python Sample v1"
+---
 apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: my-function
   namespace: mofaas
 spec:
-  # concurrency: 3
+  concurrency: 2
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: test
   - apiVersion: serving.knative.dev/v1
     kind: Service
-    name: test
-  - apiVersion: serving.knative.dev/v1
-    kind: Service
-    name: test
-  # ignore-headers:
-  # - header-a
-  # - header-b
+    name: test2
+  # - apiVersion: serving.knative.dev/v1
+  #   kind: Service
+  #   name: test
+  ignore-headers:
+  - ce-id
+  - x-envoy-upstream-service-time
