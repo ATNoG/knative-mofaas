@@ -11,10 +11,23 @@ spec:
     kind: MoFaaSFunction
     listKind: MoFaaSFunctionList
     plural: mofaasfunctions
+    shortNames:
+    - mofaas
+    - mofaasfunc
     singular: mofaasfunction
   scope: Namespaced
   versions:
-  - name: v1
+  - additionalPrinterColumns:
+    - jsonPath: .status.url
+      name: URL
+      type: string
+    - jsonPath: .status.controller
+      name: Knative Service Controller
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
     schema:
       openAPIV3Schema:
         description: MoFaaSFunction is the Schema for the mofaasfunctions API

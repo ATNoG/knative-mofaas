@@ -29,7 +29,7 @@ import (
 type MoFaaSFunctionSpec struct {
 	// Concurrenty will default to 1 if not defined
 	// +default=1
-	Concurrency int `json:"concurrency,omitempty"`
+	Concurrency int `json:"concurrency,omitempty" validation:"Maximum({.spec.variants | len})"`
 
 	Variants []VariantSpec `json:"variants,omitempty"`
 
@@ -39,8 +39,8 @@ type MoFaaSFunctionSpec struct {
 }
 
 type VariantSpec struct {
-	Kind       string `json:"kind"`
-	Name       string `json:"name"`
+	Kind       string `json:"kind" immutable:"true"`
+	Name       string `json:"name" immutable:"true"`
 	APIVersion string `json:"apiVersion,omitempty"`
 	Namespace  string `json:"namespace,omitempty"`
 }
@@ -67,6 +67,10 @@ type MoFaaSFunctionStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +kubebuilder:resource:shortName={mofaas, mofaasfunc}
+// +kubebuilder:printcolumn:name="URL",type="string",JSONPath=`.status.url`
+// +kubebuilder:printcolumn:name="Knative Service Controller",type="string",JSONPath=`.status.controller`
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=`.metadata.creationTimestamp`
 
 // MoFaaSFunction is the Schema for the mofaasfunctions API
 type MoFaaSFunction struct {

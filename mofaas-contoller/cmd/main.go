@@ -37,6 +37,7 @@ import (
 
 	k8smofaascomv1 "mofaas/api/v1"
 	"mofaas/internal/controller"
+
 	// +kubebuilder:scaffold:imports
 
 	serving "knative.dev/serving/pkg/apis/serving/v1"
@@ -164,6 +165,12 @@ func main() {
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "MoFaaSFunction")
 		os.Exit(1)
+	}
+	if os.Getenv("ENABLE_WEBHOOKS") != "false" {
+		if err = (&k8smofaascomv1.MoFaaSFunction{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "MoFaaSFunction")
+			os.Exit(1)
+		}
 	}
 	// +kubebuilder:scaffold:builder
 
