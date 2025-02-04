@@ -5,6 +5,37 @@ metadata:
 spec:
   background: false
   rules:
+  - name: change-user-container-userid
+    match:
+      all:  # Logical OR: Match if either condition is true
+      # Condition 1: Namespace has label "environment=dev"
+      - resources:
+          kinds:
+          - Pod
+          namespaceSelector:
+            matchLabels:
+              mofaas: nvp  # Target namespaces with this label
+      # Condition 2: Pod has label "inject-sidecar=true"
+      - resources:
+          kinds:
+          - Pod
+          selector:
+            matchLabels:
+              mofaas: nvp 
+    mutate:
+      foreach:
+        - list: "request.object.spec.containers"
+          patchesJson6902: |
+            - path: "/spec/containers/{{elementIndex}}/securityContext"
+              op: add
+              value:
+                runAsUser: 1000
+                runAsGroup: 1000
+          preconditions:
+            key: "{{ element.name }}"
+            operator: AnyNotIn
+            value:
+            - queue-proxy
   - name: inject-init-and-sidecar
     match:
       all:  # Logical OR: Match if either condition is true
@@ -27,44 +58,24 @@ spec:
         spec:
           initContainers:
           - name: init-iptables
-            image: alpine:3.14
+            image: 10.43.67.161:5000/init-iptables
             securityContext:
               capabilities:
                 add:
                   - NET_ADMIN
-            command:
-            - sh
-            - -c
-            - |
-              apk update
-              apk add iptables
-              # apk add iptables && apk add tcpdump && apk add curl
-
-              iptables -t nat -P PREROUTING ACCEPT
-              iptables -t nat -P INPUT ACCEPT
-              iptables -t nat -P OUTPUT ACCEPT
-              iptables -t nat -P POSTROUTING ACCEPT
-              iptables -t nat -N ISTIO_OUTPUT
-              iptables -t nat -N ISTIO_REDIRECT
-              iptables -t nat -A OUTPUT -p tcp -j ISTIO_OUTPUT
-              # iptables -t nat -A ISTIO_OUTPUT ! -d 127.0.0.1/32 -o lo -j ISTIO_REDIRECT
-              iptables -t nat -A ISTIO_OUTPUT -m owner --uid-owner 101 -j RETURN
-              iptables -t nat -A ISTIO_OUTPUT -m owner --gid-owner 101 -j RETURN
-              iptables -t nat -A ISTIO_OUTPUT -d 127.0.0.1/32 -j RETURN
-              iptables -t nat -A ISTIO_OUTPUT -j ISTIO_REDIRECT
-              iptables -t nat -A ISTIO_REDIRECT -p tcp -j REDIRECT --to-ports 10000
           # Add a sidecar container
           containers:
+            - name: queue-proxy
+              securityContext:
+                runAsUser: 65532
+                runAsGroup: 65532
             - name: envoy
-              image: 10.43.67.161:5000/envoy:latest # envoyproxy/envoy:v1.33.0
-              # args:
-              # - "--config-path"
-              # - "/etc/envoy/envoy.yaml"
-              # - "--log-level"
-              # - "trace"
+              image: 10.43.67.161:5000/envoy:latest
               ports:
               - containerPort: 10000
-              # - containerPort: 9901
+              securityContext:
+                runAsUser: 101
+                runAsGroup: 101
               volumeMounts:
               - name: envoy-config
                 mountPath: /etc/envoy
