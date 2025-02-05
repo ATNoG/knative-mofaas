@@ -64,6 +64,7 @@ spec:
           - --leader-elect
           - --health-probe-bind-address=:8081
           - --function-chooser-image=10.43.67.161:5000/function-chooser
+          - --egress-proxy-image=10.43.67.161:5000/egress-proxy
         image: controller:latest
         name: manager
         securityContext:

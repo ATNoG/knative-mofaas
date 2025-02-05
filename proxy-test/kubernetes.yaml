@@ -108,7 +108,7 @@ spec:
     spec:
       containers:
         - name: proxy
-          image: 10.43.67.161:5000/proxy
+          image: 10.43.67.161:5000/proxy:latest
           ports:
             - containerPort: 8080
               name: http

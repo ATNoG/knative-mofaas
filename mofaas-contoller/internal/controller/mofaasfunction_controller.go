@@ -26,11 +26,13 @@ import (
 	"time"
 
 	core "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/util/retry"
 	serving "knative.dev/serving/pkg/apis/serving/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -57,6 +59,7 @@ type MoFaaSFunctionReconciler struct {
 	Scheme *runtime.Scheme
 	// Mine
 	FunctionChooserImage string
+	EgressProxyImage     string
 }
 
 // +kubebuilder:rbac:groups=mofaas.atnog,resources=mofaasfunctions,verbs=get;list;watch;create;update;patch;delete
@@ -118,12 +121,31 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers
 	if !controllerutil.ContainsFinalizer(&mofaasFunc, mofaasFunctionFinalizer) {
 		log.Info("Adding Finalizer for MoFaaSFunction")
-		if ok := controllerutil.AddFinalizer(&mofaasFunc, mofaasFunctionFinalizer); !ok {
-			log.Error(nil, "Failed to add finalizer into the custom resource")
-			return ctrl.Result{Requeue: true}, nil
-		}
 
-		if err := r.Update(ctx, &mofaasFunc); err != nil {
+		// Retry on conflict to avoid stale object updates.
+		err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+			// Re-fetch the latest version of the object
+			var latestFunc k8smofaascomv1.MoFaaSFunction
+			if err := r.Get(ctx, req.NamespacedName, &latestFunc); err != nil {
+				return err
+			}
+
+			// Check if the finalizer was already added by another concurrent reconciliation.
+			if controllerutil.ContainsFinalizer(&latestFunc, mofaasFunctionFinalizer) {
+				return nil
+			}
+
+			// Add the finalizer
+			controllerutil.AddFinalizer(&latestFunc, mofaasFunctionFinalizer)
+
+			// Update the object with the new finalizer
+			if err := r.Update(ctx, &latestFunc); err != nil {
+				return err
+			}
+			return nil
+		})
+
+		if err != nil {
 			log.Error(err, "Failed to update custom resource to add finalizer")
 			return ctrl.Result{}, err
 		}
@@ -180,23 +202,23 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	}
 
 	/***************************************** Generate MoFaaS Controller Knative Service structure *****************************************/
-	functionChooserService := serving.Service{}
-	err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc, &functionChooserService)
-	if err != nil {
-		log.Error(err, "Failed to create the Function Chooser Knative Service template")
-
-		meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{
-			Type:   typeAvailableMoFaaSFunction,
-			Status: metav1.ConditionFalse, Reason: "Reconciling",
-			Message: fmt.Sprintf("Failed to create Knative Serving for the custom resource (%s): (%s)", mofaasFunc.Name, err),
-		})
-
-		if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
-			log.Error(err, "Failed to update MoFaaSFunction status")
-			return ctrl.Result{}, err
-		}
-
-		return ctrl.Result{}, err
+	functionChooserService := serving.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "mofaas-chooser-" + mofaasFunc.Name,
+			Namespace: mofaasFunc.Namespace,
+		},
+	}
+	egressProxyService := serving.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "mofaas-egress-proxy-" + mofaasFunc.Name,
+			Namespace: mofaasFunc.Namespace,
+		},
 	}
 
 	/***************************************** CREATE OR UPDATE *****************************************/
@@ -219,17 +241,36 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		log.Info("Did not update nor created a MoFaaSFunction object")
 	}
 
-	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
-	meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{
-		Type:    typeAvailableMoFaaSFunction,
-		Status:  metav1.ConditionTrue,
-		Reason:  "Reconciling",
-		Message: fmt.Sprintf("Knative Service for custom resource (%s) created successfully", mofaasFunc.Name),
+	_, err = controllerutil.CreateOrUpdate(ctx, r.Client, &egressProxyService, func() error {
+		err := r.generateEgressProxyServiceStruct(ctx, mofaasFunc, &egressProxyService)
+		return err
 	})
-	if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
-		log.Error(err, "Failed to update MoFaaSFunction status")
+	if err != nil {
+		log.Error(err, "Unable to update or create the Egress Proxy Service")
 		return ctrl.Result{}, err
 	}
+
+	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
+	// meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{
+	// 	Type:    typeAvailableMoFaaSFunction,
+	// 	Status:  metav1.ConditionTrue,
+	// 	Reason:  "Reconciling",
+	// 	Message: fmt.Sprintf("Knative Service for custom resource (%s) created successfully", mofaasFunc.Name),
+	// })
+	// // Finally, update the status once with retry:
+	// err = retry.RetryOnConflict(retry.DefaultRetry, func() error {
+	// 	var latestFunc k8smofaascomv1.MoFaaSFunction
+	// 	if err := r.Get(ctx, req.NamespacedName, &latestFunc); err != nil {
+	// 		return err
+	// 	}
+	// 	// Apply the accumulated changes from mofaasFunc to latestFunc:
+	// 	latestFunc.Status = mofaasFunc.Status
+	// 	return r.Status().Update(ctx, &latestFunc)
+	// })
+	// if err != nil {
+	// 	log.Error(err, "Failed to update MoFaaSFunction status at final step")
+	// 	return ctrl.Result{}, err
+	// }
 
 	return ctrl.Result{}, nil
 }
@@ -239,33 +280,136 @@ func (r *MoFaaSFunctionReconciler) updateStatusOnCreateOrUpdate(ctx context.Cont
 
 	timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60) // TODO - MAYBE THIS SHOULD BE PASSED BY ARGUMENT
 	defer cancel()
+
+	var svc serving.Service
 	for {
 		// Let's be sure we have the latest version
-		if err := r.Get(ctx, types.NamespacedName{Namespace: controllerService.Namespace, Name: controllerService.Name}, &controllerService); err != nil {
-			log.Error(err, "Failed to re-fetch the MoFaaS Function Knative Service")
-		}
-
-		if controllerService.Status.Address != nil && controllerService.Status.URL != nil {
-			mofaasFunc.Status.Address = controllerService.Status.Address.DeepCopy()
-			mofaasFunc.Status.URL = controllerService.Status.URL.DeepCopy()
-			break
+		err := r.Get(ctx, types.NamespacedName{Namespace: controllerService.Namespace, Name: controllerService.Name}, &svc)
+		if err != nil {
+			if apierrors.IsNotFound(err) {
+				log.Info("Knative Service not found yet; waiting...", "namespace", controllerService.Namespace, "name", controllerService.Name)
+			} else {
+				// For any other error, log it and wait.
+				log.Error(err, "Error fetching the Knative Service; will retry", "namespace", controllerService.Namespace, "name", controllerService.Name)
+			}
+		} else {
+			// Service found. Check if it has the address and URL.
+			if svc.Status.Address != nil && svc.Status.URL != nil {
+				// Update the custom resource status from the Knative Service.
+				mofaasFunc.Status.Address = svc.Status.Address.DeepCopy()
+				mofaasFunc.Status.URL = svc.Status.URL.DeepCopy()
+				break
+			} else {
+				log.Info("Knative Service found but not ready yet", "namespace", controllerService.Namespace, "name", controllerService.Name)
+			}
 		}
 
 		select {
-		case <-time.After(time.Second / 10): // Every 100 ms
+		case <-time.After(time.Second): // Every second
 		case <-timeoutCtx.Done():
 			log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service address")
 			return timeoutCtx.Err()
 		}
 	}
-	mofaasFunc.Status.Controller = controllerService.Name
 
-	if err := r.Status().Update(ctx, mofaasFunc); err != nil {
+	// Now update the status only if something has changed.
+	err := retry.RetryOnConflict(retry.DefaultRetry, func() error {
+		var latestFunc k8smofaascomv1.MoFaaSFunction
+		if err := r.Get(ctx, types.NamespacedName{Namespace: mofaasFunc.Namespace, Name: mofaasFunc.Name}, &latestFunc); err != nil {
+			return err
+		}
+
+		// Define the desired status values.
+		desiredController := controllerService.Name
+		desiredAddress := svc.Status.Address.DeepCopy()
+		desiredURL := svc.Status.URL.DeepCopy()
+		desiredCondition := metav1.Condition{
+			Type:    typeAvailableMoFaaSFunction,
+			Status:  metav1.ConditionTrue,
+			Reason:  "Reconciling",
+			Message: fmt.Sprintf("Knative Service for custom resource (%s) created or updated successfully", latestFunc.Name),
+		}
+
+		// Check if an update is actually needed.
+		updateNeeded := false
+		if latestFunc.Status.Controller != desiredController {
+			updateNeeded = true
+		}
+		if !equality.Semantic.DeepEqual(latestFunc.Status.Address, desiredAddress) {
+			updateNeeded = true
+		}
+		if !equality.Semantic.DeepEqual(latestFunc.Status.URL, desiredURL) {
+			updateNeeded = true
+		}
+
+		currentCondition := meta.FindStatusCondition(latestFunc.Status.Conditions, desiredCondition.Type)
+		if currentCondition == nil || !equality.Semantic.DeepEqual(currentCondition.Status, desiredCondition.Status) ||
+			!equality.Semantic.DeepEqual(currentCondition.Reason, desiredCondition.Reason) ||
+			!equality.Semantic.DeepEqual(currentCondition.Message, desiredCondition.Message) {
+			updateNeeded = true
+		}
+
+		// If nothing changed, skip the update.
+		if !updateNeeded {
+			log.Info("Status is up-to-date, skipping update", "controller", desiredController)
+			return nil
+		}
+
+		// Otherwise, update the status.
+		latestFunc.Status.Controller = desiredController
+		latestFunc.Status.Address = desiredAddress
+		latestFunc.Status.URL = desiredURL
+		meta.SetStatusCondition(&latestFunc.Status.Conditions, desiredCondition)
+
+		if err := r.Status().Update(ctx, &latestFunc); err != nil {
+			return err
+		}
+		return nil
+	})
+	if err != nil {
 		log.Error(err, "Failed to update MoFaaSFunction status")
 		return err
 	}
 
 	log.Info("Updated MoFaaSFunc Status with success after creation or update")
+
+	return nil
+}
+
+func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service) error {
+	log := log.FromContext(ctx)
+
+	// Knative Service definition for the Proxy
+	// egressProxyService.TypeMeta = metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"}
+	// egressProxyService.ObjectMeta.Name = "mofaas-egress-proxy-" + mofaasFunc.Name
+	// egressProxyService.ObjectMeta.Namespace = mofaasFunc.Namespace
+	egressProxyService.Spec = serving.ServiceSpec{
+		ConfigurationSpec: serving.ConfigurationSpec{
+			Template: serving.RevisionTemplateSpec{
+				Spec: serving.RevisionSpec{
+					PodSpec: core.PodSpec{
+						Containers: []core.Container{
+							{
+								// Name:  "function-chooser",
+								Image: r.EgressProxyImage,
+								Env: []core.EnvVar{
+									{
+										Name:  "CONCURRENCY",
+										Value: strconv.Itoa(mofaasFunc.Spec.Concurrency),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	if err := ctrl.SetControllerReference(&mofaasFunc, egressProxyService, r.Scheme); err != nil {
+		log.Error(err, "Error while setting controller reference for Egress Proxy")
+		return err
+	}
 
 	return nil
 }
@@ -311,9 +455,9 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	}
 
 	// Knative Service definition for the Function Chooser
-	functionChooserService.TypeMeta = metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"}
-	functionChooserService.ObjectMeta.Name = "mofaas-chooser-" + mofaasFunc.Name
-	functionChooserService.ObjectMeta.Namespace = mofaasFunc.Namespace
+	// functionChooserService.TypeMeta = metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"}
+	// functionChooserService.ObjectMeta.Name = "mofaas-chooser-" + mofaasFunc.Name
+	// functionChooserService.ObjectMeta.Namespace = mofaasFunc.Namespace
 	functionChooserService.Spec = serving.ServiceSpec{
 		ConfigurationSpec: serving.ConfigurationSpec{
 			Template: serving.RevisionTemplateSpec{
@@ -346,7 +490,7 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	}
 
 	if err := ctrl.SetControllerReference(&mofaasFunc, functionChooserService, r.Scheme); err != nil {
-		log.Error(err, "Error while setting controller reference")
+		log.Error(err, "Error while setting controller reference for Function Chooser")
 		return err
 	}
 

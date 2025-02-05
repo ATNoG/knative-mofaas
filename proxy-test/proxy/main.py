@@ -22,6 +22,7 @@ class MoFaaSProxy:
         headers = dict(request.headers)
         
         logging.debug(f"Received request: {method} {url}")
+        logging.debug(f"Received headers: {headers}")
 
         request_data = (method, url, headers, body)
         async with self.lock:

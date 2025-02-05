@@ -72,6 +72,9 @@ func main() {
 	var functionChooserImage string
 	flag.StringVar(&functionChooserImage, "function-chooser-image", "default/function-chooser",
 		"Location where to find the container image for the Function Chooser controller.")
+	var egressProxyImage string
+	flag.StringVar(&egressProxyImage, "egress-proxy-image", "default/egress-proxy",
+		"Location where to find the container image for the Egress Proxy.")
 	/* End my flags */
 	flag.StringVar(&metricsAddr, "metrics-bind-address", "0", "The address the metrics endpoint binds to. "+
 		"Use :8443 for HTTPS or :8080 for HTTP, or leave as 0 to disable the metrics service.")
@@ -162,6 +165,7 @@ func main() {
 		Client:               mgr.GetClient(),
 		Scheme:               mgr.GetScheme(),
 		FunctionChooserImage: functionChooserImage,
+		EgressProxyImage:     egressProxyImage,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "MoFaaSFunction")
 		os.Exit(1)

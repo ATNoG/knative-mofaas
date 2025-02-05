@@ -74,15 +74,25 @@ func (r *MoFaaSFunction) ValidateUpdate(old runtime.Object) (admission.Warnings,
 				fieldName: "Kind and apiVersion",
 			},
 			{
-				newField: r.ObjectMeta,
-				oldField: oldFunction.ObjectMeta,
-				fieldName: "Metadata",
+				newField: r.ObjectMeta.Name,
+				oldField: oldFunction.ObjectMeta.Name,
+				fieldName: "Name",
 			},
 			{
-				newField: r.Status,
-				oldField: oldFunction.Status,
-				fieldName: "Status",
+				newField: r.ObjectMeta.Namespace,
+				oldField: oldFunction.ObjectMeta.Namespace,
+				fieldName: "Namespace",
 			},
+			{
+				newField: r.ObjectMeta.UID,
+				oldField: oldFunction.ObjectMeta.UID,
+				fieldName: "UID",
+			},			
+			// {
+			// 	newField: r.Status,
+			// 	oldField: oldFunction.Status,
+			// 	fieldName: "Status",
+			// },
 		}
 
 		for _, f := range immutableFields {
