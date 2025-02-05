@@ -28,8 +28,8 @@ import (
 )
 
 type immutableFieldInfo struct {
-	newField any
-	oldField any
+	newField  any
+	oldField  any
 	fieldName string
 }
 
@@ -69,25 +69,25 @@ func (r *MoFaaSFunction) ValidateUpdate(old runtime.Object) (admission.Warnings,
 	} else {
 		immutableFields := [...]immutableFieldInfo{
 			{
-				newField: r.TypeMeta,
-				oldField: oldFunction.TypeMeta,
+				newField:  r.TypeMeta,
+				oldField:  oldFunction.TypeMeta,
 				fieldName: "Kind and apiVersion",
 			},
 			{
-				newField: r.ObjectMeta.Name,
-				oldField: oldFunction.ObjectMeta.Name,
+				newField:  r.ObjectMeta.Name,
+				oldField:  oldFunction.ObjectMeta.Name,
 				fieldName: "Name",
 			},
 			{
-				newField: r.ObjectMeta.Namespace,
-				oldField: oldFunction.ObjectMeta.Namespace,
+				newField:  r.ObjectMeta.Namespace,
+				oldField:  oldFunction.ObjectMeta.Namespace,
 				fieldName: "Namespace",
 			},
 			{
-				newField: r.ObjectMeta.UID,
-				oldField: oldFunction.ObjectMeta.UID,
+				newField:  r.ObjectMeta.UID,
+				oldField:  oldFunction.ObjectMeta.UID,
 				fieldName: "UID",
-			},			
+			},
 			// {
 			// 	newField: r.Status,
 			// 	oldField: oldFunction.Status,
@@ -102,7 +102,7 @@ func (r *MoFaaSFunction) ValidateUpdate(old runtime.Object) (admission.Warnings,
 		}
 	}
 	return r.validateConcurrency()
-	
+
 	// return nil, nil
 }
 
@@ -121,7 +121,7 @@ func (r *MoFaaSFunction) validateConcurrency() (admission.Warnings, error) {
 	return nil, nil
 }
 
-func (r *MoFaaSFunction) validateImmutable(fieldInfo immutableFieldInfo) (error) {
+func (r *MoFaaSFunction) validateImmutable(fieldInfo immutableFieldInfo) error {
 	if !reflect.DeepEqual(fieldInfo.newField, fieldInfo.oldField) {
 		return fmt.Errorf("%s is immutable", fieldInfo.fieldName)
 	}

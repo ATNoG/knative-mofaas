@@ -386,6 +386,11 @@ func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.
 	egressProxyService.Spec = serving.ServiceSpec{
 		ConfigurationSpec: serving.ConfigurationSpec{
 			Template: serving.RevisionTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Labels: map[string]string{
+						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-egress-proxy",			// TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
+					},
+				},
 				Spec: serving.RevisionSpec{
 					PodSpec: core.PodSpec{
 						Containers: []core.Container{
@@ -461,6 +466,11 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	functionChooserService.Spec = serving.ServiceSpec{
 		ConfigurationSpec: serving.ConfigurationSpec{
 			Template: serving.RevisionTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Labels: map[string]string{
+						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-chooser",				// TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
+					},
+				},
 				Spec: serving.RevisionSpec{
 					PodSpec: core.PodSpec{
 						Containers: []core.Container{
