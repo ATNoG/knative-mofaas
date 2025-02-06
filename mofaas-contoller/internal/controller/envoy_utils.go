@@ -1,0 +1,77 @@
+package controller
+
+import (
+	"fmt"
+	"os"
+
+	"gopkg.in/yaml.v3"
+)
+
+func loadEnvoyConfig(filePath string) (map[string]interface{}, error) {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read envoy.yaml: %w", err)
+	}
+
+	var config map[string]interface{}
+	err = yaml.Unmarshal(data, &config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse envoy.yaml: %w", err)
+	}
+
+	return config, nil
+}
+
+func updateEnvoyAddress(config map[string]interface{}, newAddress string) error {
+	// Navigate dynamically to the address field
+	staticResources, ok := config["static_resources"].(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("missing static_resources")
+	}
+
+	clusters, ok := staticResources["clusters"].([]interface{})
+	if !ok || len(clusters) == 0 {
+		return fmt.Errorf("missing clusters")
+	}
+
+	// Find the "firewall_cluster"
+	for _, c := range clusters {
+		cluster, ok := c.(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		if cluster["name"] == "firewall_cluster" {
+			loadAssignment, ok := cluster["load_assignment"].(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("missing load_assignment")
+			}
+
+			endpoints, ok := loadAssignment["endpoints"].([]interface{})
+			if !ok || len(endpoints) == 0 {
+				return fmt.Errorf("missing endpoints")
+			}
+
+			lbEndpoints, ok := endpoints[0].(map[string]interface{})["lb_endpoints"].([]interface{})
+			if !ok || len(lbEndpoints) == 0 {
+				return fmt.Errorf("missing lb_endpoints")
+			}
+
+			endpoint, ok := lbEndpoints[0].(map[string]interface{})["endpoint"].(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("missing endpoint")
+			}
+
+			socketAddress, ok := endpoint["address"].(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("missing socket_address")
+			}
+
+			// Update the address dynamically
+			socketAddress["socket_address>address"] = newAddress
+			return nil
+		}
+	}
+
+	return fmt.Errorf("firewall_cluster not found")
+}

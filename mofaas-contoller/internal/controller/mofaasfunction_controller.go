@@ -25,6 +25,8 @@ import (
 	"strings"
 	"time"
 
+	"sigs.k8s.io/yaml"
+
 	core "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -44,6 +46,8 @@ import (
 )
 
 const mofaasFunctionFinalizer = "mofaasfunctions.mofaas.atnog/finalizer"
+
+const envoyConfigPath = "config/envoy/envoy.yaml"
 
 // Definitions to manage status conditions
 const (
@@ -88,6 +92,44 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		}
 		log.Error(err, "Unable to fetch MoFaaSFunction")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	// First, let's create the egress proxy service
+	egressProxyService := serving.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "mofaas-egress-proxy-" + mofaasFunc.Name,
+			Namespace: mofaasFunc.Namespace,
+		},
+	}
+
+	_, err := controllerutil.CreateOrUpdate(ctx, r.Client, &egressProxyService, func() error {
+		err := r.generateEgressProxyServiceStruct(ctx, mofaasFunc, &egressProxyService)
+		return err
+	})
+	if err != nil {
+		log.Error(err, "Unable to update or create the Egress Proxy Service")
+		return ctrl.Result{}, err
+	}
+
+	// Then, create the new configmap for the envoy
+	r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService)
+
+	/***************************************** UPDATE ASSOCIATED VARIANTS' KNATIVE SERVICES LABELS *****************************************/
+	// Define the new labels to be added
+	newLabels := map[string]string{
+		fmt.Sprintf("%s/mofaasfunction", k8smofaascomv1.GroupVersion.Group): mofaasFunc.Name,
+	}
+
+	// Iterate over each variant and update its service labels
+	for _, variant := range mofaasFunc.Spec.Variants {
+		err := updatePodLabels(ctx, r.Client, mofaasFunc.Namespace, variant.Name, newLabels)
+		if err != nil {
+			log.Error(err, "Error updating service labels", "namespace", mofaasFunc.Namespace, "service", variant.Name)
+			// Decide whether to continue or return the error based on your use case
+		}
 	}
 
 	// Status as Unknown when no status is available
@@ -211,15 +253,6 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 			Namespace: mofaasFunc.Namespace,
 		},
 	}
-	egressProxyService := serving.Service{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      "mofaas-egress-proxy-" + mofaasFunc.Name,
-			Namespace: mofaasFunc.Namespace,
-		},
-	}
 
 	/***************************************** CREATE OR UPDATE *****************************************/
 	// Create or update the Knative Service for the Function Chooser
@@ -239,15 +272,6 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		}
 	} else if result == controllerutil.OperationResultNone {
 		log.Info("Did not update nor created a MoFaaSFunction object")
-	}
-
-	_, err = controllerutil.CreateOrUpdate(ctx, r.Client, &egressProxyService, func() error {
-		err := r.generateEgressProxyServiceStruct(ctx, mofaasFunc, &egressProxyService)
-		return err
-	})
-	if err != nil {
-		log.Error(err, "Unable to update or create the Egress Proxy Service")
-		return ctrl.Result{}, err
 	}
 
 	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
@@ -388,7 +412,7 @@ func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.
 			Template: serving.RevisionTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-egress-proxy",			// TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
+						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-egress-proxy", // TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
 					},
 				},
 				Spec: serving.RevisionSpec{
@@ -431,32 +455,12 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	// Second, get the Knative Services' URLs MoFaaS has to protect
 	srvEncURLs := make([]string, len(mofaasFunc.Spec.Variants))
 	for i, variant := range mofaasFunc.Spec.Variants {
-		kServiceName := variant.Name
-		timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60) // TODO - MAYBE THIS SHOULD BE PASSED BY ARGUMENT
-		defer cancel()
-
-		for {
-			srvObj, err := r.listObjectsByName(ctx, kServiceName, "mofaas")
-			if err != nil {
-				log.Error(err, "Error while listing services")
-				return err
-			}
-
-			if srvObj.IsReady() {
-				// log.Info(srvObj.Status.Address.URL.String())
-				currentUrl := srvObj.Status.Address.URL.String()
-				srvEncURLs[i] = base64.StdEncoding.EncodeToString([]byte(currentUrl))
-				break
-			}
-
-			select {
-			case <-time.After(time.Second / 10): // Every 100 ms
-			case <-timeoutCtx.Done():
-				log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service "+srvObj.Name)
-				return timeoutCtx.Err()
-			}
+		var err error
+		srvEncURLs[i], err = r.getKnativeServiceURL(ctx, variant.Name, mofaasFunc.Namespace)
+		if err != nil {
+			log.Error(err, fmt.Sprintf("Error while obtaining the variant's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
+			return err
 		}
-
 	}
 
 	// Knative Service definition for the Function Chooser
@@ -468,7 +472,7 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 			Template: serving.RevisionTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-chooser",				// TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
+						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-chooser", // TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
 					},
 				},
 				Spec: serving.RevisionSpec{
@@ -505,6 +509,34 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	}
 
 	return nil
+}
+
+func (r *MoFaaSFunctionReconciler) getKnativeServiceURL(ctx context.Context, serviceName string, namespace string) (string, error) {
+	log := log.FromContext(ctx)
+
+	timeoutCtx, cancel := context.WithTimeout(context.Background(), time.Second*60) // TODO - MAYBE THIS SHOULD BE PASSED BY ARGUMENT
+	defer cancel()
+
+	for {
+		srvObj, err := r.listObjectsByName(ctx, serviceName, namespace)
+		if err != nil {
+			log.Error(err, "Error while listing services")
+			return "", err
+		}
+
+		if srvObj.IsReady() {
+			// log.Info(srvObj.Status.Address.URL.String())
+			currentUrl := srvObj.Status.Address.URL.String()
+			return base64.StdEncoding.EncodeToString([]byte(currentUrl)), nil
+		}
+
+		select {
+		case <-time.After(time.Second / 10): // Every 100 ms
+		case <-timeoutCtx.Done():
+			log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service " + srvObj.Name)
+			return "", timeoutCtx.Err()
+		}
+	}
 }
 
 /*
@@ -559,4 +591,166 @@ func (r *MoFaaSFunctionReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&k8smofaascomv1.MoFaaSFunction{}).
 		Complete(r)
+}
+
+func updatePodLabels(ctx context.Context, c client.Client, namespace, serviceName string, newLabels map[string]string) error {
+	// Retrieve the existing Knative Service
+	service := &serving.Service{}
+	err := c.Get(ctx, client.ObjectKey{Namespace: namespace, Name: serviceName}, service)
+	if err != nil {
+		return fmt.Errorf("failed to get service %s: %v", serviceName, err)
+	}
+
+	// Ensure the spec.template.metadata.labels map is initialized
+	if service.Spec.Template.ObjectMeta.Labels == nil {
+		service.Spec.Template.ObjectMeta.Labels = make(map[string]string)
+	}
+
+	// Update the labels
+	for key, value := range newLabels {
+		service.Spec.Template.ObjectMeta.Labels[key] = value
+	}
+
+	// Apply the update
+	err = c.Update(ctx, service)
+	if err != nil {
+		return fmt.Errorf("failed to update service %s: %v", serviceName, err)
+	}
+	return nil
+}
+
+// func (r *MoFaaSFunctionReconciler) updateServiceLabels(ctx context.Context, c client.Client, namespace, serviceName string, newLabels map[string]string) error {
+// 	log := log.FromContext(ctx)
+
+// 	// Retrieve the existing service
+// 	service := &serving.Service{}
+
+// 	log.Info(fmt.Sprintf("Namespace: %s", namespace))
+// 	err := c.Get(ctx, client.ObjectKey{Namespace: namespace, Name: serviceName}, service)
+// 	if err != nil {
+// 		log.Info(fmt.Sprintf("Failed to get service %s. Probably it was deleted. Error: %s", serviceName, err.Error()))
+// 		return nil // fmt.Errorf("failed to get service %s: %v", serviceName, err)
+// 	}
+
+// 	// Update the labels
+// 	if service.Labels == nil {
+// 		service.Labels = make(map[string]string)
+// 	}
+// 	for key, value := range newLabels {
+// 		service.Spec.ConfigurationSpec.Template.ObjectMeta.Labels[key] = value
+// 		// service.Labels[key] = value
+// 	}
+
+// 	// Apply the update
+// 	err = c.Update(ctx, service)
+// 	if err != nil {
+// 		return fmt.Errorf("failed to update service %s: %v", serviceName, err)
+// 	}
+// 	return nil
+// }
+
+func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service) error {
+	log := log.FromContext(ctx)
+	configMapName := fmt.Sprintf("%s-envoy-config", mofaasFunc.Name)
+
+	// First, let's Load and Update Envoy Config
+	config, err := loadEnvoyConfig(envoyConfigPath)
+	if err != nil {
+		log.Error(err, "Failed to load Envoy config")
+		return err
+	}
+
+	// Now, let's obtain the egress proxy URL
+	var address string
+	address, err = r.getKnativeServiceURL(ctx, egressProxyService.Name, egressProxyService.Namespace)
+	if err != nil {
+		log.Error(err, fmt.Sprintf("Failed to get Egress Proxy URL for MoFaaSFunc %s in the namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
+		return err
+	}
+
+	// Assume the new address comes from some object created by the controller
+	err = updateEnvoyAddress(config, address)
+	if err != nil {
+		log.Error(err, "Failed to update Envoy config")
+		return err
+	}
+
+	// Convert YAML back to string
+	updatedYAML, err := yaml.Marshal(config)
+	if err != nil {
+		log.Error(err, "Failed to serialize updated Envoy config")
+		return err
+	}
+
+	// Second, Create ConfigMap Object
+	configMap := &core.ConfigMap{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      configMapName,
+			Namespace: mofaasFunc.Namespace,
+			Labels:    map[string]string{"app": mofaasFunc.Name},
+		},
+		Data: map[string]string{
+			"envoy.yaml": string(updatedYAML),
+		},
+	}
+
+	// Third, Apply ConfigMap in Cluster
+	err = r.Client.Create(ctx, configMap)
+	if err != nil && !apierrors.IsAlreadyExists(err) {
+		log.Error(err, "Failed to create ConfigMap")
+		return err
+	}
+
+	log.Info("Created ConfigMap successfully", "name", configMapName)
+
+	// Fourth, Mount ConfigMap into Services
+	for _, service := range mofaasFunc.Spec.Variants {
+		err = r.mountConfigMapToService(ctx, mofaasFunc.Namespace, service.Name, configMapName)
+		if err != nil {
+			log.Error(err, "Failed to mount ConfigMap", "service", service.Name)
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (r *MoFaaSFunctionReconciler) mountConfigMapToService(ctx context.Context, namespace, serviceName, configMapName string) error {
+	// TODO -> CALL KYVERNO CONFIG
+	// var deployment core.Deployment
+	// err := r.Get(ctx, types.NamespacedName{Name: serviceName, Namespace: namespace}, &deployment)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to get deployment %s: %w", serviceName, err)
+	// }
+
+	// // Modify the Deployment to include ConfigMap as a volume
+	// volume := corev1.Volume{
+	// 	Name: "envoy-config",
+	// 	VolumeSource: corev1.VolumeSource{
+	// 		ConfigMap: &corev1.ConfigMapVolumeSource{
+	// 			LocalObjectReference: corev1.LocalObjectReference{
+	// 				Name: configMapName,
+	// 			},
+	// 		},
+	// 	},
+	// }
+
+	// volumeMount := corev1.VolumeMount{
+	// 	Name:      "envoy-config",
+	// 	MountPath: "/etc/envoy", // Where the file will be accessible in the container
+	// }
+
+	// // Apply volume and volumeMount to all containers
+	// for i := range deployment.Spec.Template.Spec.Containers {
+	// 	deployment.Spec.Template.Spec.Containers[i].VolumeMounts = append(deployment.Spec.Template.Spec.Containers[i].VolumeMounts, volumeMount)
+	// }
+	// deployment.Spec.Template.Spec.Volumes = append(deployment.Spec.Template.Spec.Volumes, volume)
+
+	// // Apply the updated deployment
+	// err = r.Update(ctx, &deployment)
+	// if err != nil {
+	// 	return fmt.Errorf("failed to update deployment %s: %w", serviceName, err)
+	// }
+
+	return nil
 }

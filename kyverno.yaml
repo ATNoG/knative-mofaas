@@ -15,13 +15,6 @@ spec:
           namespaceSelector:
             matchLabels:
               mofaas: nvp  # Target namespaces with this label
-      # Condition 2: Pod has label "inject-sidecar=true"
-      # - resources:
-      #     kinds:
-      #     - Pod
-      #     selector:
-      #       matchLabels:
-      #         mofaas: nvp 
     exclude:
       any:
       - resources:
@@ -52,21 +45,13 @@ spec:
             - queue-proxy
   - name: inject-init-and-sidecar
     match:
-      all:  # Logical OR: Match if either condition is true
-      # Condition 1: Namespace has label "environment=dev"
+      all:
       - resources:
           kinds:
           - Pod
           namespaceSelector:
             matchLabels:
-              mofaas: nvp  # Target namespaces with this label
-      # Condition 2: Pod has label "inject-sidecar=true"
-      # - resources:
-      #     kinds:
-      #     - Pod
-      #     selector:
-      #       matchLabels:
-      #         mofaas: nvp 
+              mofaas: nvp
     exclude:
       any:
       - resources:
@@ -108,6 +93,32 @@ spec:
               - name: envoy-config
                 mountPath: /etc/envoy
                 readOnly: true
+  - name: inject-envoy-configmap-volume-pod  # This could be integrated in the previous rule. However, it would be very difficult to exclude this specific rule from the MoFaaSFunc controller
+    match:
+      all:
+      - resources:
+          kinds:
+          - Pod
+          namespaceSelector:
+            matchLabels:
+              mofaas: nvp
+    exclude:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          selector:
+            matchLabels:
+              mofaas.atnog/service: mofaas-egress-proxy
+      - resources:
+          kinds:
+          - Pod
+          selector:
+            matchLabels:
+              mofaas.atnog/service: mofaas-chooser
+    mutate:
+      patchStrategicMerge:
+        spec:
           volumes:
           - name: envoy-config
             configMap:

@@ -1,0 +1,18 @@
+apiVersion: kyverno.io/v2
+kind: PolicyException
+metadata:
+  name: pod-label-exception
+  namespace: mofaas  # Replace with the appropriate namespace
+spec:
+  exceptions:
+    - policyName: inject-containers  # Replace with the name of your ClusterPolicy
+      ruleNames:
+        - inject-envoy-configmap-volume-pod  # Replace with the specific rule name to bypass
+  match:
+    any:
+      - resources:
+          kinds:
+            - Pod
+          selector:
+            matchLabels:
+              mofaas.atnog/mofaasfunction: my-function  # Replace with your specific label key and value

@@ -42,7 +42,6 @@ type VariantSpec struct {
 	Kind       string `json:"kind" immutable:"true"`
 	Name       string `json:"name" immutable:"true"`
 	APIVersion string `json:"apiVersion,omitempty"`
-	Namespace  string `json:"namespace,omitempty"`
 }
 
 // MoFaaSFunctionStatus defines the observed state of MoFaaSFunction

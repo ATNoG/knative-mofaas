@@ -22,10 +22,15 @@ $ make uninstall
 
 
 ## Requirements
-# Install Kyverno
+### Install Kyverno
 
 ```bash
 $ helm repo add kyverno https://kyverno.github.io/kyverno/
 $ helm repo update
 $ helm install kyverno kyverno/kyverno -n kyverno --create-namespace
 ```
+#### TODO -> It is required to allow the PolicyException in kyverno
+
+helm upgrade kyverno kyverno/kyverno -n kyverno --set features.policyExceptions.enabled=true --set features.policyExceptions.namespace="*"
+
+
