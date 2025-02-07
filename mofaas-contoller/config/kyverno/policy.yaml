@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: REPLACE
+  namespace: REPLACE
+spec:
+  rules:
+    - name: add-configmap-volume
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+            selector:
+              matchLabels:
+                REPLACE: REPLACE
+      mutate:
+        patchStrategicMerge:
+          spec:
+            volumes:
+              - name: envoy-config
+                configMap:
+                  name: REPLACE
+            containers:
+              - name: envoy
+                volumeMounts:
+                  - name: envoy-config
+                    mountPath: /etc/envoy
+                    readOnly: true

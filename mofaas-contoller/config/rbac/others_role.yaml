@@ -1,0 +1,52 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mofaasfunc-others-role
+rules:
+# For Knative
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+# For Kyverno
+- apiGroups:
+  - kyverno.io
+  resources:
+  - policyexceptions
+  - policies
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - patch
+  - delete
+# For configmaps
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - patch
+  - delete
+

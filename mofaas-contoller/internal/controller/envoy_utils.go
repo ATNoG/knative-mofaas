@@ -2,25 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"os"
-
-	"gopkg.in/yaml.v3"
 )
-
-func loadEnvoyConfig(filePath string) (map[string]interface{}, error) {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read envoy.yaml: %w", err)
-	}
-
-	var config map[string]interface{}
-	err = yaml.Unmarshal(data, &config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse envoy.yaml: %w", err)
-	}
-
-	return config, nil
-}
 
 func updateEnvoyAddress(config map[string]interface{}, newAddress string) error {
 	// Navigate dynamically to the address field

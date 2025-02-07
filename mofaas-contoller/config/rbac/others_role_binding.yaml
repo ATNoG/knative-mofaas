@@ -4,11 +4,11 @@ metadata:
   labels:
     app.kubernetes.io/name: mofaas-contoller
     app.kubernetes.io/managed-by: kustomize
-  name: knative-manager-rolebinding
+  name: mofaasfunc-others-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: knative-manager-role
+  name: mofaasfunc-others-role
 subjects:
 - kind: ServiceAccount
   name: controller-manager

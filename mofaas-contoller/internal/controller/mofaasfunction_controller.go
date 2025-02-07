@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strconv"
@@ -27,7 +28,10 @@ import (
 
 	"sigs.k8s.io/yaml"
 
+	kyvernov1 "github.com/kyverno/kyverno/api/kyverno/v1"
+	kyvernov2 "github.com/kyverno/kyverno/api/kyverno/v2"
 	core "k8s.io/api/core/v1"
+	apiextv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -48,6 +52,8 @@ import (
 const mofaasFunctionFinalizer = "mofaasfunctions.mofaas.atnog/finalizer"
 
 const envoyConfigPath = "config/envoy/envoy.yaml"
+const kyvernoPolExceptPath = "config/kyverno/policy-exception.yaml"
+const kyvernoPolPath = "config/kyverno/policy.yaml"
 
 // Definitions to manage status conditions
 const (
@@ -114,9 +120,6 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		return ctrl.Result{}, err
 	}
 
-	// Then, create the new configmap for the envoy
-	r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService)
-
 	/***************************************** UPDATE ASSOCIATED VARIANTS' KNATIVE SERVICES LABELS *****************************************/
 	// Define the new labels to be added
 	newLabels := map[string]string{
@@ -131,6 +134,9 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 			// Decide whether to continue or return the error based on your use case
 		}
 	}
+
+	// Then, create the new configmap for the envoy
+	r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService, newLabels)
 
 	// Status as Unknown when no status is available
 	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
@@ -533,7 +539,7 @@ func (r *MoFaaSFunctionReconciler) getKnativeServiceURL(ctx context.Context, ser
 		select {
 		case <-time.After(time.Second / 10): // Every 100 ms
 		case <-timeoutCtx.Done():
-			log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service " + srvObj.Name)
+			log.Error(timeoutCtx.Err(), "Error while waiting for the Knative Service "+srvObj.Name)
 			return "", timeoutCtx.Err()
 		}
 	}
@@ -649,20 +655,27 @@ func updatePodLabels(ctx context.Context, c client.Client, namespace, serviceNam
 // 	return nil
 // }
 
-func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service) error {
+func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service, labels map[string]string) error {
 	log := log.FromContext(ctx)
 	configMapName := fmt.Sprintf("%s-envoy-config", mofaasFunc.Name)
 
 	// First, let's Load and Update Envoy Config
-	config, err := loadEnvoyConfig(envoyConfigPath)
-	if err != nil {
+	var config map[string]interface{}
+	if err := loadYaml(envoyConfigPath, &config); err != nil {
 		log.Error(err, "Failed to load Envoy config")
 		return err
 	}
 
+	b, e := yaml.Marshal(config)
+	if e != nil {
+		log.Error(e, "WTF")
+		return e
+	}
+	log.Info(fmt.Sprintf("\n\n\nConfig: %s\n\n\n", b))
+
 	// Now, let's obtain the egress proxy URL
 	var address string
-	address, err = r.getKnativeServiceURL(ctx, egressProxyService.Name, egressProxyService.Namespace)
+	address, err := r.getKnativeServiceURL(ctx, egressProxyService.Name, egressProxyService.Namespace)
 	if err != nil {
 		log.Error(err, fmt.Sprintf("Failed to get Egress Proxy URL for MoFaaSFunc %s in the namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
 		return err
@@ -705,7 +718,7 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 
 	// Fourth, Mount ConfigMap into Services
 	for _, service := range mofaasFunc.Spec.Variants {
-		err = r.mountConfigMapToService(ctx, mofaasFunc.Namespace, service.Name, configMapName)
+		err = r.mountConfigMapToServicesPods(ctx, *mofaasFunc, labels, configMapName)
 		if err != nil {
 			log.Error(err, "Failed to mount ConfigMap", "service", service.Name)
 			return err
@@ -715,42 +728,216 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 	return nil
 }
 
-func (r *MoFaaSFunctionReconciler) mountConfigMapToService(ctx context.Context, namespace, serviceName, configMapName string) error {
-	// TODO -> CALL KYVERNO CONFIG
-	// var deployment core.Deployment
-	// err := r.Get(ctx, types.NamespacedName{Name: serviceName, Namespace: namespace}, &deployment)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to get deployment %s: %w", serviceName, err)
-	// }
+func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, labels map[string]string, configMapName string) error {
+	log := log.FromContext(ctx)
 
-	// // Modify the Deployment to include ConfigMap as a volume
-	// volume := corev1.Volume{
-	// 	Name: "envoy-config",
-	// 	VolumeSource: corev1.VolumeSource{
-	// 		ConfigMap: &corev1.ConfigMapVolumeSource{
-	// 			LocalObjectReference: corev1.LocalObjectReference{
-	// 				Name: configMapName,
-	// 			},
-	// 		},
-	// 	},
-	// }
+	namespace := mofaasFunc.Namespace
+	policyExceptionName := fmt.Sprintf("%s-policy-exception", mofaasFunc.Name)
+	policyName := fmt.Sprintf("%s-policy", mofaasFunc.Name)
 
-	// volumeMount := corev1.VolumeMount{
-	// 	Name:      "envoy-config",
-	// 	MountPath: "/etc/envoy", // Where the file will be accessible in the container
-	// }
+	/***************************************** CREATE POLICY EXCEPTION *****************************************/
 
-	// // Apply volume and volumeMount to all containers
-	// for i := range deployment.Spec.Template.Spec.Containers {
-	// 	deployment.Spec.Template.Spec.Containers[i].VolumeMounts = append(deployment.Spec.Template.Spec.Containers[i].VolumeMounts, volumeMount)
-	// }
-	// deployment.Spec.Template.Spec.Volumes = append(deployment.Spec.Template.Spec.Volumes, volume)
+	// Check if the PolicyException already exists
+	existingPolicyException := &kyvernov2.PolicyException{}
+	err := r.Client.Get(ctx, client.ObjectKey{
+		Namespace: namespace,
+		Name:      policyExceptionName,
+	}, existingPolicyException)
 
-	// // Apply the updated deployment
-	// err = r.Update(ctx, &deployment)
-	// if err != nil {
-	// 	return fmt.Errorf("failed to update deployment %s: %w", serviceName, err)
-	// }
+	if err != nil && !apierrors.IsNotFound(err) {
+		// Error occurred while fetching the existing PolicyException
+		log.Error(err, "Failed to get existing PolicyException")
+		return err
+	}
+
+	if err == nil {
+		// PolicyException exists, no need to create
+		log.Info("PolicyException already exists, skipping creation")
+	} else {
+
+		// Step 1: Load the YAML file for the Kyverno Policy Exception
+		var policyException kyvernov2.PolicyException
+		if err := loadYaml(kyvernoPolExceptPath, &policyException); err != nil {
+			log.Error(err, "Failed to load Kyverno Policy Exception config")
+			return err
+		}
+
+		// Modify it accordingly
+		policyException.Name = policyExceptionName
+		policyException.Namespace = namespace
+		for _, l := range labels {
+			policyException.Spec.Match.Any[0].ResourceDescription.Selector.MatchLabels[l] = labels[l]
+		}
+
+		policyExceptionWrapper := &PolicyExceptionWrapper{PolicyException: &policyException}
+
+		if err := controllerutil.SetControllerReference(&mofaasFunc, policyExceptionWrapper, r.Scheme); err != nil {
+			log.Error(err, "Error while setting controller reference for Policy Exception")
+			return err
+		}
+
+		err = r.Client.Create(ctx, policyExceptionWrapper)
+		if err != nil && !apierrors.IsAlreadyExists(err) {
+			log.Error(err, "Failed to create Policy Exception")
+			return err
+		}
+	}
+
+	/***************************************** CREATE POLICY *****************************************/
+	// Check if the Policy already exists
+	existingPolicy := &kyvernov1.Policy{}
+	err = r.Client.Get(ctx, client.ObjectKey{
+		Namespace: namespace,
+		Name:      policyName,
+	}, existingPolicy)
+
+	if err != nil && !apierrors.IsNotFound(err) {
+		// Error occurred while fetching the existing Policy
+		log.Error(err, "Failed to get existing Policy")
+		return err
+	}
+
+	if err == nil {
+		// Policy exists, no need to create
+		log.Info("Policy already exists, skipping creation")
+	} else {
+
+		// Step 1: Load the YAML file for the Kyverno Policy Exception
+		var policy kyvernov1.Policy
+		if err := loadYaml(kyvernoPolPath, &policy); err != nil {
+			log.Error(err, "Failed to load Kyverno Policy config")
+			return err
+		}
+
+		// Modify it accordingly
+		policy.Name = policyName
+		policy.Namespace = namespace
+		for _, l := range labels {
+			policy.Spec.Rules[0].MatchResources.Any[0].ResourceDescription.Selector.MatchLabels[l] = labels[l]
+		}
+
+		var patch map[string]interface{}
+		if policy.Spec.Rules[0].Mutation.RawPatchStrategicMerge != nil {
+			if err := json.Unmarshal(policy.Spec.Rules[0].Mutation.RawPatchStrategicMerge.Raw, &patch); err != nil {
+				log.Error(err, "Failed to unmarshal RawPatchStrategicMerge")
+				return err
+			}
+		} else {
+			patch = make(map[string]interface{})
+		}
+
+		// Ensure 'spec' exists
+		spec, ok := patch["spec"].(map[string]interface{})
+		if !ok {
+			spec = make(map[string]interface{})
+			patch["spec"] = spec
+		}
+
+		// Ensure 'volumes' exists
+		volumes, ok := spec["volumes"].([]interface{})
+		if !ok {
+			volumes = []interface{}{}
+		}
+		volumeFound := false
+		for i, v := range volumes {
+			vol, _ := v.(map[string]interface{})
+			if volName, _ := vol["name"].(string); volName == "envoy-config" {
+				// Update existing volume
+				vol["configMap"] = map[string]interface{}{"name": configMapName}
+				volumes[i] = vol
+				volumeFound = true
+				break
+			}
+		}
+		if !volumeFound {
+			// Append new volume entry
+			volumes = append(volumes, map[string]interface{}{
+				"name": "envoy-config",
+				"configMap": map[string]interface{}{
+					"name": configMapName,
+				},
+			})
+		}
+		spec["volumes"] = volumes
+
+		// Ensure "containers" exist
+		containers, ok := spec["containers"].([]interface{})
+		if !ok {
+			containers = []interface{}{}
+		}
+
+		// Update or append the container volumeMount
+		containerFound := false
+		for i, c := range containers {
+			container, _ := c.(map[string]interface{})
+			if containerName, _ := container["name"].(string); containerName == "envoy" {
+				// Ensure "volumeMounts" exist
+				volumeMounts, ok := container["volumeMounts"].([]interface{})
+				if !ok {
+					volumeMounts = []interface{}{}
+				}
+
+				// Update or append the volumeMount
+				volumeMountFound := false
+				for j, vm := range volumeMounts {
+					volMount, _ := vm.(map[string]interface{})
+					if vmName, _ := volMount["name"].(string); vmName == "envoy-config" {
+						volMount["mountPath"] = "/etc/envoy"
+						volMount["readOnly"] = true
+						volumeMounts[j] = volMount
+						volumeMountFound = true
+						break
+					}
+				}
+				if !volumeMountFound {
+					volumeMounts = append(volumeMounts, map[string]interface{}{
+						"name":      "envoy-config",
+						"mountPath": "/etc/envoy",
+						"readOnly":  true,
+					})
+				}
+				container["volumeMounts"] = volumeMounts
+				containers[i] = container
+				containerFound = true
+				break
+			}
+		}
+		if !containerFound {
+			// Append new container entry
+			containers = append(containers, map[string]interface{}{
+				"name": "envoy",
+				"volumeMounts": []interface{}{
+					map[string]interface{}{
+						"name":      "envoy-config",
+						"mountPath": "/etc/envoy",
+						"readOnly":  true,
+					},
+				},
+			})
+		}
+		spec["containers"] = containers
+
+		// Finally, marshal back to JSON and update policy
+		patchBytes, err := json.Marshal(patch)
+		if err != nil {
+			log.Error(err, "Failed to marshal updated RawPatchStrategicMerge")
+			return err
+		}
+		policy.Spec.Rules[0].Mutation.RawPatchStrategicMerge = &apiextv1.JSON{Raw: patchBytes}
+
+		policyWrapper := &PolicyWrapper{Policy: &policy}
+
+		if err := controllerutil.SetControllerReference(&mofaasFunc, policyWrapper, r.Scheme); err != nil {
+			log.Error(err, "Error while setting controller reference for Policy")
+			return err
+		}
+
+		err = r.Client.Create(ctx, policyWrapper)
+		if err != nil && !apierrors.IsAlreadyExists(err) {
+			log.Error(err, "Failed to create Policy")
+			return err
+		}
+	}
 
 	return nil
 }
