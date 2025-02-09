@@ -21,6 +21,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -462,11 +463,12 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 	srvEncURLs := make([]string, len(mofaasFunc.Spec.Variants))
 	for i, variant := range mofaasFunc.Spec.Variants {
 		var err error
-		srvEncURLs[i], err = r.getKnativeServiceURL(ctx, variant.Name, mofaasFunc.Namespace)
+		currentUrl, err := r.getKnativeServiceURL(ctx, variant.Name, mofaasFunc.Namespace)
 		if err != nil {
 			log.Error(err, fmt.Sprintf("Error while obtaining the variant's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
 			return err
 		}
+		srvEncURLs[i] = base64.StdEncoding.EncodeToString([]byte(currentUrl))
 	}
 
 	// Knative Service definition for the Function Chooser
@@ -532,8 +534,8 @@ func (r *MoFaaSFunctionReconciler) getKnativeServiceURL(ctx context.Context, ser
 
 		if srvObj.IsReady() {
 			// log.Info(srvObj.Status.Address.URL.String())
-			currentUrl := srvObj.Status.Address.URL.String()
-			return base64.StdEncoding.EncodeToString([]byte(currentUrl)), nil
+			return srvObj.Status.Address.URL.String(), nil
+			// return base64.StdEncoding.EncodeToString([]byte(currentUrl)), nil
 		}
 
 		select {
@@ -666,13 +668,6 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 		return err
 	}
 
-	b, e := yaml.Marshal(config)
-	if e != nil {
-		log.Error(e, "WTF")
-		return e
-	}
-	log.Info(fmt.Sprintf("\n\n\nConfig: %s\n\n\n", b))
-
 	// Now, let's obtain the egress proxy URL
 	var address string
 	address, err := r.getKnativeServiceURL(ctx, egressProxyService.Name, egressProxyService.Namespace)
@@ -705,6 +700,11 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 		Data: map[string]string{
 			"envoy.yaml": string(updatedYAML),
 		},
+	}
+
+	if err := controllerutil.SetControllerReference(mofaasFunc, configMap, r.Scheme); err != nil {
+		log.Error(err, "Error while setting controller reference for the ConfigMap")
+		return err
 	}
 
 	// Third, Apply ConfigMap in Cluster
@@ -765,18 +765,16 @@ func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Cont
 		// Modify it accordingly
 		policyException.Name = policyExceptionName
 		policyException.Namespace = namespace
-		for _, l := range labels {
-			policyException.Spec.Match.Any[0].ResourceDescription.Selector.MatchLabels[l] = labels[l]
+		for key, value := range labels {
+			policyException.Spec.Match.Any[0].ResourceDescription.Selector.MatchLabels[key] = value
 		}
 
-		policyExceptionWrapper := &PolicyExceptionWrapper{PolicyException: &policyException}
-
-		if err := controllerutil.SetControllerReference(&mofaasFunc, policyExceptionWrapper, r.Scheme); err != nil {
+		if err := controllerutil.SetControllerReference(&mofaasFunc, &policyException, r.Scheme); err != nil {
 			log.Error(err, "Error while setting controller reference for Policy Exception")
 			return err
 		}
 
-		err = r.Client.Create(ctx, policyExceptionWrapper)
+		err = r.Client.Create(ctx, &policyException)
 		if err != nil && !apierrors.IsAlreadyExists(err) {
 			log.Error(err, "Failed to create Policy Exception")
 			return err
@@ -812,8 +810,8 @@ func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Cont
 		// Modify it accordingly
 		policy.Name = policyName
 		policy.Namespace = namespace
-		for _, l := range labels {
-			policy.Spec.Rules[0].MatchResources.Any[0].ResourceDescription.Selector.MatchLabels[l] = labels[l]
+		for key, value := range labels {
+			policy.Spec.Rules[0].MatchResources.Any[0].ResourceDescription.Selector.MatchLabels[key] = value
 		}
 
 		var patch map[string]interface{}
@@ -925,18 +923,33 @@ func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Cont
 		}
 		policy.Spec.Rules[0].Mutation.RawPatchStrategicMerge = &apiextv1.JSON{Raw: patchBytes}
 
-		policyWrapper := &PolicyWrapper{Policy: &policy}
+		// policyWrapper := &k8smofaascomv1.PolicyWrapper{Policy: &policy}
 
-		if err := controllerutil.SetControllerReference(&mofaasFunc, policyWrapper, r.Scheme); err != nil {
+		if err := controllerutil.SetControllerReference(&mofaasFunc, &policy, r.Scheme); err != nil {
 			log.Error(err, "Error while setting controller reference for Policy")
 			return err
 		}
 
-		err = r.Client.Create(ctx, policyWrapper)
+		err = r.Client.Create(ctx, &policy)
 		if err != nil && !apierrors.IsAlreadyExists(err) {
 			log.Error(err, "Failed to create Policy")
 			return err
 		}
+	}
+
+	return nil
+}
+
+
+func loadYaml(filePath string, config interface{}) error {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to read yaml file: %w", err)
+	}
+
+	err = yaml.Unmarshal(data, config)
+	if err != nil {
+		return fmt.Errorf("failed to parse yaml file: %w", err)
 	}
 
 	return nil

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"strings"
 )
 
 func updateEnvoyAddress(config map[string]interface{}, newAddress string) error {
@@ -44,13 +45,20 @@ func updateEnvoyAddress(config map[string]interface{}, newAddress string) error 
 				return fmt.Errorf("missing endpoint")
 			}
 
-			socketAddress, ok := endpoint["address"].(map[string]interface{})
+			address, ok := endpoint["address"].(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("missing address")
+			}
+
+			socketAddress, ok := address["socket_address"].(map[string]interface{})
 			if !ok {
 				return fmt.Errorf("missing socket_address")
 			}
 
 			// Update the address dynamically
-			socketAddress["socket_address>address"] = newAddress
+			newAddress = strings.TrimPrefix(newAddress, "http://")
+			newAddress = strings.TrimPrefix(newAddress, "https://")
+			socketAddress["address"] = newAddress
 			return nil
 		}
 	}

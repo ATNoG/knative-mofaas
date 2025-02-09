@@ -42,6 +42,9 @@ import (
 
 	serving "knative.dev/serving/pkg/apis/serving/v1"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+
+	kyvernov1 "github.com/kyverno/kyverno/api/kyverno/v1"
+	kyvernov2 "github.com/kyverno/kyverno/api/kyverno/v2"
 )
 
 var (
@@ -57,6 +60,16 @@ func init() {
 
 	if err := serving.AddToScheme(scheme); err != nil {
 		log.Log.Error(err, "Error adding Serving v1 to scheme")
+		return
+	}
+
+	if err := kyvernov1.AddToScheme(scheme); err != nil {
+		log.Log.Error(err, "Error adding Kyverno v1 to scheme")
+		return
+	}
+
+	if err := kyvernov2.AddToScheme(scheme); err != nil {
+		log.Log.Error(err, "Error adding Kyverno v2 to scheme")
 		return
 	}
 }

@@ -89,10 +89,6 @@ spec:
               securityContext:
                 runAsUser: 101
                 runAsGroup: 101
-              volumeMounts:
-              - name: envoy-config
-                mountPath: /etc/envoy
-                readOnly: true
   - name: inject-envoy-configmap-volume-pod  # This could be integrated in the previous rule. However, it would be very difficult to exclude this specific rule from the MoFaaSFunc controller
     match:
       all:
@@ -119,6 +115,12 @@ spec:
     mutate:
       patchStrategicMerge:
         spec:
+          containers:
+            - name: envoy
+              volumeMounts:
+              - name: envoy-config
+                mountPath: /etc/envoy
+                readOnly: true
           volumes:
           - name: envoy-config
             configMap:
