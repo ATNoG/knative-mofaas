@@ -24,6 +24,7 @@ static_resources:
                 route:
                   cluster: firewall_cluster
                   host_rewrite_literal: REPLACE       # Replace, because if it is a Knative service, it will be redirected to the original host (defined in the HOST header)
+                  append_x_forwarded_host: true
           http_filters:
           # Lua filter to add the hostname
           - name: envoy.filters.http.lua
