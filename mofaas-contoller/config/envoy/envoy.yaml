@@ -23,6 +23,7 @@ static_resources:
                   prefix: "/"
                 route:
                   cluster: firewall_cluster
+                  host_rewrite_literal: REPLACE       # Replace, because if it is a Knative service, it will be redirected to the original host (defined in the HOST header)
           http_filters:
           - name: envoy.filters.http.router
             typed_config:
