@@ -1,3 +1,4 @@
+import os
 import aiohttp
 import aiohttp.web
 import logging
@@ -47,6 +48,9 @@ class MoFaaSProxy:
 
 
 def main():
+    concurrency = int(os.environ.get("CONCURRENCY") or DEFAULT_CONCURRENCY)
+    ignore_headers = []
+
     # Create the aiohttp application and route
     app = aiohttp.web.Application()
     proxy = MoFaaSProxy()
