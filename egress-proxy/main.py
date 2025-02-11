@@ -11,6 +11,9 @@ logging.getLogger("http.client").setLevel(logging.DEBUG)
 
 DEFAULT_CONCURRENCY = 2
 SENDER_HEADER = "x-original-hostname"
+IGNORE_HEADERS_RECEIVED = ("host", "connection", "keep-alive", "proxy-authenticate", "proxy-authorization", "te", "trailer", "transfer-encoding", "upgrade", "accept-encoding",
+                           "x-forwarded-proto", "x-request-id", "x-original-hostname", "x-envoy-expected-rq-timeout-ms", "x-forwarded-host", )
+IGNORE_HEADERS_SEND = ("transfer-encoding", "connection", "content-encoding")
 
 class MoFaaSProxy:
     def __init__(self, concurrency):
@@ -24,50 +27,36 @@ class MoFaaSProxy:
         """Handles incoming HTTP requests and verifies identical ones before forwarding."""
         method = request.method
         body = await request.read()
-        url = str(request.url)
         headers = dict(request.headers)
+        path = request.path
 
-        logging.debug(f"Received request: {method} {url}")
+        logging.debug(f"Received request: {method}")
         logging.debug(f"Received headers: {headers}")
         
         sender = headers[SENDER_HEADER][:headers[SENDER_HEADER].find("deployment") - 1]
-        request_data = (method, url, headers, body)
+        request_data = (method, path, headers, body)
         self.request_store[sender] = request_data
         
         await self.forward_request()
         await self.event.wait()
-        logging.debug("Sending response")
-        logging.debug(self.response[2])
+        logging.debug(f"Sending response to {sender}")
         response = aiohttp.web.Response(status=self.response[0], body=self.response[1], headers=self.response[2])
-        if self.response[2].get('Transfer-Encoding') == 'chunked':
-            response.enable_chunked_encoding()
-        logging.debug(response.headers)
+
         return response
-        # async with self.lock:
-        #     # Check if all stored requests are identical
-        #     requests = self.request_store[url]
-        #     if len(requests) == self.expected_count and all(req == requests[0] for req in requests):
-        #         logging.debug("All requests match! Forwarding...")
-        #         del self.request_store[url]  # Reset for the next batch
-        #         return await self.forward_request(*requests[0])
-        #     else:
-        #         logging.debug(f"Stored {len(requests)}/{self.expected_count} requests for {url}.")
-        #         return aiohttp.web.Response(status=202, text="Waiting for more matching requests...")
 
     async def forward_request(self):
         """Forwards the request to the original destination and returns the response."""
         if len(self.request_store) == self.concurrency:
             # TODO -> VERIFY IF EQUAL
-            (method, url, headers, body) = self.request_store[list(self.request_store.keys())[0]]
+            (method, path, headers, body) = self.request_store[list(self.request_store.keys())[0]]
+            filtered_headers = {k: v for k, v in headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
+            logging.debug(f"Making request with headers ({list(filtered_headers.items())})")
             async with aiohttp.ClientSession() as session:
-                async with session.request(method, f"{headers['X-Forwarded-Proto']}://{headers['X-Forwarded-Host']}") as resp:  # , headers=headers, data=body
-                    logging.debug(f"{headers['X-Forwarded-Proto']}://{headers['X-Forwarded-Host']}")
-                    logging.debug(f"Making request")
-                    logging.debug(resp.status)
+                async with session.request(method, f"{headers['X-Forwarded-Proto']}://{headers['X-Forwarded-Host']}/{path}", headers=filtered_headers, data=body) as resp:  # , headers=headers, data=body
+                    logging.debug(f"Response status: {resp.status}")
                     response_body = await resp.read()
-                    logging.debug(response_body)
-                    self.response = (resp.status, response_body, dict(resp.headers))
-                    # self.response[2].pop("Transfer-Encoding")
+                    self.response = (resp.status, response_body, {k:v for k, v in dict(resp.headers).items() if k.lower() not in IGNORE_HEADERS_SEND})
+                    logging.debug(f"Response headers: {self.response[2]}")
                     self.event.set()
 
 def main():
