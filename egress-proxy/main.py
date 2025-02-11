@@ -9,10 +9,11 @@ from collections import defaultdict
 logging.basicConfig(level=logging.DEBUG)
 logging.getLogger("http.client").setLevel(logging.DEBUG)
 
-DEFAULT_CONCURRENCY = 2
+DEFAULT_CONCURRENCY = 1
 SENDER_HEADER = "x-original-hostname"
 IGNORE_HEADERS_RECEIVED = ("host", "connection", "keep-alive", "proxy-authenticate", "proxy-authorization", "te", "trailer", "transfer-encoding", "upgrade", "accept-encoding",
-                           "x-forwarded-proto", "x-request-id", "x-original-hostname", "x-envoy-expected-rq-timeout-ms", "x-forwarded-host", )
+                           "x-forwarded-proto", "x-request-id", "x-original-hostname", "x-envoy-expected-rq-timeout-ms", "x-forwarded-host", "traceparent", 
+                           "forwarded", "k-proxy-request", "x-b3-sampled", "x-b3-spanid", "x-b3-traceid", "x-forwarded-for")
 IGNORE_HEADERS_SEND = ("transfer-encoding", "connection", "content-encoding")
 
 class MoFaaSProxy:
@@ -27,7 +28,7 @@ class MoFaaSProxy:
         """Handles incoming HTTP requests and verifies identical ones before forwarding."""
         method = request.method
         body = await request.read()
-        headers = dict(request.headers)
+        headers = request.headers
         path = request.path
 
         logging.debug(f"Received request: {method}")
@@ -70,7 +71,7 @@ class MoFaaSProxy:
         for sender, (method, path, headers, body) in all_requests[1:]:
             current_filtered = {k: v for k, v in headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
             if method != ref_method or path != ref_path or body != ref_body or current_filtered != ref_filtered:
-                logging.error(f"Mismatch for sender '{sender}' vs '{ref_sender}': expected '{ref_method, ref_path, ref_headers, ref_body}', got '{method, path, headers, body}'")
+                logging.error(f"Mismatch for sender '{sender}' vs '{ref_sender}': expected '{ref_method, ref_path, ref_filtered, ref_body}', got '{method, path, current_filtered, body}'")
                 return None
         return (ref_method, ref_path, ref_headers, ref_body, ref_filtered)
 
