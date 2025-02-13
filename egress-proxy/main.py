@@ -95,7 +95,7 @@ class MoFaaSProxy:
             
             logging.debug(f"Making request with headers ({list(filtered_headers.items())})")
             async with aiohttp.ClientSession() as session:
-                async with session.request(method, f"{proto}://{host}/{path}", headers=filtered_headers, data=body) as resp:  # , headers=headers, data=body
+                async with session.request(method, f"{proto}://{host}{path}", headers=filtered_headers, data=body) as resp:  # , headers=headers, data=body
                     logging.debug(f"Response status: {resp.status}")
                     response_body = await resp.read()
                     for sender in senders:
