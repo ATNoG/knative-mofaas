@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: mofaas
+  name: mofaas-test-app
   labels:
     mofaas: nvp
 ---
@@ -9,7 +9,7 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: test
-  namespace: mofaas
+  namespace: mofaas-test-app
 spec:
   template: 
     spec:
@@ -29,7 +29,7 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: test2
-  namespace: mofaas
+  namespace: mofaas-test-app
 spec:
   template:
     spec:
@@ -48,7 +48,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: directus-secret
-  namespace: mofaas
+  namespace: mofaas-test-app
 type: Opaque
 data:
   DIRECTUS_API_TOKEN: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
@@ -57,7 +57,7 @@ apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: my-function
-  namespace: mofaas
+  namespace: mofaas-test-app
 spec:
   concurrency: 2
   variants:
