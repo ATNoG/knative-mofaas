@@ -38,6 +38,27 @@ spec:
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
+  name: login-java
+  namespace: mofaas-jwt-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/jwt-app/login/java
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: directus-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              value: very_secret_key
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
   name: get-secret-python
   namespace: mofaas-jwt-app
 spec:
@@ -45,6 +66,27 @@ spec:
     spec:
       containers:
         - image: 10.43.67.161:5000/jwt-app/get-secret/python
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: directus-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              value: very_secret_key
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: get-secret-java
+  namespace: mofaas-jwt-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/jwt-app/get-secret/java
           env:
             - name: DIRECTUS_URL
               value: http://directus.directus:8055
