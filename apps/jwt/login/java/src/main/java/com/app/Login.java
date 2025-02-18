@@ -17,8 +17,6 @@ import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.ext.auth.JWTOptions;
 import io.vertx.ext.auth.PubSecKeyOptions;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class Login extends AbstractVerticle {

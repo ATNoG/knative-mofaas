@@ -1,0 +1,269 @@
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: mofaas-bank-app
+#   labels:
+#     mofaas: nvp
+# ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bank-app-secret
+  namespace: mofaas-bank-app
+type: Opaque
+data:
+  DIRECTUS_API_TOKEN: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
+  JWT_KEY: dmVyeV9zZWNyZXRfa2V5
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: entry-point
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/entry-point
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: login-python
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/login
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: authorization-python
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/authorization/python
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: verify-transaction-python
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/verify-transaction/python
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: transaction
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/transaction
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: result
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/result
+---
+# https://knative.dev/docs/eventing/brokers/broker-types/kafka-broker/#create-a-kafka-broker
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  annotations:
+    eventing.knative.dev/broker.class: Kafka
+  name: broker
+  namespace: mofaas-bank-app
+spec:
+  # Configuration specific to this broker.
+  config:
+    apiVersion: v1
+    kind: ConfigMap
+    name: kafka-broker-config
+    namespace: knative-eventing
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-entry-point
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: entry-point
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: authorization-python
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-authorization
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: authorization-python
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: broker
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-verify-transaction
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: verify-transaction-python
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: broker
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: verify-transaction-trigger
+  namespace: mofaas-bank-app
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: authorization
+        dv: "True"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: verify-transaction-python
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: authorization-bad-result-trigger
+  namespace: mofaas-bank-app
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: authorization
+        dv: "False"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: transaction-trigger
+  namespace: mofaas-bank-app
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: verify-transaction
+        dt: "True"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: transaction
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: verify-transaction-bad-result-trigger
+  namespace: mofaas-bank-app
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: verify-transaction
+        dt: "False"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+    uri: /
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-transaction-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
