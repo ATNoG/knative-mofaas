@@ -12,7 +12,7 @@ def forward_to_broker():
     event = request.get_json()
     ce_id = str(uuid.uuid4())
     headers = {
-        "Ce-Id": str(uuid.uuid4()),
+        "Ce-Id": ce_id,
         "Ce-Specversion": "1.0",
         "Ce-Type": "http.request.received",
         "Ce-Source": "http-event-source",
