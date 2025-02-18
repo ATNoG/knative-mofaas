@@ -4,17 +4,22 @@ kind: Service
 metadata:
   name: {{ .name }}
   namespace: {{ $.Values.namespace }}
-  {{- if .annotations }}
-  annotations:
-    {{- toYaml .annotations | nindent 4 }}
-  {{- end }}
 spec:
   template:
+    metadata:
+      {{- if .annotations }}
+      annotations:
+        {{- toYaml .annotations | nindent 8 }}
+      {{- end }}
     spec:
       containers:
         - image: {{ $.Values.registry }}/{{ .name }}
+          {{- if .env }}
           env:
-            {{- range $.Values.commonEnv }}
+            {{- range .env }}
+              {{- $envName := . }}
+              {{- range $.Values.commonEnv }}
+                {{- if eq .name $envName }}
             - name: {{ .name }}
               {{- if .value }}
               value: {{ .value }}
@@ -24,27 +29,39 @@ spec:
                   name: {{ .secretKeyRef.name }}
                   key: {{ .secretKeyRef.key }}
               {{- end }}
+                {{- end }}
+              {{- end }}
             {{- end }}
+          {{- end }}
 ---
 {{- end }}
 
-
 {{- $root := . -}}
 {{- range .Values.multiVersionServices }}
-  {{- $service := .name }}
+  {{- $svc := . }}
+  {{- $serviceName := .name }}
   {{- range $root.Values.languages }}
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: {{ $service }}-{{ . }}
+  name: {{ $serviceName }}-{{ . }}
   namespace: {{ $root.Values.namespace }}
 spec:
   template:
+    metadata:
+      {{- if $svc.annotations }}
+      annotations:
+        {{- toYaml $svc.annotations | nindent 8 }}
+      {{- end }}
     spec:
       containers:
-        - image: {{ $root.Values.registry }}/{{ $service }}/{{ . }}
+        - image: {{ $root.Values.registry }}/{{ $serviceName }}/{{ . }}
+          {{- if $svc.env }}
           env:
-            {{- range $root.Values.commonEnv }}
+            {{- range $svc.env }}
+              {{- $envName := . }}
+              {{- range $root.Values.commonEnv }}
+                {{- if eq .name $envName }}
             - name: {{ .name }}
               {{- if .value }}
               value: {{ .value }}
@@ -54,7 +71,10 @@ spec:
                   name: {{ .secretKeyRef.name }}
                   key: {{ .secretKeyRef.key }}
               {{- end }}
+                {{- end }}
+              {{- end }}
             {{- end }}
+          {{- end }}
 ---
 {{- end }}
 {{- end }}
