@@ -1,10 +1,5 @@
-# apiVersion: v1
-# kind: Namespace
-# metadata:
-#   name: mofaas-bank-app
-#   labels:
-#     mofaas: nvp
-# ---
+---
+# Source: mofaas-bank-app/templates/Secrets.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -12,27 +7,17 @@ metadata:
   namespace: mofaas-bank-app
 type: Opaque
 data:
-  DIRECTUS_API_TOKEN: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
-  JWT_KEY: dmVyeV9zZWNyZXRfa2V5
+  DIRECTUS_API_TOKEN: 
+  JWT_KEY:
 ---
-apiVersion: serving.knative.dev/v1
-kind: Service
-metadata:
-  name: entry-point
-  namespace: mofaas-bank-app
-spec:
-  template: 
-    spec:
-      containers:
-        - image: 10.43.67.161:5000/bank-app/entry-point
----
+# Source: mofaas-bank-app/templates/Services.yaml
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: login
   namespace: mofaas-bank-app
 spec:
-  template: 
+  template:
     spec:
       containers:
         - image: 10.43.67.161:5000/bank-app/login
@@ -50,33 +35,17 @@ spec:
                   name: bank-app-secret
                   key: JWT_KEY
 ---
+# Source: mofaas-bank-app/templates/Services.yaml
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: authorization-python
+  name: entry-point
   namespace: mofaas-bank-app
 spec:
-  template: 
+  template:
     spec:
       containers:
-        - image: 10.43.67.161:5000/bank-app/authorization/python
-          env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: bank-app-secret
-                  key: JWT_KEY
----
-apiVersion: serving.knative.dev/v1
-kind: Service
-metadata:
-  name: verify-transaction-python
-  namespace: mofaas-bank-app
-spec:
-  template: 
-    spec:
-      containers:
-        - image: 10.43.67.161:5000/bank-app/verify-transaction/python
+        - image: 10.43.67.161:5000/bank-app/entry-point
           env:
             - name: DIRECTUS_URL
               value: http://directus.directus:8055
@@ -85,14 +54,20 @@ spec:
                 secretKeyRef:
                   name: bank-app-secret
                   key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
 ---
+# Source: mofaas-bank-app/templates/Services.yaml
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: transaction
   namespace: mofaas-bank-app
 spec:
-  template: 
+  template:
     spec:
       containers:
         - image: 10.43.67.161:5000/bank-app/transaction
@@ -104,23 +79,91 @@ spec:
                 secretKeyRef:
                   name: bank-app-secret
                   key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
 ---
+# Source: mofaas-bank-app/templates/Services.yaml
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: result
   namespace: mofaas-bank-app
+  annotations:
+    autoscaling.knative.dev/max-scale: "1"
+    autoscaling.knative.dev/min-scale: "1"
 spec:
-  template: 
-    metadata:
-      annotations:
-        autoscaling.knative.dev/min-scale: "1"
-        autoscaling.knative.dev/max-scale: "1"
+  template:
     spec:
       containers:
         - image: 10.43.67.161:5000/bank-app/result
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
 ---
-# https://knative.dev/docs/eventing/brokers/broker-types/kafka-broker/#create-a-kafka-broker
+# Source: mofaas-bank-app/templates/Services.yaml
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: authorization-python
+  namespace: mofaas-bank-app
+spec:
+  template:
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/authorization/python
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
+---
+# Source: mofaas-bank-app/templates/Services.yaml
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: verify-transaction-python
+  namespace: mofaas-bank-app
+spec:
+  template:
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/verify-transaction/python
+          env:
+            - name: DIRECTUS_URL
+              value: http://directus.directus:8055
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: DIRECTUS_API_TOKEN
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: JWT_KEY
+---
+# Source: mofaas-bank-app/templates/Broker.yaml
 apiVersion: eventing.knative.dev/v1
 kind: Broker
 metadata:
@@ -129,13 +172,13 @@ metadata:
   name: broker
   namespace: mofaas-bank-app
 spec:
-  # Configuration specific to this broker.
   config:
     apiVersion: v1
     kind: ConfigMap
     name: kafka-broker-config
     namespace: knative-eventing
 ---
+# Source: mofaas-bank-app/templates/SinkBindings.yaml
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
@@ -152,6 +195,7 @@ spec:
       kind: Service
       name: authorization-python
 ---
+# Source: mofaas-bank-app/templates/SinkBindings.yaml
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
@@ -168,6 +212,7 @@ spec:
       kind: Broker
       name: broker
 ---
+# Source: mofaas-bank-app/templates/SinkBindings.yaml
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
@@ -184,6 +229,24 @@ spec:
       kind: Broker
       name: broker
 ---
+# Source: mofaas-bank-app/templates/SinkBindings.yaml
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-transaction-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+---
+# Source: mofaas-bank-app/templates/Triggers.yaml
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
@@ -202,6 +265,7 @@ spec:
       name: verify-transaction-python
     uri: /
 ---
+# Source: mofaas-bank-app/templates/Triggers.yaml
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
@@ -220,6 +284,7 @@ spec:
       name: result
     uri: /
 ---
+# Source: mofaas-bank-app/templates/Triggers.yaml
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
@@ -238,6 +303,7 @@ spec:
       name: transaction
     uri: /
 ---
+# Source: mofaas-bank-app/templates/Triggers.yaml
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
@@ -255,19 +321,3 @@ spec:
       kind: Service
       name: result
     uri: /
----
-apiVersion: sources.knative.dev/v1
-kind: SinkBinding
-metadata:
-  name: bind-transaction-result
-  namespace: mofaas-bank-app
-spec:
-  subject:
-    apiVersion: serving.knative.dev/v1
-    kind: Service
-    name: transaction
-  sink:
-    ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: result

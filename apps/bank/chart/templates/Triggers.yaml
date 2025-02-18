@@ -1,0 +1,71 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: verify-transaction-trigger
+  namespace: {{ .Values.namespace }}
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: authorization
+        dv: "True"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: verify-transaction-python
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: authorization-bad-result-trigger
+  namespace: {{ .Values.namespace }}
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: authorization
+        dv: "False"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: transaction-trigger
+  namespace: {{ .Values.namespace }}
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: verify-transaction
+        dt: "True"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: transaction
+    uri: /
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: verify-transaction-bad-result-trigger
+  namespace: {{ .Values.namespace }}
+spec:
+  broker: broker
+  filters:
+    - exact:
+        source: verify-transaction
+        dt: "False"
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+    uri: /

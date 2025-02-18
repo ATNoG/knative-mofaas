@@ -1,0 +1,41 @@
+namespace: mofaas-bank-app
+registry: "10.43.67.161:5000/bank-app"
+oneVersionServices:
+  - name: login
+    env:
+      - DIRECTUS_URL
+      - DIRECTUS_TOKEN
+      - SECRET_KEY
+  - name: entry-point
+  - name: transaction
+    env:
+      - DIRECTUS_URL
+      - DIRECTUS_TOKEN
+  - name: result
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
+multiVersionServices:
+  - name: authorization
+    env:
+      - SECRET_KEY
+  - name: verify-transaction
+    env:
+      - DIRECTUS_URL
+      - DIRECTUS_TOKEN
+languages:
+  - python
+commonEnv:
+  - name: DIRECTUS_URL
+    value: "http://directus.directus:8055"
+  - name: DIRECTUS_TOKEN
+    secretKeyRef:
+      name: bank-app-secret
+      key: DIRECTUS_API_TOKEN
+  - name: SECRET_KEY
+    secretKeyRef:
+      name: bank-app-secret
+      key: JWT_KEY
+secrets:
+  directusToken: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
+  jwtKey: dmVyeV9zZWNyZXRfa2V5

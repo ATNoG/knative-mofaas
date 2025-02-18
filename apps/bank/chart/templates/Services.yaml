@@ -1,0 +1,60 @@
+{{- range .Values.oneVersionServices }}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.namespace }}
+  {{- if .annotations }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    spec:
+      containers:
+        - image: {{ $.Values.registry }}/{{ .name }}
+          env:
+            {{- range $.Values.commonEnv }}
+            - name: {{ .name }}
+              {{- if .value }}
+              value: {{ .value }}
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretKeyRef.name }}
+                  key: {{ .secretKeyRef.key }}
+              {{- end }}
+            {{- end }}
+---
+{{- end }}
+
+
+{{- $root := . -}}
+{{- range .Values.multiVersionServices }}
+  {{- $service := .name }}
+  {{- range $root.Values.languages }}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ $service }}-{{ . }}
+  namespace: {{ $root.Values.namespace }}
+spec:
+  template:
+    spec:
+      containers:
+        - image: {{ $root.Values.registry }}/{{ $service }}/{{ . }}
+          env:
+            {{- range $root.Values.commonEnv }}
+            - name: {{ .name }}
+              {{- if .value }}
+              value: {{ .value }}
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretKeyRef.name }}
+                  key: {{ .secretKeyRef.key }}
+              {{- end }}
+            {{- end }}
+---
+{{- end }}
+{{- end }}

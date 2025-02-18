@@ -66,7 +66,7 @@ def create_transaction():
         proceed = False
         message = "Invalid client usernames"
         code = 400
-    
+
     forward_to_broker({**data, "message": message, "from": from_id, "to": to_id}, proceed, request.headers)
     return jsonify({"message": message}), code
 

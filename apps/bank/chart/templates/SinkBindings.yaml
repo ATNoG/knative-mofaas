@@ -1,0 +1,63 @@
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-entry-point
+  namespace: {{ .Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: entry-point
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: authorization-python
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-authorization
+  namespace: {{ .Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: authorization-python
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: broker
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-verify-transaction
+  namespace: {{ .Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: verify-transaction-python
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: broker
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-transaction-result
+  namespace: {{ .Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result

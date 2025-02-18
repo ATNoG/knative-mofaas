@@ -39,7 +39,7 @@ def create_transaction():
     response = requests.post(url, json=payload, headers=headers)
 
     if response.status_code != 200:
-        code = 500
+        code = 400
         message = "Transaction failed"
 
     forward_to_broker({**data, "message": message, "success": code == 200, "details": response.json()}, request.headers)
