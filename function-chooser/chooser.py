@@ -1,4 +1,5 @@
 import os
+import json
 import math
 import random
 import logging
@@ -14,13 +15,16 @@ logging.getLogger("urllib3").setLevel(logging.DEBUG)
 
 PORT = 8080
 DEFAULT_CONCURRENCY = 1
-
+K_SINK_HEADER = "X-K-Sink"
+CE_OVERRIDES_HEADER = "X-Ce-Overrides"
 
 class MoFaaSProxy:
-    def __init__(self, services_list, concurrency, ignore_headers):
+    def __init__(self, services_list, concurrency, ignore_headers, k_sink=None, ce_overrides=None):
         self.services_list = services_list
         self.concurrency = concurrency
         self.ignore_headers = ignore_headers
+        self.k_sink = k_sink
+        self.ce_overrides = ce_overrides
 
     async def proxy_handler(self, request):
         """This method only works for HTTP at the moment!!! Do not try to use the Proxy for HTTPS, it will fail miserably!!!"""
@@ -38,6 +42,10 @@ class MoFaaSProxy:
                 target_url = f"{url}{request.path}"
                 headers = request.headers.copy()
                 headers["Host"] = urllib.parse.urlparse(url).netloc
+                if self.k_sink:
+                    headers[K_SINK_HEADER] = self.k_sink
+                if self.ce_overrides:
+                    headers[CE_OVERRIDES_HEADER] = self.ce_overrides
                 tasks.append(
                     asyncio.create_task(
                         self.__do_request(
@@ -67,7 +75,7 @@ class MoFaaSProxy:
                         if responses[i1][k] != responses[i2][k]:
                             if k != "headers":
                                 logging.error(
-                                    f"{k.capitalize()} different between response from the URL <{responses[i1]['url']}> and <{responses[i2]['url']}>"
+                                    f"{k.capitalize()} different between response from the URL <{responses[i1]['url']}> ({responses[i1][k]}) and <{responses[i2]['url']} ({responses[i2][k]})>"
                                 )
                                 await self.__fill_resultant_structs(
                                     differences_matrixes,
@@ -160,10 +168,13 @@ class MoFaaSProxy:
     ):
         logging.debug(f"Doing a request to: {url}")
         async with session.request(method, url, headers=headers, data=body) as response:
+            body = await response.read()
+            if response.headers.get('content-type') == 'application/json':
+                body = json.loads(body)
             return {
                 "url": url,
                 "status": response.status,
-                "body": await response.read(),
+                "body": body,
                 "headers": response.headers,
             }
 
@@ -276,6 +287,7 @@ def main():
     if not (services := os.environ.get("SERVICES")):
         logging.error("There were no given services")
         exit(1)
+
     services_list = [base64.b64decode(s).decode() for s in services.split(",")]
     concurrency = int(os.environ.get("CONCURRENCY") or DEFAULT_CONCURRENCY)
     ignore_headers = []
@@ -293,7 +305,7 @@ def main():
 
     # Create the aiohttp application and route
     app = aiohttp.web.Application()
-    proxy = MoFaaSProxy(services_list, concurrency, ignore_headers)
+    proxy = MoFaaSProxy(services_list, concurrency, ignore_headers, os.environ.get("K_SINK"), os.environ.get("CE_OVERRIDES"))
     app.router.add_route("*", "/{path_info:.*}", proxy.proxy_handler)
     aiohttp.web.run_app(app, port=PORT)
 

@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 K_SINK = os.getenv("K_SINK")
 
 EXPIRATION = 1  # 1 hour
-HEADERS_REMOVE = ("Ce-Id", "Ce-Specversion", "Ce-Type", "Ce-Source", "Content-Type", "Host")
+HEADERS_REMOVE = ("Ce-Id", "Ce-Specversion", "Ce-Type", "Ce-Source", "Content-Type", "Host", "X-K-Sink")
 
 app = Flask(__name__)
 
@@ -36,17 +36,17 @@ def decode_jwt(token):
     except jwt.exceptions.JWTError:
         return None
     
-def forward_to_broker(req, proceed, headers):
+def forward_to_broker(req, proceed, original_headers):
     headers = {
-        "Ce-Id": headers.get("Ce-Id"),
+        "Ce-Id": original_headers.get("Ce-Id"),
         "Ce-Specversion": "1.0",
         "Ce-Type": "authorization",
         "Ce-Source": "authorization",
         "Content-Type": "application/json",
-        "Ce-dv": str(proceed),          # dv = do verification
-        **{k: v for k, v in headers.items() if k not in HEADERS_REMOVE}
+        "Ce-dv": str(proceed).lower(),          # dv = do verification
+        **{k: v for k, v in original_headers.items() if k not in HEADERS_REMOVE}
     }
-    requests.post(K_SINK, json=req, headers=headers)
+    requests.post(original_headers["X-K-Sink"] if original_headers.get("X-K-Sink") else K_SINK, json=req, headers=headers)
 
 @app.route("/", methods=["POST"])
 def authorization():

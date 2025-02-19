@@ -29,7 +29,7 @@ def forward_to_broker(data, proceed, headers):
         "Ce-Type": "transaction",
         "Ce-Source": "verify-transaction",
         "Content-Type": "application/json",
-        "Ce-Dt": str(proceed),          # dt = do transaction
+        "Ce-Dt": str(proceed).lower(),          # dt = do transaction
         **{k: v for k, v in headers.items() if k not in HEADERS_REMOVE}
     }
     requests.post(K_SINK, json=data, headers=headers)

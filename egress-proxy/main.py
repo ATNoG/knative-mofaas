@@ -1,4 +1,5 @@
 import os
+import json
 import aiohttp
 import aiohttp.web
 import logging
@@ -13,7 +14,7 @@ DEFAULT_CONCURRENCY = 1
 SENDER_HEADER = "x-original-hostname"
 IGNORE_HEADERS_RECEIVED = ("host", "connection", "keep-alive", "proxy-authenticate", "proxy-authorization", "te", "trailer", "transfer-encoding", "upgrade", "accept-encoding",
                            "x-forwarded-proto", "x-request-id", "x-original-hostname", "x-envoy-expected-rq-timeout-ms", "x-forwarded-host", "traceparent", 
-                           "forwarded", "k-proxy-request", "x-b3-sampled", "x-b3-spanid", "x-b3-traceid", "x-forwarded-for")
+                           "forwarded", "k-proxy-request", "x-b3-sampled", "x-b3-spanid", "x-b3-traceid", "x-forwarded-for", "user-agent", "content-length")
 IGNORE_HEADERS_SEND = ("transfer-encoding", "connection", "content-encoding")
 
 class MoFaaSProxy:
@@ -66,10 +67,28 @@ class MoFaaSProxy:
 
         # Use the first request as the reference.
         ref_sender, (ref_method, ref_path, ref_headers, ref_body) = all_requests[0]
-        ref_filtered = {k: v for k, v in ref_headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
+        ref_is_json = False
+        ref_filtered = {}
+        for k, v in ref_headers.items():
+            if k.lower() == "content-type" and 'json' in v:
+                ref_is_json = True
+            if k.lower() not in IGNORE_HEADERS_RECEIVED:
+                ref_filtered[k] = v
+        # ref_filtered = {k: v for k, v in ref_headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
 
         for sender, (method, path, headers, body) in all_requests[1:]:
-            current_filtered = {k: v for k, v in headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
+            current_filtered = {}
+            is_json = False
+            for k, v in headers.items():
+                if k.lower() == "content-type" and 'json' in v:
+                    is_json = True
+                if k.lower() not in IGNORE_HEADERS_RECEIVED:
+                    current_filtered[k] = v
+            # current_filtered = {k: v for k, v in headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
+            # Verify if body is json
+            if ref_is_json and is_json:
+                body = json.loads(body)
+                ref_body = json.loads(ref_body)
             if method != ref_method or path != ref_path or body != ref_body or current_filtered != ref_filtered:
                 logging.error(f"Mismatch for sender '{sender}' vs '{ref_sender}': expected '{ref_method, ref_path, ref_filtered, ref_body}', got '{method, path, current_filtered, body}'")
                 return None

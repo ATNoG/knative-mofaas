@@ -21,7 +21,7 @@ def forward_to_broker():
         **{k: v for k, v in request.headers.items() if k not in HEADERS_REMOVE}
     }
     response = requests.post(K_SINK, json=event, headers=headers)
-    return {"forwarded-response": response.json(), "id": ce_id}, response.status_code
+    return {"forwarded-response": response.json() if response.status_code == 200 else None, "id": ce_id}, response.status_code
 
 if __name__ == "__main__":
     if not K_SINK:
