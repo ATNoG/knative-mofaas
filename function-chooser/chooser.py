@@ -153,8 +153,8 @@ class MoFaaSProxy:
                 if len(equal_results[i]) + 1 >= accepted_minimum:
                     proxied_response = aiohttp.web.Response(
                         status=responses[i]["status"],
-                        body=responses[i]["body"],
-                        headers=responses[i]["headers"],
+                        body=json.dumps(responses[i]["body"]) if type(responses[i]["body"]) == dict else responses[i]["body"],
+                        headers={k: v for k,v in responses[i]["headers"].items() if k.lower() != 'content-length'},
                     )
                     return proxied_response
 

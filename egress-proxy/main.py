@@ -112,11 +112,13 @@ class MoFaaSProxy:
             proto = original_headers.get("X-Forwarded-Proto")
             host = original_headers.get("X-Forwarded-Host")
             
-            logging.debug(f"Making request with headers ({list(filtered_headers.items())})")
+            url = f"{proto}://{host}{path}"
+            logging.debug(f"Making <{method}> request to <{url}> with headers ({list(filtered_headers.items())}) and body <{body}>")
             async with aiohttp.ClientSession() as session:
-                async with session.request(method, f"{proto}://{host}{path}", headers=filtered_headers, data=body) as resp:  # , headers=headers, data=body
+                async with session.request(method, url, headers=filtered_headers, **{'json' if type(body) == dict else 'data': body}) as resp:  # , headers=headers, data=body
                     logging.debug(f"Response status: {resp.status}")
                     response_body = await resp.read()
+                    logging.debug(f"Response body: {response_body}")
                     for sender in senders:
                         self.response[sender] = (resp.status, response_body, {k:v for k, v in dict(resp.headers).items() if k.lower() not in IGNORE_HEADERS_SEND})
                     logging.debug(f"Response headers: {self.response[sender][2]}")
