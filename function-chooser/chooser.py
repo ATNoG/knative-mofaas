@@ -17,12 +17,15 @@ PORT = 8080
 DEFAULT_CONCURRENCY = 1
 K_SINK_HEADER = "X-K-Sink"
 CE_OVERRIDES_HEADER = "X-Ce-Overrides"
+EGRESS_START_HEADER = "x-start-request"
+EGRESS_STOP_HEADER = "x-stop-request"
 
 class MoFaaSProxy:
-    def __init__(self, services_list, concurrency, ignore_headers, k_sink=None, ce_overrides=None):
-        self.services_list = services_list
+    def __init__(self, services, concurrency, ignore_headers, egress_url, k_sink=None, ce_overrides=None):
+        self.services = services
         self.concurrency = concurrency
         self.ignore_headers = ignore_headers
+        self.egress_url = egress_url
         self.k_sink = k_sink
         self.ce_overrides = ce_overrides
 
@@ -31,14 +34,17 @@ class MoFaaSProxy:
         # Extract information from the incoming request
         method = request.method
         body = await request.read()
+        request_id = request.headers.get("ce-id")
 
         # Choosing the function to execute and change the Host header accordingly
-        chosen_funcs = random.sample(self.services_list, k=self.concurrency)
+        chosen_funcs = random.sample(list(self.services.keys()), k=self.concurrency)
         logging.debug(f"Chosen functions: {chosen_funcs}")
+        await self.__egress_request({EGRESS_START_HEADER: "true"}, {"services": chosen_funcs, "id": request_id})
 
         async with aiohttp.ClientSession() as session:
             tasks = []
-            for url in chosen_funcs:
+            for func in chosen_funcs:
+                url = self.services[func]
                 target_url = f"{url}{request.path}"
                 headers = request.headers.copy()
                 headers["Host"] = urllib.parse.urlparse(url).netloc
@@ -156,12 +162,24 @@ class MoFaaSProxy:
                         body=json.dumps(responses[i]["body"]) if type(responses[i]["body"]) == dict else responses[i]["body"],
                         headers={k: v for k,v in responses[i]["headers"].items() if k.lower() != 'content-length'},
                     )
+                    await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
                     return proxied_response
+
+        # Notice the Egress Proxy that this request ended
+        await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
 
         proxied_response = aiohttp.web.Response(
             status=400, body="yeet", headers=headers
         )
         return proxied_response
+
+    async def __egress_request(self, headers, data):
+        async with aiohttp.ClientSession() as session:
+            logging.debug(f"Sending {data} to the egress with headers {headers}")
+            async with session.post(self.egress_url, headers=headers, json=data) as response:
+                if response.status != 200:
+                    logging.error(f"The response from the Egress was not successful: status code <{response.status}> and body <{response.content}>")
+        
 
     async def __do_request(
         self, session: aiohttp.ClientSession, method, url, headers, body
@@ -284,11 +302,21 @@ class MoFaaSProxy:
 
 
 def main():
-    if not (services := os.environ.get("SERVICES")):
+    if not (services_names := os.environ.get("SERVICES")):
         logging.error("There were no given services")
         exit(1)
+    if not (services_urls := os.environ.get("SERVICES_URLS")):
+        logging.error("There were no given services URLs")
+        exit(1)
+    if not (egress_url_b64 := os.environ.get("EGRESS_URL")):
+        logging.error("There was no given egress URL")
+        exit(1)
 
-    services_list = [base64.b64decode(s).decode() for s in services.split(",")]
+    egress_url = base64.b64decode(egress_url_b64).decode()
+    services = {}
+    services_urls_b64_list = services_urls.split(",")
+    for i in range(len(services_list := services_names.split(","))):
+        services[services_list[i]] = base64.b64decode(services_urls_b64_list[i]).decode()
     concurrency = int(os.environ.get("CONCURRENCY") or DEFAULT_CONCURRENCY)
     ignore_headers = []
     if ignore_headers_enc := os.environ.get("IGNORE_HEADERS"):
@@ -297,15 +325,17 @@ def main():
         ]
     logging.debug(
         f"""======== Starting MoFaaS Chooser ========
-           Services: {', '.join(services_list)}
+           Services: {', '.join(services.keys())}
+           Services URLs: {', '.join(services.values())}
            Concurrency: {concurrency}
            Ignore headers: {', '.join(ignore_headers)}
+           Egress URL: {egress_url}
            ========================================="""
     )
 
     # Create the aiohttp application and route
     app = aiohttp.web.Application()
-    proxy = MoFaaSProxy(services_list, concurrency, ignore_headers, os.environ.get("K_SINK"), os.environ.get("CE_OVERRIDES"))
+    proxy = MoFaaSProxy(services, concurrency, ignore_headers, egress_url, os.environ.get("K_SINK"), os.environ.get("CE_OVERRIDES"))
     app.router.add_route("*", "/{path_info:.*}", proxy.proxy_handler)
     aiohttp.web.run_app(app, port=PORT)
 

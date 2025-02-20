@@ -43,7 +43,7 @@ def forward_to_broker(req, proceed, original_headers):
         "Ce-Type": "authorization",
         "Ce-Source": "authorization",
         "Content-Type": "application/json",
-        "Ce-dv": str(proceed).lower(),          # dv = do verification
+        "Ce-Dv": str(proceed).lower(),          # dv = do verification
         **{k: v for k, v in original_headers.items() if k not in HEADERS_REMOVE}
     }
     requests.post(original_headers["X-K-Sink"] if original_headers.get("X-K-Sink") else K_SINK, json=req, headers=headers)

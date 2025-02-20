@@ -7,32 +7,33 @@ from flask import Flask, request, jsonify
 DIRECTUS_URL = os.getenv("DIRECTUS_URL")
 DIRECTUS_TOKEN = os.getenv("DIRECTUS_TOKEN")
 K_SINK = os.getenv("K_SINK")
-MAX_AMOUNT = 1000  # Maximum transaction amount before requiring Matrix Secret
-MATRIX_SECRET = 123456  # MATRIX SECRET required for transactions above MAX_AMOUNT
+MAX_AMOUNT = float(os.getenv("MAX_AMOUNT"))  # Maximum transaction amount before requiring OTP Secret
+OTP_SECRET = os.getenv("OTP_SECRET")  # OTP SECRET required for transactions above MAX_AMOUNT
 
-HEADERS_REMOVE = ("Ce-Id", "Ce-Specversion", "Ce-Type", "Ce-Source", "Content-Type", "Host")
+HEADERS_REMOVE = ("Ce-Id", "Ce-Specversion", "Ce-Type", "Ce-Source", "Content-Type", "Host", "X-K-Sink")
 
 app = Flask(__name__)
 
-def get_user_id(username):
+def get_user_id(username, req_id):
     url = f"{DIRECTUS_URL}/items/users?filter[username][_eq]={username}"
-    headers = {"Authorization": f"Bearer {DIRECTUS_TOKEN}"}
+    headers = {"Authorization": f"Bearer {DIRECTUS_TOKEN}", "Ce-Id": req_id}
     response = requests.get(url, headers=headers)
     if response.status_code == 200 and (data := response.json().get("data")):
         return data[0]["id"]
     return None
 
-def forward_to_broker(data, proceed, headers):
+
+def forward_to_broker(req, proceed, original_headers):
     headers = {
-        "Ce-Id": headers.get("Ce-Id"),
+        "Ce-Id": original_headers.get("Ce-Id"),
         "Ce-Specversion": "1.0",
         "Ce-Type": "transaction",
         "Ce-Source": "verify-transaction",
         "Content-Type": "application/json",
         "Ce-Dt": str(proceed).lower(),          # dt = do transaction
-        **{k: v for k, v in headers.items() if k not in HEADERS_REMOVE}
+        **{k: v for k, v in original_headers.items() if k not in HEADERS_REMOVE}
     }
-    requests.post(K_SINK, json=data, headers=headers)
+    requests.post(original_headers["X-K-Sink"] if original_headers.get("X-K-Sink") else K_SINK, json=req, headers=headers)
 
 @app.route("/", methods=["POST"])
 def create_transaction():
@@ -54,14 +55,14 @@ def create_transaction():
     otp = data.get("otp")                    # OTP provided, if any
 
     # Check transaction limit with OTP verification.
-    if code == 200 and amount > MAX_AMOUNT and otp != int(MATRIX_SECRET):
+    if code == 200 and amount > MAX_AMOUNT and otp != OTP_SECRET:
         proceed = False
         message = "OTP required or incorrect"
         code = 403
 
     # Get user IDs
-    from_id = get_user_id(client)
-    to_id = get_user_id(destination_client)
+    from_id = get_user_id(client, request.headers.get("Ce-Id"))
+    to_id = get_user_id(destination_client, request.headers.get("Ce-Id"))
     if code == 200 and not from_id or not to_id:
         proceed = False
         message = "Invalid client usernames"
@@ -72,8 +73,8 @@ def create_transaction():
 
 
 if __name__ == "__main__":
-    if not DIRECTUS_URL or not DIRECTUS_TOKEN:
-        raise ValueError("Missing required environment variables: DIRECTUS_URL, DIRECTUS_TOKEN")
+    if not DIRECTUS_URL or not DIRECTUS_TOKEN or not MAX_AMOUNT or not OTP_SECRET:
+        raise ValueError("Missing required environment variables: DIRECTUS_URL, DIRECTUS_TOKEN, MAX_AMOUNT, OTP_SECRET")
     if not K_SINK:
         logging.warning("Missing K_SINK variable")
     app.run(host='0.0.0.0', port=8080)

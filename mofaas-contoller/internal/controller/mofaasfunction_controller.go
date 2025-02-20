@@ -265,7 +265,7 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	// Create or update the Knative Service for the Function Chooser
 	// TODO - MAYBE IN THE FUTURE, WE SHOULD VERIFY IF THE SERVICE WAS CREATED COMPLETELY WITH SUCCESS (E.G., IT MIGHT FAIL IF THE CONTAINER IS NOT FOUND)
 	result, err := controllerutil.CreateOrUpdate(ctx, r.Client, &functionChooserService, func() error {
-		err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc, &functionChooserService)
+		err := r.generateFuncChooserServiceStruct(ctx, mofaasFunc, &functionChooserService, egressProxyService.Name)
 		return err
 	})
 
@@ -428,12 +428,6 @@ func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.
 							{
 								// Name:  "function-chooser",
 								Image: r.EgressProxyImage,
-								Env: []core.EnvVar{
-									{
-										Name:  "CONCURRENCY",
-										Value: strconv.Itoa(mofaasFunc.Spec.Concurrency),
-									},
-								},
 							},
 						},
 					},
@@ -450,7 +444,7 @@ func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.
 	return nil
 }
 
-func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, functionChooserService *serving.Service) error {
+func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, functionChooserService *serving.Service, egressProxyServiceName string) error {
 	log := log.FromContext(ctx)
 
 	// First, get the headers to ignore
@@ -461,14 +455,22 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 
 	// Second, get the Knative Services' URLs MoFaaS has to protect
 	srvEncURLs := make([]string, len(mofaasFunc.Spec.Variants))
+	services := make([]string, len(mofaasFunc.Spec.Variants))
 	for i, variant := range mofaasFunc.Spec.Variants {
-		var err error
 		currentUrl, err := r.getKnativeServiceURL(ctx, variant.Name, mofaasFunc.Namespace)
 		if err != nil {
 			log.Error(err, fmt.Sprintf("Error while obtaining the variant's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
 			return err
 		}
 		srvEncURLs[i] = base64.StdEncoding.EncodeToString([]byte(currentUrl))
+		services[i] = variant.Name
+	}
+
+	// Third, get the Knative Egress Service URL
+	egressProxyServiceUrl, err := r.getKnativeServiceURL(ctx, egressProxyServiceName, mofaasFunc.Namespace)
+	if err != nil {
+		log.Error(err, fmt.Sprintf("Error while obtaining the Egress's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
+		return err
 	}
 
 	// Knative Service definition for the Function Chooser
@@ -492,6 +494,10 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 								Env: []core.EnvVar{
 									{
 										Name:  "SERVICES",
+										Value: strings.Join(services[:], ","),
+									},
+									{
+										Name:  "SERVICES_URLS",
 										Value: strings.Join(srvEncURLs[:], ","),
 									},
 									{
@@ -501,6 +507,10 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 									{
 										Name:  "IGNORE_HEADERS",
 										Value: strings.Join(ignoreHeadersEnc[:], ","),
+									},
+									{
+										Name:  "EGRESS_URL",
+										Value: base64.StdEncoding.EncodeToString([]byte(egressProxyServiceUrl)),
 									},
 								},
 							},
