@@ -2,6 +2,8 @@ import uuid
 import requests, os, logging
 from flask import Flask, request, jsonify
 
+logging.basicConfig(level=logging.DEBUG)
+
 app = Flask(__name__)
 
 K_SINK = os.getenv("K_SINK")
@@ -21,6 +23,7 @@ def forward_to_broker():
         **{k: v for k, v in request.headers.items() if k not in HEADERS_REMOVE}
     }
     response = requests.post(K_SINK, json=event, headers=headers)
+    logging.debug(f"Received response with headers <{response.headers}>")
     return {"forwarded-response": response.json() if response.status_code < 500 else None, "id": ce_id}, response.status_code
 
 if __name__ == "__main__":

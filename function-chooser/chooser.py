@@ -64,114 +64,68 @@ class MoFaaSProxy:
                     )
                 )
             responses = await asyncio.gather(*tasks)
+            
+            verified, response = await self.__verify_responses(responses)
 
-            differences_matrixes = {"status": {}, "body": {}, "headers": {}}
-            equal_results = [
-                [r2["url"] for r2 in responses if r2 != r1] for r1 in responses
-            ]
-            for i1 in range(len(responses)):
-                for i2 in range(len(responses)):
-                    if responses[i1] == responses[i2]:
-                        continue
-                    for k in differences_matrixes:
-                        await self.__fill_resultant_structs_defaults(
-                            differences_matrixes, responses, key=k, index1=i1, index2=i2
-                        )
+            if verified:
+                status = response["status"]
+                body = json.dumps(response["body"]) if type(response["body"]) == dict else response["body"]
+                headers = {k: v for k,v in response["headers"].items() if k.lower() != 'content-length'}
+                logging.debug(f"Sending response with status <{status}>, body <{body}>, headers {headers}")
+                proxied_response = aiohttp.web.Response(
+                    status=status,
+                    body=body,
+                    headers=headers,
+                )
+                await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
+                return proxied_response
+            else:
+                # Notice the Egress Proxy that this request ended
+                await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
+                
+                # TODO -> send error message (in response) to sink
 
-                        if responses[i1][k] != responses[i2][k]:
-                            if k != "headers":
-                                logging.error(
-                                    f"{k.capitalize()} different between response from the URL <{responses[i1]['url']}> ({responses[i1][k]}) and <{responses[i2]['url']} ({responses[i2][k]})>"
-                                )
-                                await self.__fill_resultant_structs(
-                                    differences_matrixes,
-                                    equal_results,
-                                    responses,
-                                    key=k,
-                                    index1=i1,
-                                    index2=i2,
-                                )
-                            else:
-                                for header in list(responses[i1][k].keys()) + list(
-                                    responses[i2][k].keys()
-                                ):
-                                    await self.__fill_resultant_structs_defaults(
-                                        differences_matrixes,
-                                        responses,
-                                        key=k,
-                                        index1=i1,
-                                        index2=i2,
-                                        header=header,
-                                    )
-
-                                    if (
-                                        header not in responses[i1][k]
-                                        and header in responses[i2][k]
-                                    ):
-                                        message = f"Header <{header}> not found in the response from the URL <{responses[i1]['url']}>, but found in the URL <{responses[i2]['url']}>."
-                                        await self.__verify_ignore_headers(
-                                            differences_matrixes,
-                                            equal_results,
-                                            responses,
-                                            key=k,
-                                            index1=i1,
-                                            index2=i2,
-                                            header=header,
-                                            message=message,
-                                        )
-                                    elif (
-                                        header not in responses[i2][k]
-                                        and header in responses[i1][k]
-                                    ):
-                                        message = f"Header <{header}> not found in the response from the URL <{responses[i2]['url']}>, but found in the URL <{responses[i1]['url']}>."
-                                        await self.__verify_ignore_headers(
-                                            differences_matrixes,
-                                            equal_results,
-                                            responses,
-                                            key=k,
-                                            index1=i1,
-                                            index2=i2,
-                                            header=header,
-                                            message=message,
-                                        )
-                                    elif (
-                                        responses[i1][k][header]
-                                        != responses[i2][k][header]
-                                    ):
-                                        message = f"Header <{header}> from URL <{responses[i1]['url']}> (value: <{responses[i1][k][header]}>) not equal to the one from URL <{responses[i2]['url']}> (value: <{responses[i2][k][header]}>)."
-                                        await self.__verify_ignore_headers(
-                                            differences_matrixes,
-                                            equal_results,
-                                            responses,
-                                            key=k,
-                                            index1=i1,
-                                            index2=i2,
-                                            header=header,
-                                            message=message,
-                                        )
-
-            # TODO -> This should be sent to a controller!!!
-            logging.info(f"Differences matrix: {differences_matrixes}")
-
-            accepted_minimum = math.floor(self.concurrency / 2) + 1
-            for i in range(len(equal_results)):
-                # Plus 1 because it is counting with the request itself being verified
-                if len(equal_results[i]) + 1 >= accepted_minimum:
-                    proxied_response = aiohttp.web.Response(
-                        status=responses[i]["status"],
-                        body=json.dumps(responses[i]["body"]) if type(responses[i]["body"]) == dict else responses[i]["body"],
-                        headers={k: v for k,v in responses[i]["headers"].items() if k.lower() != 'content-length'},
-                    )
-                    await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
-                    return proxied_response
-
-        # Notice the Egress Proxy that this request ended
-        await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
-
-        proxied_response = aiohttp.web.Response(
-            status=400, body="yeet", headers=headers
-        )
-        return proxied_response
+                proxied_response = aiohttp.web.Response(
+                    status=400, body=json.dumps({"message": "Responses did not match!"}), headers={"Content-Type": "application/json"}
+                )
+                return proxied_response
+    
+    async def __verify_responses(self, responses):
+        ref_response = responses[0]
+        for response in responses[1:]:    
+            for k in ref_response:
+                if k not in ("headers", "url"):
+                    if ref_response[k] != response[k]:
+                        err_message = f"{k.capitalize()} different between response from the URL <{ref_response['url']}> ({ref_response[k]}) and <{response['url']} ({response[k]})>"
+                        logging.error(err_message)
+                        return False, err_message
+                elif k == "headers":
+                    for header in list(ref_response[k].keys()) + list(response[k].keys()):
+                        if (
+                            header not in ref_response[k]
+                            and header in response[k]
+                        ):
+                            message = f"Header <{header}> not found in the response from the URL <{ref_response['url']}>, but found in the URL <{response['url']}>."
+                            ignore, message = await self.__verify_ignore_headers(header=header, message=message)
+                            if not ignore:
+                                return False, message
+                        elif (
+                            header not in response[k]
+                            and header in ref_response[k]
+                        ):
+                            message = f"Header <{header}> not found in the response from the URL <{response['url']}>, but found in the URL <{ref_response['url']}>."
+                            ignore, message = await self.__verify_ignore_headers(header=header, message=message)
+                            if not ignore:
+                                return False, message
+                        elif (
+                            ref_response[k][header]
+                            != response[k][header]
+                        ):
+                            message = f"Header <{header}> from URL <{ref_response['url']}> (value: <{ref_response[k][header]}>) not equal to the one from URL <{response['url']}> (value: <{response[k][header]}>)."
+                            ignore, message = await self.__verify_ignore_headers(header=header, message=message)
+                            if not ignore:
+                                return False, message
+        return True, ref_response
 
     async def __egress_request(self, headers, data):
         async with aiohttp.ClientSession() as session:
@@ -195,92 +149,9 @@ class MoFaaSProxy:
                 "body": body,
                 "headers": response.headers,
             }
-
-    async def __fill_resultant_structs_defaults(
-        self, differences_matrixes, responses, key, index1, index2, header=None
-    ):
-        if not header:
-            if responses[index1]["url"] not in differences_matrixes[key]:
-                differences_matrixes[key][responses[index1]["url"]] = {}
-            if responses[index2]["url"] not in differences_matrixes[key]:
-                differences_matrixes[key][responses[index2]["url"]] = {}
-
-            # By default, everything is O key
-            differences_matrixes[key][responses[index1]["url"]][
-                responses[index2]["url"]
-            ] = (0 if key != "headers" else {})
-            differences_matrixes[key][responses[index2]["url"]][
-                responses[index1]["url"]
-            ] = (0 if key != "headers" else {})
-        else:
-            if (
-                header
-                not in differences_matrixes[key][responses[index1]["url"]][
-                    responses[index2]["url"]
-                ]
-            ):
-                differences_matrixes[key][responses[index1]["url"]][
-                    responses[index2]["url"]
-                ][header] = {}
-            if (
-                header
-                not in differences_matrixes[key][responses[index2]["url"]][
-                    responses[index1]["url"]
-                ]
-            ):
-                differences_matrixes[key][responses[index2]["url"]][
-                    responses[index1]["url"]
-                ][header] = {}
-
-            # By default, everything is O key
-            differences_matrixes[key][responses[index1]["url"]][
-                responses[index2]["url"]
-            ][header] = 0
-            differences_matrixes[key][responses[index2]["url"]][
-                responses[index1]["url"]
-            ][header] = 0
-
-    async def __fill_resultant_structs(
-        self,
-        differences_matrixes,
-        equal_results,
-        responses,
-        key,
-        index1,
-        index2,
-        header=None,
-    ):
-        if header:
-            differences_matrixes[key][responses[index1]["url"]][
-                responses[index2]["url"]
-            ][header] = 1
-            differences_matrixes[key][responses[index2]["url"]][
-                responses[index1]["url"]
-            ][header] = 1
-        else:
-            differences_matrixes[key][responses[index1]["url"]][
-                responses[index2]["url"]
-            ] = 1
-            differences_matrixes[key][responses[index2]["url"]][
-                responses[index1]["url"]
-            ] = 1
-        if responses[index2]["url"] in equal_results[index1]:
-            equal_results[index1].pop(
-                equal_results[index1].index(responses[index2]["url"])
-            )
-        if responses[index1]["url"] in equal_results[index2]:
-            equal_results[index2].pop(
-                equal_results[index2].index(responses[index1]["url"])
-            )
-
+    
     async def __verify_ignore_headers(
         self,
-        differences_matrixes,
-        equal_results,
-        responses,
-        key,
-        index1,
-        index2,
         header,
         message,
     ):
@@ -288,17 +159,10 @@ class MoFaaSProxy:
             logging.warning(
                 message + " Ignoring, because it is in the given IGNORE HEADERS list."
             )
+            return True, message
         else:
             logging.error(message + " It will be flagged.")
-            await self.__fill_resultant_structs(
-                differences_matrixes,
-                equal_results,
-                responses,
-                key=key,
-                index1=index1,
-                index2=index2,
-                header=header,
-            )
+            return False, message
 
 
 def main():

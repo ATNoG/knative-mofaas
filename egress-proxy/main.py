@@ -72,11 +72,11 @@ class MoFaaSProxy:
                     headers = request.headers
                     path_qs = yarl.URL(request.path_qs).human_repr()
 
-                    logging.debug(f"Received request: {method}")
-                    logging.debug(f"Received headers: {headers}")
+                    logging.debug(f"Received {method} request from {service}: {headers}")
 
                     request_store[service] = (method, path_qs, headers, body)
 
+                logging.debug("Starting forward request")
                 response = await self.forward_request(request_store, req_id)
                 for service in services:
                     logging.debug(f"Sending response to {service}")
@@ -98,28 +98,21 @@ class MoFaaSProxy:
 
         # Use the first request as the reference.
         ref_sender, (ref_method, ref_path, ref_headers, ref_body) = all_requests[0]
-        ref_is_json = False
         ref_filtered = {}
         for k, v in ref_headers.items():
             if k.lower() == "content-type" and 'json' in v:
-                ref_is_json = True
+                ref_body = json.loads(ref_body)
             if k.lower() not in IGNORE_HEADERS_RECEIVED:
                 ref_filtered[k] = v
         # ref_filtered = {k: v for k, v in ref_headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
 
         for sender, (method, path, headers, body) in all_requests[1:]:
             current_filtered = {}
-            is_json = False
             for k, v in headers.items():
                 if k.lower() == "content-type" and 'json' in v:
-                    is_json = True
+                    body = json.loads(body)
                 if k.lower() not in IGNORE_HEADERS_RECEIVED:
                     current_filtered[k] = v
-            # current_filtered = {k: v for k, v in headers.items() if k.lower() not in IGNORE_HEADERS_RECEIVED}
-            # Verify if body is json
-            if ref_is_json and is_json:
-                body = json.loads(body)
-                ref_body = json.loads(ref_body)
             if method != ref_method or path != ref_path or body != ref_body or current_filtered != ref_filtered:
                 err_message = f"Mismatch for sender '{ref_sender}' vs '{sender}': expected '{ref_method, ref_path, ref_filtered, ref_body}', got '{method, path, current_filtered, body}'"
                 logging.error(err_message)
