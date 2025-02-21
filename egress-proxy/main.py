@@ -1,4 +1,5 @@
 import os
+import requests
 import json
 import aiohttp
 import aiohttp.web
@@ -76,7 +77,7 @@ class MoFaaSProxy:
 
                     request_store[service] = (method, path_qs, headers, body)
 
-                response = await self.forward_request(request_store)
+                response = await self.forward_request(request_store, req_id)
                 for service in services:
                     logging.debug(f"Sending response to {service}")
                     await self.response_queues[req_id][service].put(aiohttp.web.Response(status=response[0], body=response[1], headers=response[2]))
@@ -87,13 +88,13 @@ class MoFaaSProxy:
         """
         Verify that all stored requests have identical method, path, body, and
         filtered headers (i.e. after removing headers in IGNORE_HEADERS_RECEIVED).
-        If they are identical, return a tuple:
+        If they are identical, return True and tuple:
             (method, path, original_headers, body, filtered_headers)
-        Otherwise, return None.
+        Otherwise, return False and message.
         """
         all_requests = list(request_store.items())
         if not all_requests:
-            return None
+            return False, "Internal issue"
 
         # Use the first request as the reference.
         ref_sender, (ref_method, ref_path, ref_headers, ref_body) = all_requests[0]
@@ -120,18 +121,20 @@ class MoFaaSProxy:
                 body = json.loads(body)
                 ref_body = json.loads(ref_body)
             if method != ref_method or path != ref_path or body != ref_body or current_filtered != ref_filtered:
-                logging.error(f"Mismatch for sender '{ref_sender}' vs '{sender}': expected '{ref_method, ref_path, ref_filtered, ref_body}', got '{method, path, current_filtered, body}'")
-                return None
-        return (ref_method, ref_path, ref_headers, ref_body, ref_filtered)
+                err_message = f"Mismatch for sender '{ref_sender}' vs '{sender}': expected '{ref_method, ref_path, ref_filtered, ref_body}', got '{method, path, current_filtered, body}'"
+                logging.error(err_message)
+                return False, err_message
+        return True, (ref_method, ref_path, ref_headers, ref_body, ref_filtered)
 
-    async def forward_request(self, request_store):
+    async def forward_request(self, request_store, req_id):
         """Forwards the request to the original destination and returns the response."""
         verified = await self.verify_requests_equal(request_store)
-        if verified is None:
-            logging.debug("Requests do not match. Potential attack happening.")
+        if not verified[0]:
+            logging.error(f"Requests do not match. Potential attack happening for request id <{req_id}>.")
+            await self.idependet_sinkbinding_forward_result(req_id, verified[1])
             return (400, b"Requests did not match!", {})
     
-        method, path, original_headers, body, filtered_headers = verified
+        _, (method, path, original_headers, body, filtered_headers) = verified
         proto = original_headers.get("X-Forwarded-Proto")
         host = original_headers.get("X-Forwarded-Host")
         
@@ -143,6 +146,17 @@ class MoFaaSProxy:
                 response_body = await resp.read()
                 logging.debug(f"Response body: {response_body}")
                 return (resp.status, response_body, {k:v for k, v in dict(resp.headers).items() if k.lower() not in IGNORE_HEADERS_SEND})
+    
+    async def idependet_sinkbinding_forward_result(self, req_id, message):
+        if k_sink := os.getenv("K_SINK"):
+            headers = {
+                "Ce-Id": req_id,
+                "Ce-Specversion": "1.0",
+                "Ce-Type": "egress-proxy-error",
+                "Ce-Source": "egress-proxy",
+                "Content-Type": "application/json",
+            }
+            requests.post(k_sink, json={"error_message": message}, headers=headers)
 
 async def main():
     # Create the aiohttp application and route

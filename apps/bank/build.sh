@@ -2,7 +2,7 @@
 
 REGISTRY=10.43.67.161:5000/bank-app
 paths=(entry-point login authorization verify-transaction transaction result)
-languages=(python)      # java
+languages=(python java)
 
 for p in ${paths[@]}; do
     cd $p

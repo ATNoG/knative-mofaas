@@ -399,3 +399,35 @@ spec:
       apiVersion: serving.knative.dev/v1
       kind: Service
       name: result
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-authorization-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-authorization
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-verify-transaction-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-verify-transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
