@@ -131,13 +131,30 @@ spec:
                   name: bank-app-secret
                   key: jwt_key
 ---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: authorization-go
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/authorization/go
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: jwt_key
+---
 apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: authorization
   namespace: mofaas-bank-app
 spec:
-  concurrency: 4
+  concurrency: 5
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
@@ -151,6 +168,9 @@ spec:
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: authorization-js
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: authorization-go
   ignore-headers:
   - ce-id
   - Date
