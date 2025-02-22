@@ -54,7 +54,13 @@ class MoFaaSProxy:
         sender_header = request.headers.get(SENDER_HEADER)
         sender = sender_header[:sender_header.find("deployment") - 7]
         req_id = request.headers.get(CLOUD_EVENT_ID_HEADER)
-        await self.requests_queues[req_id][sender].put(request)
+        
+        method = request.method
+        body = await request.read()
+        headers = request.headers
+        path_qs = yarl.URL(request.path_qs).human_repr()
+        logging.debug(f"Received {method} request from {sender}: {headers}")
+        await self.requests_queues[req_id][sender].put((method, body, headers, path_qs))
 
         # Return the response (wait for it)
         return await self.response_queues[req_id][sender].get()
@@ -65,18 +71,9 @@ class MoFaaSProxy:
             while True:
                 request_store = {}
                 for service in services:
-                    request = await self.requests_queues[req_id][service].get()
-
-                    method = request.method
-                    body = await request.read()
-                    headers = request.headers
-                    path_qs = yarl.URL(request.path_qs).human_repr()
-
-                    logging.debug(f"Received {method} request from {service}: {headers}")
-
+                    method, body, headers, path_qs = await self.requests_queues[req_id][service].get()
                     request_store[service] = (method, path_qs, headers, body)
 
-                logging.debug("Starting forward request")
                 response = await self.forward_request(request_store, req_id)
                 for service in services:
                     logging.debug(f"Sending response to {service}")
@@ -130,7 +127,7 @@ class MoFaaSProxy:
         _, (method, path, original_headers, body, filtered_headers) = verified
         proto = original_headers.get("X-Forwarded-Proto")
         host = original_headers.get("X-Forwarded-Host")
-        
+
         url = f"{proto}://{host}{path}"
         logging.debug(f"Making <{method}> request to <{url}> with headers ({list(filtered_headers.items())}) and body <{body}>")
         async with aiohttp.ClientSession() as session:

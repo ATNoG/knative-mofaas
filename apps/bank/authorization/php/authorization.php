@@ -63,14 +63,6 @@ function forwardToBroker(Request $request, Response $response, ?string $client, 
 
     // Build fixed outgoing headers.
     $outHeaders = [];
-    if (!empty($request->header['ce-id'])) {
-        $outHeaders['Ce-Id'] = $request->header['ce-id'];
-    }
-    $outHeaders['Ce-Specversion'] = '1.0';
-    $outHeaders['Ce-Type'] = 'authorization';
-    $outHeaders['Ce-Source'] = 'authorization';
-    $outHeaders['Content-Type'] = 'application/json';
-    $outHeaders['Ce-dv'] = $proceed ? 'true' : 'false';
 
     // Copy additional headers from the incoming request, skipping those in HEADERS_REMOVE.
     foreach ($request->header as $key => $value) {
@@ -85,6 +77,15 @@ function forwardToBroker(Request $request, Response $response, ?string $client, 
             $outHeaders[$key] = $value;
         }
     }
+
+    if (!empty($request->header['ce-id'])) {
+        $outHeaders['Ce-Id'] = $request->header['ce-id'];
+    }
+    $outHeaders['Ce-Specversion'] = '1.0';
+    $outHeaders['Ce-Type'] = 'authorization';
+    $outHeaders['Ce-Source'] = 'authorization';
+    $outHeaders['Content-Type'] = 'application/json';
+    $outHeaders['Ce-dv'] = $proceed ? 'true' : 'false';
 
     // Determine target sink: use the "x-k-sink" header if present; otherwise, use the global K_SINK.
     $targetSink = (isset($request->header['x-k-sink']) && !empty($request->header['x-k-sink'])) 
