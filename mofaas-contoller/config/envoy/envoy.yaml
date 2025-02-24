@@ -43,7 +43,7 @@ static_resources:
 
   clusters:
   - name: firewall_cluster
-    connect_timeout: 0.25s
+    connect_timeout: 10s
     type: STRICT_DNS
     lb_policy: ROUND_ROBIN
     load_assignment:
