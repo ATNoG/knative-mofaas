@@ -83,7 +83,7 @@ class MoFaaSProxy:
                 # Notice the Egress Proxy that this request ended
                 await self.__egress_request({EGRESS_STOP_HEADER: "true"}, {"id": request_id})
                 
-                # TODO -> send error message (in response) to sink
+                await self.__idependet_sinkbinding_forward_result(request_id, response)
 
                 proxied_response = aiohttp.web.Response(
                     status=400, body=json.dumps({"message": "Responses did not match!"}), headers={"Content-Type": "application/json"}
@@ -164,6 +164,18 @@ class MoFaaSProxy:
             logging.error(message + " It will be flagged.")
             return False, message
 
+    async def __idependet_sinkbinding_forward_result(self, req_id, message):
+        if k_sink := os.getenv("K_SINK"):
+            headers = {
+                "Ce-Id": req_id,
+                "Ce-Specversion": "1.0",
+                "Ce-Type": "chooser-error",
+                "Ce-Source": "chooser",
+                "Content-Type": "application/json",
+            }
+            async with aiohttp.ClientSession() as session:
+                async with session.post(k_sink, json={"error_message": message}, headers=headers) as resp:
+                    logging.debug(f"Made request to ksink {k_sink}")
 
 def main():
     if not (services_names := os.environ.get("SERVICES")):

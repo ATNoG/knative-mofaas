@@ -1,0 +1,14 @@
+{
+    "name": "app/verify-transaction",
+    "description": "A PHP microservice for verifying transactions and forwarding events.",
+    "require": {
+      "guzzlehttp/guzzle": "^7.0",
+      "ext-swoole": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "App\\": "src/"
+      }
+    }
+  }
+  

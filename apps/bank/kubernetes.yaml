@@ -242,13 +242,45 @@ spec:
                   name: bank-app-configmap
                   key: max_amount
 ---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: verify-transaction-php
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/verify-transaction/php
+          env:
+            - name: DIRECTUS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: bank-app-configmap
+                  key: directus_url
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: directus_api_token
+            - name: OTP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: otp_secret
+            - name: MAX_AMOUNT
+              valueFrom:
+                configMapKeyRef:
+                  name: bank-app-configmap
+                  key: max_amount
+---
 apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: verify-transaction
   namespace: mofaas-bank-app
 spec:
-  concurrency: 2
+  concurrency: 3
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
@@ -256,6 +288,9 @@ spec:
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: verify-transaction-java
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: verify-transaction-php
   ignore-headers:
   - ce-id
   - Date
@@ -492,3 +527,35 @@ spec:
       apiVersion: serving.knative.dev/v1
       kind: Service
       name: result
+# ---
+# apiVersion: sources.knative.dev/v1
+# kind: SinkBinding
+# metadata:
+#   name: bind-chooser-authorization-result
+#   namespace: mofaas-bank-app
+# spec:
+#   subject:
+#     apiVersion: serving.knative.dev/v1
+#     kind: Service
+#     name: mofaas-chooser-authorization
+#   sink:
+#     ref:
+#       apiVersion: serving.knative.dev/v1
+#       kind: Service
+#       name: result
+# ---
+# apiVersion: sources.knative.dev/v1
+# kind: SinkBinding
+# metadata:
+#   name: bind-chooser-verify-transaction-result
+#   namespace: mofaas-bank-app
+# spec:
+#   subject:
+#     apiVersion: serving.knative.dev/v1
+#     kind: Service
+#     name: mofaas-chooser-verify-transaction
+#   sink:
+#     ref:
+#       apiVersion: serving.knative.dev/v1
+#       kind: Service
+#       name: result

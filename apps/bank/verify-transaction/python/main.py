@@ -55,7 +55,7 @@ def create_transaction():
     otp = data.get("otp")                    # OTP provided, if any
 
     # Check transaction limit with OTP verification.
-    if code == 200 and amount > MAX_AMOUNT and otp != OTP_SECRET:
+    if code == 200 and amount > MAX_AMOUNT and str(otp) != str(OTP_SECRET):
         proceed = False
         message = "OTP required or incorrect"
         code = 403

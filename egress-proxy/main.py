@@ -1,5 +1,4 @@
 import os
-import requests
 import json
 import aiohttp
 import aiohttp.web
@@ -146,7 +145,9 @@ class MoFaaSProxy:
                 "Ce-Source": "egress-proxy",
                 "Content-Type": "application/json",
             }
-            requests.post(k_sink, json={"error_message": message}, headers=headers)
+            async with aiohttp.ClientSession() as session:
+                async with session.post(k_sink, json={"error_message": message}, headers=headers) as resp:
+                    logging.debug(f"Made request to ksink {k_sink}")
 
 async def main():
     # Create the aiohttp application and route
