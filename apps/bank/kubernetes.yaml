@@ -306,13 +306,45 @@ spec:
                   name: bank-app-configmap
                   key: max_amount
 ---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: verify-transaction-go
+  namespace: mofaas-bank-app
+spec:
+  template: 
+    spec:
+      containers:
+        - image: 10.43.67.161:5000/bank-app/verify-transaction/go
+          env:
+            - name: DIRECTUS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: bank-app-configmap
+                  key: directus_url
+            - name: DIRECTUS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: directus_api_token
+            - name: OTP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: bank-app-secret
+                  key: otp_secret
+            - name: MAX_AMOUNT
+              valueFrom:
+                configMapKeyRef:
+                  name: bank-app-configmap
+                  key: max_amount
+---
 apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
   name: verify-transaction
   namespace: mofaas-bank-app
 spec:
-  concurrency: 4
+  concurrency: 5
   variants:
   - apiVersion: serving.knative.dev/v1
     kind: Service
@@ -326,6 +358,9 @@ spec:
   - apiVersion: serving.knative.dev/v1
     kind: Service
     name: verify-transaction-js
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: verify-transaction-go
   ignore-headers:
   - ce-id
   - Date
