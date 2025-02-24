@@ -26,6 +26,9 @@ if (!$K_SINK) {
 }
 
 $server = new Server("0.0.0.0", 8080);
+$server->set([
+    'http_compression' => false,
+]);
 $client = new Client();
 
 $server->on("request", function (Request $request, Response $response) use ($client, $DIRECTUS_URL, $DIRECTUS_TOKEN, $K_SINK, $OTP_SECRET, $MAX_AMOUNT, $HEADERS_REMOVE) {

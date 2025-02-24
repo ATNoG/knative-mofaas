@@ -58,7 +58,7 @@ class MoFaaSProxy:
         body = await request.read()
         headers = request.headers
         path_qs = yarl.URL(request.path_qs).human_repr()
-        logging.debug(f"Received {method} request from {sender}: {headers}")
+        logging.debug(f"Received {method} request from {sender}: <{headers}> <{body}>")
         await self.requests_queues[req_id][sender].put((method, body, headers, path_qs))
 
         # Return the response (wait for it)
@@ -73,6 +73,7 @@ class MoFaaSProxy:
                     method, body, headers, path_qs = await self.requests_queues[req_id][service].get()
                     request_store[service] = (method, path_qs, headers, body)
 
+                logging.debug("Forwarding request")
                 response = await self.forward_request(request_store, req_id)
                 for service in services:
                     logging.debug(f"Sending response to {service}")
