@@ -11,10 +11,14 @@ oneVersionServices:
     env:
       - DIRECTUS_URL
       - DIRECTUS_TOKEN
+    labels:
+      networking.knative.dev/visibility: cluster-local
   - name: result
     annotations:
       autoscaling.knative.dev/min-scale: "1"
       autoscaling.knative.dev/max-scale: "1"
+    labels:
+      networking.knative.dev/visibility: cluster-local
 multiVersionServices:
   - name: authorization
     env:
@@ -27,11 +31,13 @@ multiVersionServices:
       - js
       - go
     ignoreHeaders:
-    - ce-id
-    - Date
-    - x-envoy-upstream-service-time
-    - Content-Length
-    - x-powered-by
+      - ce-id
+      - Date
+      - x-envoy-upstream-service-time
+      - Content-Length
+      - x-powered-by
+    labels:
+      networking.knative.dev/visibility: cluster-local
   - name: verify-transaction
     env:
       - DIRECTUS_URL
@@ -46,11 +52,13 @@ multiVersionServices:
       - js
       - go
     ignoreHeaders:
-    - ce-id
-    - Date
-    - x-envoy-upstream-service-time
-    - Content-Length
-    - x-powered-by
+      - ce-id
+      - Date
+      - x-envoy-upstream-service-time
+      - Content-Length
+      - x-powered-by
+    labels:
+      networking.knative.dev/visibility: cluster-local
 languages:
   - python
   - java

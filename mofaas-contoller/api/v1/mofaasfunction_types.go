@@ -31,6 +31,9 @@ type MoFaaSFunctionSpec struct {
 	// +default=1
 	Concurrency int `json:"concurrency,omitempty" validation:"Maximum({.spec.variants | len})"`
 
+	// +default=false
+	Private bool `json:"private,omitempty"`
+
 	Variants []VariantSpec `json:"variants,omitempty"`
 
 	// IgnoreHeaders will default to an empty array if not given

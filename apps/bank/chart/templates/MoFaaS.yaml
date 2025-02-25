@@ -10,6 +10,7 @@ metadata:
   namespace: {{ $root.Values.namespace }}
 spec:
   concurrency: {{ $svc.concurrency }}
+  private: true
   variants:
   {{- range $svc.versions }}
   - apiVersion: serving.knative.dev/v1

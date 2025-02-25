@@ -4,6 +4,10 @@ kind: Service
 metadata:
   name: {{ .name }}
   namespace: {{ $.Values.namespace }}
+  {{- if .labels }}
+  labels:
+    {{- toYaml .labels | nindent 4 }}
+  {{- end }}
 spec:
   template:
     metadata:
@@ -38,12 +42,17 @@ spec:
 {{- range .Values.multiVersionServices }}
   {{- $svc := . }}
   {{- $serviceName := .name }}
+  {{- $serviceLabels := .labels }}
   {{- range $root.Values.languages }}
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: {{ $serviceName }}-{{ . }}
   namespace: {{ $root.Values.namespace }}
+  {{- if $serviceLabels }}
+  labels:
+    {{- toYaml $serviceLabels | nindent 4 }}
+  {{- end }}
 spec:
   template:
     metadata:

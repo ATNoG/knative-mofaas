@@ -109,6 +109,7 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "mofaas-egress-proxy-" + mofaasFunc.Name,
 			Namespace: mofaasFunc.Namespace,
+			Labels: map[string]string{"networking.knative.dev/visibility": "cluster-local"},
 		},
 	}
 
@@ -251,6 +252,10 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	}
 
 	/***************************************** Generate MoFaaS Controller Knative Service structure *****************************************/
+	functionChooserServiceLabels := map[string]string{}
+	if mofaasFunc.Spec.Private {
+		functionChooserServiceLabels["networking.knative.dev/visibility"] = "cluster-local"
+	}
 	functionChooserService := serving.Service{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
@@ -258,6 +263,7 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "mofaas-chooser-" + mofaasFunc.Name,
 			Namespace: mofaasFunc.Namespace,
+			Labels: functionChooserServiceLabels,
 		},
 	}
 
@@ -420,6 +426,7 @@ func (r *MoFaaSFunctionReconciler) generateEgressProxyServiceStruct(ctx context.
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
 						fmt.Sprintf("%s/service", k8smofaascomv1.GroupVersion.Group): "mofaas-egress-proxy", // TODO -> THIS SHOULD BE DEFINED AS A CONSTANT OR SOMETHING
+						"networking.knative.dev/visibility": "cluster-local",
 					},
 				},
 				Spec: serving.RevisionSpec{
