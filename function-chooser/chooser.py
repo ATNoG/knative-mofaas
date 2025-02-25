@@ -9,7 +9,10 @@ import urllib
 import aiohttp
 import aiohttp.web
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    format="%(created)f - %(levelname)s - %(message)s",
+    level=logging.DEBUG
+)
 logging.getLogger("http.client").setLevel(logging.DEBUG)
 logging.getLogger("urllib3").setLevel(logging.DEBUG)
 
@@ -38,7 +41,7 @@ class MoFaaSProxy:
 
         # Choosing the function to execute and change the Host header accordingly
         chosen_funcs = random.sample(list(self.services.keys()), k=self.concurrency)
-        logging.debug(f"Chosen functions: {chosen_funcs}")
+        logging.debug(f"Chosen functions for id <{request_id}>: {chosen_funcs}")
         await self.__egress_request({EGRESS_START_HEADER: "true"}, {"services": chosen_funcs, "id": request_id})
 
         async with aiohttp.ClientSession() as session:

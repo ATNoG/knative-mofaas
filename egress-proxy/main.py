@@ -7,7 +7,10 @@ import asyncio
 import yarl
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    format="%(created)f - %(levelname)s - %(message)s",
+    level=logging.DEBUG
+)
 logging.getLogger("http.client").setLevel(logging.DEBUG)
 
 DEFAULT_CONCURRENCY = 1

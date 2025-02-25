@@ -2,7 +2,10 @@ import uuid
 import requests, os, logging
 from flask import Flask, request, jsonify
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    format="%(created)f - %(levelname)s - %(message)s",
+    level=logging.DEBUG
+)
 
 app = Flask(__name__)
 
@@ -13,6 +16,7 @@ HEADERS_REMOVE = ("Ce-Id", "Ce-Specversion", "Ce-Type", "Ce-Source", "Content-Ty
 def forward_to_broker():
     event = request.get_json()
     ce_id = str(uuid.uuid4())
+    logging.debug(f"Received request with id <{ce_id}>")
     headers = {
         "Ce-Id": ce_id,
         "Ce-Specversion": "1.0",
@@ -23,7 +27,6 @@ def forward_to_broker():
         **{k: v for k, v in request.headers.items() if k not in HEADERS_REMOVE}
     }
     response = requests.post(K_SINK, json=event, headers=headers)
-    logging.debug(f"Received response with headers <{response.headers}>")
     return {"forwarded-response": response.json() if response.status_code < 500 else None, "id": ce_id}, response.status_code
 
 if __name__ == "__main__":

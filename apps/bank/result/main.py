@@ -3,9 +3,7 @@ import json
 from flask import Flask, request
 
 logging.basicConfig(
-    format="{asctime} - {levelname} - {message}",
-    style="{",
-    datefmt="%Y-%m-%d %H:%M",
+    format="%(created)f - %(levelname)s - %(message)s",
     level=logging.DEBUG
 )
 
