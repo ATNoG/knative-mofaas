@@ -23,7 +23,7 @@ multiVersionServices:
   - name: authorization
     env:
       - SECRET_KEY
-    concurrency: 5
+    concurrency: 1
     versions:
       - python
       - java
@@ -44,7 +44,7 @@ multiVersionServices:
       - DIRECTUS_TOKEN
       - OTP_SECRET
       - MAX_AMOUNT
-    concurrency: 5
+    concurrency: 1
     versions:
       - python
       - java

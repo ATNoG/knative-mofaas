@@ -101,7 +101,8 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// First, let's create the egress proxy service
+	// First, let's create the egress proxy service if the concurrency is greater than 1
+	// TODO -> this code should really be improved, it is starting to be too spaghetti :(
 	egressProxyService := serving.Service{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service",
@@ -112,33 +113,82 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 			Labels: map[string]string{"networking.knative.dev/visibility": "cluster-local"},
 		},
 	}
-
-	_, err := controllerutil.CreateOrUpdate(ctx, r.Client, &egressProxyService, func() error {
-		err := r.generateEgressProxyServiceStruct(ctx, mofaasFunc, &egressProxyService)
-		return err
-	})
-	if err != nil {
-		log.Error(err, "Unable to update or create the Egress Proxy Service")
-		return ctrl.Result{}, err
-	}
-
-	/***************************************** UPDATE ASSOCIATED VARIANTS' KNATIVE SERVICES LABELS *****************************************/
-	// Define the new labels to be added
-	newLabels := map[string]string{
-		fmt.Sprintf("%s/mofaasfunction", k8smofaascomv1.GroupVersion.Group): mofaasFunc.Name,
-	}
-
-	// Iterate over each variant and update its service labels
-	for _, variant := range mofaasFunc.Spec.Variants {
-		err := updatePodLabels(ctx, r.Client, mofaasFunc.Namespace, variant.Name, newLabels)
+	configMapName := fmt.Sprintf("%s-envoy-config", mofaasFunc.Name)
+	policyExceptionName := fmt.Sprintf("%s-policy-exception", mofaasFunc.Name)
+	policyName := fmt.Sprintf("%s-policy", mofaasFunc.Name)
+	if mofaasFunc.Spec.Concurrency > 1 {
+		_, err := controllerutil.CreateOrUpdate(ctx, r.Client, &egressProxyService, func() error {
+			err := r.generateEgressProxyServiceStruct(ctx, mofaasFunc, &egressProxyService)
+			return err
+		})
 		if err != nil {
-			log.Error(err, "Error updating service labels", "namespace", mofaasFunc.Namespace, "service", variant.Name)
-			// Decide whether to continue or return the error based on your use case
+			log.Error(err, "Unable to update or create the Egress Proxy Service")
+			return ctrl.Result{}, err
+		}
+
+		/***************************************** UPDATE ASSOCIATED VARIANTS' KNATIVE SERVICES LABELS *****************************************/
+		// Define the new labels to be added
+		newLabels := map[string]string{
+			fmt.Sprintf("%s/mofaasfunction", k8smofaascomv1.GroupVersion.Group): mofaasFunc.Name,
+		}
+
+		// Iterate over each variant and update its service labels
+		for _, variant := range mofaasFunc.Spec.Variants {
+			err := updatePodLabels(ctx, r.Client, mofaasFunc.Namespace, variant.Name, newLabels)
+			if err != nil {
+				log.Error(err, "Error updating service labels", "namespace", mofaasFunc.Namespace, "service", variant.Name)
+				// Decide whether to continue or return the error based on your use case
+			}
+		}
+
+		// Then, create the new configmap for the envoy
+		r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService, newLabels, configMapName, policyExceptionName, policyName)
+	} else {
+		// Delete the egress proxy service if it exists.
+		err := r.Client.Delete(ctx, &egressProxyService)
+
+		// Ignore the error if the service is not found.
+		if err != nil && !apierrors.IsNotFound(err) {
+			log.Error(err, "Unable to delete the Egress Proxy Service")
+			return ctrl.Result{}, err
+		}
+
+		// Delete the ConfigMap if it exists.
+		configMap := &core.ConfigMap{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      configMapName,
+				Namespace: mofaasFunc.Namespace,
+			},
+		}
+		if err := r.Client.Delete(ctx, configMap); err != nil && !apierrors.IsNotFound(err) {
+			log.Error(err, "Unable to delete ConfigMap")
+			return ctrl.Result{}, err
+		}
+	
+		// Delete the PolicyException if it exists.
+		policyException := &kyvernov2.PolicyException{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      policyExceptionName,
+				Namespace: mofaasFunc.Namespace,
+			},
+		}
+		if err := r.Client.Delete(ctx, policyException); err != nil && !apierrors.IsNotFound(err) {
+			log.Error(err, "Unable to delete PolicyException")
+			return ctrl.Result{}, err
+		}
+	
+		// Delete the Policy if it exists.
+		policy := &kyvernov1.Policy{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      policyName,
+				Namespace: mofaasFunc.Namespace,
+			},
+		}
+		if err := r.Client.Delete(ctx, policy); err != nil && !apierrors.IsNotFound(err) {
+			log.Error(err, "Unable to delete Policy")
+			return ctrl.Result{}, err
 		}
 	}
-
-	// Then, create the new configmap for the envoy
-	r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService, newLabels)
 
 	// Status as Unknown when no status is available
 	// Adapted from https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/getting-started/testdata/project/internal/controller/memcached_controller.go
@@ -473,13 +523,6 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 		services[i] = variant.Name
 	}
 
-	// Third, get the Knative Egress Service URL
-	egressProxyServiceUrl, err := r.getKnativeServiceURL(ctx, egressProxyServiceName, mofaasFunc.Namespace)
-	if err != nil {
-		log.Error(err, fmt.Sprintf("Error while obtaining the Egress's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
-		return err
-	}
-
 	// Knative Service definition for the Function Chooser
 	// functionChooserService.TypeMeta = metav1.TypeMeta{APIVersion: serving.Kind("Service").Group + "/v1", Kind: "Service"}
 	// functionChooserService.ObjectMeta.Name = "mofaas-chooser-" + mofaasFunc.Name
@@ -515,10 +558,6 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 										Name:  "IGNORE_HEADERS",
 										Value: strings.Join(ignoreHeadersEnc[:], ","),
 									},
-									{
-										Name:  "EGRESS_URL",
-										Value: base64.StdEncoding.EncodeToString([]byte(egressProxyServiceUrl)),
-									},
 								},
 							},
 						},
@@ -526,6 +565,20 @@ func (r *MoFaaSFunctionReconciler) generateFuncChooserServiceStruct(ctx context.
 				},
 			},
 		},
+	}
+
+	// Finally, get the Knative Egress Service URL if it exists and add it
+	if mofaasFunc.Spec.Concurrency > 1 {
+		egressProxyServiceUrl, err := r.getKnativeServiceURL(ctx, egressProxyServiceName, mofaasFunc.Namespace)
+		if err != nil {
+			log.Error(err, fmt.Sprintf("Error while obtaining the Egress's URLs for mofaasFunc %s in namespace %s", mofaasFunc.Name, mofaasFunc.Namespace))
+			return err
+		}
+		egressUrlEnv := core.EnvVar{
+			Name:  "EGRESS_URL",
+			Value: base64.StdEncoding.EncodeToString([]byte(egressProxyServiceUrl)),
+		}
+		functionChooserService.Spec.ConfigurationSpec.Template.Spec.PodSpec.Containers[0].Env = append(functionChooserService.Spec.ConfigurationSpec.Template.Spec.PodSpec.Containers[0].Env, egressUrlEnv)
 	}
 
 	if err := ctrl.SetControllerReference(&mofaasFunc, functionChooserService, r.Scheme); err != nil {
@@ -674,9 +727,8 @@ func updatePodLabels(ctx context.Context, c client.Client, namespace, serviceNam
 // 	return nil
 // }
 
-func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service, labels map[string]string) error {
+func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, mofaasFunc *k8smofaascomv1.MoFaaSFunction, egressProxyService *serving.Service, labels map[string]string, configMapName string, policyExceptionName string, policyName string) error {
 	log := log.FromContext(ctx)
-	configMapName := fmt.Sprintf("%s-envoy-config", mofaasFunc.Name)
 
 	// First, let's Load and Update Envoy Config
 	var config map[string]interface{}
@@ -735,7 +787,7 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 
 	// Fourth, Mount ConfigMap into Services
 	for _, service := range mofaasFunc.Spec.Variants {
-		err = r.mountConfigMapToServicesPods(ctx, *mofaasFunc, labels, configMapName)
+		err = r.mountConfigMapToServicesPods(ctx, *mofaasFunc, labels, configMapName, policyExceptionName, policyName)
 		if err != nil {
 			log.Error(err, "Failed to mount ConfigMap", "service", service.Name)
 			return err
@@ -745,13 +797,10 @@ func (r *MoFaaSFunctionReconciler) createAndMountConfigMap(ctx context.Context, 
 	return nil
 }
 
-func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, labels map[string]string, configMapName string) error {
+func (r *MoFaaSFunctionReconciler) mountConfigMapToServicesPods(ctx context.Context, mofaasFunc k8smofaascomv1.MoFaaSFunction, labels map[string]string, configMapName string, policyExceptionName string, policyName string) error {
 	log := log.FromContext(ctx)
 
 	namespace := mofaasFunc.Namespace
-	policyExceptionName := fmt.Sprintf("%s-policy-exception", mofaasFunc.Name)
-	policyName := fmt.Sprintf("%s-policy", mofaasFunc.Name)
-
 	/***************************************** CREATE POLICY EXCEPTION *****************************************/
 
 	// Check if the PolicyException already exists

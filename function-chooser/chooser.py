@@ -128,6 +128,9 @@ class MoFaaSProxy:
         return True, ref_response
 
     async def __egress_request(self, headers, data):
+        if not self.egress_url:
+            logging.warning("Will not send a request to the egress, as there is none")
+            return 
         async with aiohttp.ClientSession() as session:
             logging.debug(f"Sending {data} to the egress with headers {headers}")
             async with session.post(self.egress_url, headers=headers, json=data) as response:
@@ -184,11 +187,11 @@ def main():
     if not (services_urls := os.environ.get("SERVICES_URLS")):
         logging.error("There were no given services URLs")
         exit(1)
-    if not (egress_url_b64 := os.environ.get("EGRESS_URL")):
-        logging.error("There was no given egress URL")
-        exit(1)
 
-    egress_url = base64.b64decode(egress_url_b64).decode()
+    egress_url = None           # Default value
+    if egress_url_b64 := os.environ.get("EGRESS_URL"):
+        egress_url = base64.b64decode(egress_url_b64).decode()
+    
     services = {}
     services_urls_b64_list = services_urls.split(",")
     for i in range(len(services_list := services_names.split(","))):
