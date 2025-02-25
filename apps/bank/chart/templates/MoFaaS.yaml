@@ -1,0 +1,24 @@
+{{- $root := . -}}
+{{- range .Values.multiVersionServices }}
+  {{- $svc := . }}
+  {{- $serviceName := .name }}
+
+apiVersion: mofaas.atnog/v1
+kind: MoFaaSFunction
+metadata:
+  name: {{ $serviceName }}
+  namespace: {{ $root.Values.namespace }}
+spec:
+  concurrency: {{ $svc.concurrency }}
+  variants:
+  {{- range $svc.versions }}
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: {{ $serviceName }}-{{ . }}
+  {{- end }}
+  ignore-headers:
+  {{- range $svc.ignoreHeaders }}
+  - {{ . }}
+  {{- end }}
+---
+{{- end }}

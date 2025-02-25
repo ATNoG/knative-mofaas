@@ -8,12 +8,16 @@ spec:
   filters:
     - exact:
         source: authorization
-        dv: "True"
+        dv: "true"
   subscriber:
+    # ref:
+    #   apiVersion: serving.knative.dev/v1
+    #   kind: Service
+    #   name: verify-transaction-python
     ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: verify-transaction-python
+      apiVersion: mofaas.atnog/v1
+      kind: MoFaaSFunction
+      name: verify-transaction
     uri: /
 ---
 apiVersion: eventing.knative.dev/v1
@@ -26,7 +30,9 @@ spec:
   filters:
     - exact:
         source: authorization
-        dv: "False"
+    - not:
+        exact:
+          dv: "true"
   subscriber:
     ref:
       apiVersion: serving.knative.dev/v1
@@ -44,7 +50,7 @@ spec:
   filters:
     - exact:
         source: verify-transaction
-        dt: "True"
+        dt: "true"
   subscriber:
     ref:
       apiVersion: serving.knative.dev/v1
@@ -62,7 +68,9 @@ spec:
   filters:
     - exact:
         source: verify-transaction
-        dt: "False"
+    - not:
+        exact:
+          dt: "true"
   subscriber:
     ref:
       apiVersion: serving.knative.dev/v1

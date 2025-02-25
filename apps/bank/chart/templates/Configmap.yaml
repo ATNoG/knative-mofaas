@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bank-app-configmap
+  namespace: {{ .Values.namespace }}
+data:
+  directus_url: {{ .Values.configmap.directusUrl }}
+  max_amount: "{{ .Values.configmap.maxAmount }}"

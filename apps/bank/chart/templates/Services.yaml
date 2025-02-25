@@ -24,10 +24,8 @@ spec:
               {{- if .value }}
               value: {{ .value }}
               {{- else }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .secretKeyRef.name }}
-                  key: {{ .secretKeyRef.key }}
+              valueFrom: {{ toYaml .valueFrom | nindent 16 }}
+                
               {{- end }}
                 {{- end }}
               {{- end }}
@@ -66,10 +64,8 @@ spec:
               {{- if .value }}
               value: {{ .value }}
               {{- else }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .secretKeyRef.name }}
-                  key: {{ .secretKeyRef.key }}
+              valueFrom: {{ toYaml .valueFrom | nindent 16 }}
+                
               {{- end }}
                 {{- end }}
               {{- end }}

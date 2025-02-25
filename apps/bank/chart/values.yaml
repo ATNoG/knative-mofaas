@@ -19,23 +19,74 @@ multiVersionServices:
   - name: authorization
     env:
       - SECRET_KEY
+    concurrency: 5
+    versions:
+      - python
+      - java
+      - php
+      - js
+      - go
+    ignoreHeaders:
+    - ce-id
+    - Date
+    - x-envoy-upstream-service-time
+    - Content-Length
+    - x-powered-by
   - name: verify-transaction
     env:
       - DIRECTUS_URL
       - DIRECTUS_TOKEN
+      - OTP_SECRET
+      - MAX_AMOUNT
+    concurrency: 5
+    versions:
+      - python
+      - java
+      - php
+      - js
+      - go
+    ignoreHeaders:
+    - ce-id
+    - Date
+    - x-envoy-upstream-service-time
+    - Content-Length
+    - x-powered-by
 languages:
   - python
+  - java
+  - php
+  - js
+  - go
 commonEnv:
-  - name: DIRECTUS_URL
-    value: "http://directus.directus:8055"
   - name: DIRECTUS_TOKEN
-    secretKeyRef:
-      name: bank-app-secret
-      key: DIRECTUS_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: bank-app-secret
+        key: directus_api_token
   - name: SECRET_KEY
-    secretKeyRef:
-      name: bank-app-secret
-      key: JWT_KEY
+    valueFrom:
+      secretKeyRef:
+        name: bank-app-secret
+        key: jwt_key
+  - name: OTP_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: bank-app-secret
+        key: otp_secret
+  - name: DIRECTUS_URL
+    valueFrom:
+      configMapKeyRef:
+        name: bank-app-configmap
+        key: directus_url
+  - name: MAX_AMOUNT
+    valueFrom:
+      configMapKeyRef:
+        name: bank-app-configmap
+        key: max_amount
+configmap:
+  directusUrl: http://directus.directus:8055
+  maxAmount: "1000"
 secrets:
   directusToken: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
   jwtKey: dmVyeV9zZWNyZXRfa2V5
+  otpSecret: MTIzNDU2

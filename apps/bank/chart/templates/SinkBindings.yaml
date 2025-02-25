@@ -10,9 +10,14 @@ spec:
     name: entry-point
   sink:
     ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: authorization-python
+      apiVersion: mofaas.atnog/v1
+      kind: MoFaaSFunction
+      name: authorization
+  # sink:
+  #   ref:
+  #     apiVersion: serving.knative.dev/v1
+  #     kind: Service
+  #     name: authorization-python
 ---
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
@@ -20,10 +25,14 @@ metadata:
   name: bind-authorization
   namespace: {{ .Values.namespace }}
 spec:
+  # subject:
+  #   apiVersion: serving.knative.dev/v1
+  #   kind: Service
+  #   name: authorization-python
   subject:
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: authorization-python
+    name: mofaas-chooser-authorization
   sink:
     ref:
       apiVersion: eventing.knative.dev/v1
@@ -36,10 +45,14 @@ metadata:
   name: bind-verify-transaction
   namespace: {{ .Values.namespace }}
 spec:
+  # subject:
+  #   apiVersion: serving.knative.dev/v1
+  #   kind: Service
+  #   name: verify-transaction-python
   subject:
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: verify-transaction-python
+    name: mofaas-chooser-verify-transaction
   sink:
     ref:
       apiVersion: eventing.knative.dev/v1
@@ -56,6 +69,38 @@ spec:
     apiVersion: serving.knative.dev/v1
     kind: Service
     name: transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-authorization-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-authorization
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-verify-transaction-result
+  namespace: mofaas-bank-app
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-verify-transaction
   sink:
     ref:
       apiVersion: serving.knative.dev/v1
