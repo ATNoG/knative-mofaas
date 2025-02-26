@@ -6,13 +6,22 @@ oneVersionServices:
       - DIRECTUS_URL
       - DIRECTUS_TOKEN
       - SECRET_KEY
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
   - name: entry-point
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
   - name: transaction
     env:
       - DIRECTUS_URL
       - DIRECTUS_TOKEN
     labels:
       networking.knative.dev/visibility: cluster-local
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
   - name: result
     annotations:
       autoscaling.knative.dev/min-scale: "1"
@@ -38,6 +47,9 @@ multiVersionServices:
       - x-powered-by
     labels:
       networking.knative.dev/visibility: cluster-local
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
   - name: verify-transaction
     env:
       - DIRECTUS_URL
@@ -59,6 +71,9 @@ multiVersionServices:
       - x-powered-by
     labels:
       networking.knative.dev/visibility: cluster-local
+    annotations:
+      autoscaling.knative.dev/min-scale: "1"
+      autoscaling.knative.dev/max-scale: "1"
 languages:
   - python
   - java
@@ -93,7 +108,7 @@ commonEnv:
         key: max_amount
 configmap:
   directusUrl: http://directus.directus:8055
-  maxAmount: "1000"
+  maxAmount: "15"
 secrets:
   directusToken: QmR0NXRZQ0RTTFMzLW42MmpVOFhndDFzWXJ6eWlwc1E=
   jwtKey: dmVyeV9zZWNyZXRfa2V5
