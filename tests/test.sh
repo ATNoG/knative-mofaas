@@ -129,7 +129,7 @@ for auth_concurrency in {1..5}; do
             echo "-------------------------------------------------------" >> "$result_trace_file"
 
             for (( i=1; i<=REQUEST_COUNT; i++ )); do
-                req_start=$(date +%s)
+                req_start=$(date +%s.%N)
                 echo "Request $i start: $req_start" >> "$result_trace_file"
                 
                 # Build JSON payload
@@ -144,7 +144,7 @@ for auth_concurrency in {1..5}; do
 
                 # Execute curl request and capture response
                 response=$(curl --silent --data "$payload" "$ENTRY_URL" "${headers[@]}")
-                req_end=$(date +%s)
+                req_end=$(date +%s.%N)
                 echo "Request $i end: $req_end" >> "$result_trace_file"
                 echo "Response: $response" >> "$result_trace_file"
                 echo "-------------------------------------------------------" >> "$result_trace_file"
@@ -161,6 +161,12 @@ for auth_concurrency in {1..5}; do
                 pod_log_file="${test_dir}/pod_${pod}_logs.txt"
                 echo "Saving logs for pod $pod to $pod_log_file"
                 kubectl logs "$pod" -c user-container -n "$NAMESPACE" > "$pod_log_file"
+
+                # Check if the pod has a previous instance and save its logs
+                if kubectl get pod "$pod" -n "$NAMESPACE" -o jsonpath='{.status.containerStatuses[0].restartCount}' | grep -q '[1-9]'; then
+                    echo "Saving logs for previous instance of pod $pod" >> "$pod_log_file"
+                    kubectl logs "$pod" -c user-container -n "$NAMESPACE" --previous >> "$pod_log_file" 2>&1
+                fi
             done
 
             ##########################
