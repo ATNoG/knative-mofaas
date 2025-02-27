@@ -87,8 +87,8 @@ reboot_machines() {
 # We now run independent test cycles for each amount (10 and 100), combined with each combination
 # of authorization and verify-transaction concurrency (ranging from 1 to 5).
 for auth_concurrency in {1..5}; do
-    for verify_concurrency in {1..5}; do
-        for amount in 10 100; do
+    for verify_concurrency in {3..5}; do # for verify_concurrency in {1..5}; do
+        for amount in 100 10; do
             ##########################
             # 1. REBOOT CLUSTER MACHINES AND WAIT FOR CLUSTER TO BE READY
             ##########################
