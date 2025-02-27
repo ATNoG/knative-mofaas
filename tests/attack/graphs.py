@@ -1,5 +1,6 @@
 import os
-import re
+import seaborn as sns
+import matplotlib.pyplot as plt
 import json
 
 RESULTS_DIR = "results/"
@@ -43,7 +44,8 @@ def read_results_pod(file_name):
 
         results.append({
             "headers": headers,
-            "body": body
+            "body": body,
+            "time": float(content[headers_marker - 18 - 28 - 16:headers_marker - 18 - 28])
         })
             
         pos = next_index_body
@@ -109,16 +111,35 @@ for item in os.listdir('results/'):
             all_results[amount][auth_conc][verify_conc][_id] = {}
         all_results[amount][auth_conc][verify_conc][_id]["pod_results"] = p
     
-    if item == "test_amt-100_auth-1_verify-4_20250226135603":
+    if item.startswith("test_amt-10_auth-1_verify-1"):
         for i in (r := all_results[amount][auth_conc][verify_conc]):
             if not r[i].get("pod_results"):
                 print(i, r[i])
 
 # Now all_results holds the parsed data from each pod_result file.
 
-# x = 0
-# for r in (c := all_results[100][1][4]):
-#     if r["body"].get("message") == "Transaction successful":
-#         x += 1
-# print(x)
-# print(len(c))
+data = {
+    "Test": [],
+    "Probability": [],
+    "Time": []
+}
+for amount in [10, 100]:
+    for verify in range(1, 4):
+        x = 0
+        l = 1
+        data["Time"].append([])
+        for r in (c := all_results[amount][1][verify]):
+            if 'pod_results' in c[r]:
+                if c[r]['pod_results']["body"].get("message") == "Transaction successful":
+                    x += 1
+                    if 'requests_trace' in c[r]:
+                        data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+                l += 1
+        data["Test"].append(f"Amount {amount}, Verify {verify}")
+        data["Probability"].append(x/l*100)
+        print(l)
+        # data.append(x/len(c)*100)
+print(data)
+# sns.scatterplot(data=data)
+sns.boxplot(data["Time"])
+plt.show()
