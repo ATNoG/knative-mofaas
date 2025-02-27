@@ -101,6 +101,57 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+
+	/***************************************** DELETE *****************************************/
+	// Check if the Memcached instance is marked to be deleted, which is
+	// indicated by the deletion timestamp being set.
+	isMofaasFunctMarkedToBeDeleted := mofaasFunc.GetDeletionTimestamp() != nil
+	if isMofaasFunctMarkedToBeDeleted {
+		if controllerutil.ContainsFinalizer(&mofaasFunc, mofaasFunctionFinalizer) {
+			log.Info("Performing Finalizer Operations for MoFaaSFunction before delete CR")
+
+			// Let's add here a status "Downgrade" to reflect that this resource began its process to be terminated.
+			meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{Type: typeDegradedMoFaaSFunction,
+				Status: metav1.ConditionUnknown, Reason: "Finalizing",
+				Message: fmt.Sprintf("Performing finalizer operations for the custom resource: %s ", mofaasFunc.Name)})
+
+			if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
+				log.Error(err, "Failed to update MoFaaSFunction status")
+				return ctrl.Result{}, err
+			}
+
+			// Re-fetch the MoFaaSFunction Custom Resource before updating the status
+			// so that we have the latest state of the resource on the cluster and we will avoid
+			// raising the error "the object has been modified, please apply
+			// your changes to the latest version and try again" which would re-trigger the reconciliation
+			if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
+				log.Error(err, "Failed to re-fetch MoFaaSFunction")
+				return ctrl.Result{}, err
+			}
+
+			meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{Type: typeDegradedMoFaaSFunction,
+				Status: metav1.ConditionTrue, Reason: "Finalizing",
+				Message: fmt.Sprintf("Finalizer operations for custom resource %s name were successfully accomplished", mofaasFunc.Name)})
+
+			if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
+				log.Error(err, "Failed to update MoFaaSFunction status")
+				return ctrl.Result{}, err
+			}
+
+			log.Info("Removing Finalizer for MoFaaSFunction after successfully perform the operations")
+			if ok := controllerutil.RemoveFinalizer(&mofaasFunc, mofaasFunctionFinalizer); !ok {
+				log.Error(nil, "Failed to remove finalizer for MoFaaSFunction")
+				return ctrl.Result{Requeue: true}, nil
+			}
+
+			if err := r.Update(ctx, &mofaasFunc); err != nil {
+				log.Error(err, "Failed to remove finalizer for MoFaaSFunction")
+				return ctrl.Result{}, err
+			}
+		}
+		return ctrl.Result{}, nil
+	}
+
 	// First, let's create the egress proxy service if the concurrency is greater than 1
 	// TODO -> this code should really be improved, it is starting to be too spaghetti :(
 	egressProxyService := serving.Service{
@@ -132,16 +183,19 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 			fmt.Sprintf("%s/mofaasfunction", k8smofaascomv1.GroupVersion.Group): mofaasFunc.Name,
 		}
 
-		// Iterate over each variant and update its service labels
+		// Create the new configmap for the envoy
+		r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService, newLabels, configMapName, policyExceptionName, policyName)
+
+		// Then, iterate over each variant and update its service labels
 		for _, variant := range mofaasFunc.Spec.Variants {
 			err := updatePodLabels(ctx, r.Client, mofaasFunc.Namespace, variant.Name, newLabels)
 			if err != nil {
 				log.Error(err, "Error updating service labels", "namespace", mofaasFunc.Namespace, "service", variant.Name)
+				return ctrl.Result{}, err
 				// Decide whether to continue or return the error based on your use case
 			}
 		}
 
-		// Then, create the new configmap for the envoy
 		r.createAndMountConfigMap(ctx, &mofaasFunc, &egressProxyService, newLabels, configMapName, policyExceptionName, policyName)
 	} else {
 		// Delete the egress proxy service if it exists.
@@ -249,56 +303,6 @@ func (r *MoFaaSFunctionReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 			log.Error(err, "Failed to update custom resource to add finalizer")
 			return ctrl.Result{}, err
 		}
-	}
-
-	/***************************************** DELETE *****************************************/
-	// Check if the Memcached instance is marked to be deleted, which is
-	// indicated by the deletion timestamp being set.
-	isMofaasFunctMarkedToBeDeleted := mofaasFunc.GetDeletionTimestamp() != nil
-	if isMofaasFunctMarkedToBeDeleted {
-		if controllerutil.ContainsFinalizer(&mofaasFunc, mofaasFunctionFinalizer) {
-			log.Info("Performing Finalizer Operations for MoFaaSFunction before delete CR")
-
-			// Let's add here a status "Downgrade" to reflect that this resource began its process to be terminated.
-			meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{Type: typeDegradedMoFaaSFunction,
-				Status: metav1.ConditionUnknown, Reason: "Finalizing",
-				Message: fmt.Sprintf("Performing finalizer operations for the custom resource: %s ", mofaasFunc.Name)})
-
-			if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
-				log.Error(err, "Failed to update MoFaaSFunction status")
-				return ctrl.Result{}, err
-			}
-
-			// Re-fetch the MoFaaSFunction Custom Resource before updating the status
-			// so that we have the latest state of the resource on the cluster and we will avoid
-			// raising the error "the object has been modified, please apply
-			// your changes to the latest version and try again" which would re-trigger the reconciliation
-			if err := r.Get(ctx, req.NamespacedName, &mofaasFunc); err != nil {
-				log.Error(err, "Failed to re-fetch MoFaaSFunction")
-				return ctrl.Result{}, err
-			}
-
-			meta.SetStatusCondition(&mofaasFunc.Status.Conditions, metav1.Condition{Type: typeDegradedMoFaaSFunction,
-				Status: metav1.ConditionTrue, Reason: "Finalizing",
-				Message: fmt.Sprintf("Finalizer operations for custom resource %s name were successfully accomplished", mofaasFunc.Name)})
-
-			if err := r.Status().Update(ctx, &mofaasFunc); err != nil {
-				log.Error(err, "Failed to update MoFaaSFunction status")
-				return ctrl.Result{}, err
-			}
-
-			log.Info("Removing Finalizer for MoFaaSFunction after successfully perform the operations")
-			if ok := controllerutil.RemoveFinalizer(&mofaasFunc, mofaasFunctionFinalizer); !ok {
-				log.Error(nil, "Failed to remove finalizer for MoFaaSFunction")
-				return ctrl.Result{Requeue: true}, nil
-			}
-
-			if err := r.Update(ctx, &mofaasFunc); err != nil {
-				log.Error(err, "Failed to remove finalizer for MoFaaSFunction")
-				return ctrl.Result{}, err
-			}
-		}
-		return ctrl.Result{}, nil
 	}
 
 	/***************************************** Generate MoFaaS Controller Knative Service structure *****************************************/
