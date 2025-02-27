@@ -4,6 +4,7 @@ metadata:
   name: REPLACE
   namespace: REPLACE  # Replace with the appropriate namespace
 spec:
+  background: true
   exceptions:
     - policyName: inject-containers  # Replace with the name of your ClusterPolicy
       ruleNames:

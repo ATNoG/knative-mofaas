@@ -8,7 +8,7 @@ SSH_PASSWORD="olaadeus"                     # SSH password for the Kubernetes cl
 MACHINE_USER="ubuntu"                     # SSH user (assumed to have sudo privileges for reboot)
 MACHINES=("10.255.30.133" "10.255.30.109" "10.255.30.35")  # IPs of the 3 Kubernetes machines
 HELM_CHART_DIR="../apps/bank/chart/"             # Path to the helm chart directory
-REQUEST_COUNT=5000                                 # Number of consecutive curl requests per test cycle
+REQUEST_COUNT=6000                                 # Number of consecutive curl requests per test cycle
 WAIT_PERIOD=1                                    # Seconds to wait between each request
 NAMESPACE="mofaas-bank-app"                       # Kubernetes namespace for helm chart deployment
 RELEASE_NAME="bank"                      # Helm release name to be used for installation
@@ -87,8 +87,8 @@ reboot_machines() {
 # We now run independent test cycles for each amount (10 and 100), combined with each combination
 # of authorization and verify-transaction concurrency (ranging from 1 to 5).
 for auth_concurrency in {1..5}; do
-    for verify_concurrency in {1..5}; do
-        for amount in 10 100; do
+    for verify_concurrency in {3..5}; do # for verify_concurrency in {1..5}; do
+        for amount in 100 10; do
             ##########################
             # 1. REBOOT CLUSTER MACHINES AND WAIT FOR CLUSTER TO BE READY
             ##########################
@@ -119,6 +119,14 @@ for auth_concurrency in {1..5}; do
             # Wait until helm install is ready
             sleep 60
             wait_for_helm_ready
+
+            echo "Saving logs from pods during execution"
+            pods_to_log=$(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name || true)
+            for pod in $pods_to_log; do
+                pod_log_file="${test_dir}/pod_${pod}_logs_pre.txt"
+                echo "Saving logs for pod $pod to $pod_log_file"
+                kubectl logs "$pod" -c user-container -n "$NAMESPACE" --follow > "$pod_log_file" &
+            done
 
             ##########################
             # 3. PERFORM REQUESTS WITH CURL (TRACE SAVED)
@@ -163,10 +171,8 @@ for auth_concurrency in {1..5}; do
                 kubectl logs "$pod" -c user-container -n "$NAMESPACE" > "$pod_log_file"
 
                 # Check if the pod has a previous instance and save its logs
-                if kubectl get pod "$pod" -n "$NAMESPACE" -o jsonpath='{.status.containerStatuses[0].restartCount}' | grep -q '[1-9]'; then
-                    echo "Saving logs for previous instance of pod $pod" >> "$pod_log_file"
-                    kubectl logs "$pod" -c user-container -n "$NAMESPACE" --previous >> "$pod_log_file" 2>&1
-                fi
+                echo "Saving logs for previous instance of pod $pod" >> "$pod_log_file"
+                kubectl logs "$pod" -c user-container -n "$NAMESPACE" --previous >> "$pod_log_file"
             done
 
             ##########################

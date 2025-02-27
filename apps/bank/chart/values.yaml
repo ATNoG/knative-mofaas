@@ -32,7 +32,7 @@ multiVersionServices:
   - name: authorization
     env:
       - SECRET_KEY
-    concurrency: 3
+    concurrency: 1
     versions:
       - python
       - java
