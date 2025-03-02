@@ -7,7 +7,7 @@
 SSH_PASSWORD="olaadeus"                     # SSH password for the Kubernetes cluster machines
 MACHINE_USER="ubuntu"                     # SSH user (assumed to have sudo privileges for reboot)
 MACHINES=("10.255.30.133" "10.255.30.109" "10.255.30.35")  # IPs of the 3 Kubernetes machines
-HELM_CHART_DIR="../apps/bank/chart/"             # Path to the helm chart directory
+HELM_CHART_DIR="../../apps/bank/chart/"             # Path to the helm chart directory
 REQUEST_COUNT=6000                                 # Number of consecutive curl requests per test cycle
 WAIT_PERIOD=1                                    # Seconds to wait between each request
 NAMESPACE="mofaas-bank-app"                       # Kubernetes namespace for helm chart deployment
