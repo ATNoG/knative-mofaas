@@ -1,0 +1,83 @@
+{{- $root := . -}}
+{{- range .Values.multiVersionServices }}
+# Bind the entry-point to the first function (function-0)
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-entry-point
+  namespace: {{ $root.Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: entry-point
+  sink:
+    ref:
+      {{- if eq .deploymentType "attack" }}
+      apiVersion: mofaas.atnog/v1
+      kind: MoFaaSFunction
+      name: mofaas-function-0
+      {{- else }}
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: function-0
+      {{- end }}
+---
+{{- $svc := . }}
+{{- $pathSize := (int $svc.pathSize) }}
+{{- range $i := until $pathSize }}
+  {{- if gt $i 0 }}
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-function-{{ sub $i 1 }}-{{ $i }}
+  namespace: {{ $root.Values.namespace }}
+spec:
+  subject:
+    {{- if eq $svc.deploymentType "attack" }}
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-chooser-mofaas-function-{{ sub $i 1 }}
+    {{- else }}
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: function-{{ sub $i 1 }}
+    {{- end }}
+  sink:
+    ref:
+      {{- if eq $svc.deploymentType "attack" }}
+      apiVersion: mofaas.atnog/v1
+      kind: MoFaaSFunction
+      name: mofaas-function-{{ $i }}
+      {{- else }}
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: function-{{ $i }}
+      {{- end }}
+---
+  {{- end }}
+{{- end }}
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-last-function-result
+  namespace: {{ $root.Values.namespace }}
+spec:
+  subject:
+    {{- if eq .deploymentType "attack" }}
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-chooser-mofaas-function-{{ sub .pathSize 1 }}
+    {{- else }}
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: function-{{ sub .pathSize 1 }}
+    {{- end }}
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+{{- end }}
+
