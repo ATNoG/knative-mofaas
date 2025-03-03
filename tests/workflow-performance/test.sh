@@ -12,7 +12,7 @@ REQUEST_COUNT=1500                                 # Number of consecutive curl 
 WAIT_PERIOD=1                                    # Seconds to wait between each request
 NAMESPACE="mofaas-sample-workflow"                       # Kubernetes namespace for helm chart deployment
 RELEASE_NAME="sample-workflow"                      # Helm release name to be used for installation
-ENTRY_URL="http://entry-point.mofaas-sample-workflow.10.255.30.133.sslip.io"  # URL to contact for test requests
+ENTRY_URL="http://entry-point.mofaas-sample-workflow.10.255.30.127.sslip.io"  # URL to contact for test requests
 WAIT_REBOOT=280                                  # Seconds to wait after rebooting the cluster machines
 
 # Base directory to store test results (trace file and pod logs)
@@ -25,12 +25,13 @@ mkdir -p "$BASE_RESULT_DIR"
 
 # Wait until the only pod in the namespace has a name starting with "result"
 wait_for_helm_ready() {
-    n_functions=$1
-    needed_pods=$(( n_functions + 2 ))
+    versions=$1
+    path=$2
+    needed_pods=$(( versions * path + 2 ))
     echo "Waiting for helm install to be ready (only one pod starting with 'result')..."
     while true; do
         # mapfile -t pods < <(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name)
-        number_pods=$(kubectl get pods -n mofaas-bank-app | grep Running | wc | awk '{print $1}')
+        number_pods=$(kubectl get pods -n $NAMESPACE | grep Running | wc | awk '{print $1}')
         if [[ $number_pods -eq $needed_pods ]]; then
             echo "Helm chart is ready."
             break
@@ -114,13 +115,13 @@ main_task() {
     cp "$HELM_CHART_DIR/values.yaml" "$tmp_values_file"
     yq eval ".multiVersionServices[0].deploymentType = \"$deployment_type\"" -i "$tmp_values_file"
     yq eval ".multiVersionServices[0].concurrency = $concurrency" -i "$tmp_values_file"
-    yq eval ".multiVersionServices[1].pathSize = $path_size" -i "$tmp_values_file"
-    yq eval ".multiVersionServices[1].versions = $versions_per_function" -i "$tmp_values_file"
+    yq eval ".multiVersionServices[0].pathSize = $path_size" -i "$tmp_values_file"
+    yq eval ".multiVersionServices[0].versions = $versions_per_function" -i "$tmp_values_file"
     helm install "$RELEASE_NAME" "$HELM_CHART_DIR" -f "$tmp_values_file"
 
     # Wait until helm install is ready
     sleep 60
-    wait_for_helm_ready
+    wait_for_helm_ready $versions_per_function $path_size
     ./top.sh $NAMESPACE $test_dir $WAIT_PERIOD &
     top_pid=$!
 
@@ -178,6 +179,10 @@ main_task() {
     echo "Uninstalling helm release '$RELEASE_NAME'"
     helm uninstall "$RELEASE_NAME"
     wait_for_pods_termination
+    kubectl delete namespace $NAMESPACE &
+    sleep 60
+    kubectl delete namespace $NAMESPACE --force --grace-period=0
+    sleep 60
 
     echo "Test run completed. Results saved in directory: $test_dir"
     echo "-------------------------------------------------------"
@@ -188,7 +193,7 @@ main_task() {
 path_size=10
 deployment_type=attack
 for vpf in {1..10}; do
-    for concurrency in $(seq $vpf 10); do
+    for concurrency in $(seq 1 $vpf); do
         main_task $vpf $path_size $concurrency $deployment_type
     done
 done
@@ -196,121 +201,17 @@ done
 # vary the path size
 vpf=10
 for deployment_type in attack normal; do
+    if [[ $deployment_type == "attack" ]]; then
+        vpf=10
+    else
+        vpf=1
+    fi
     for path_size in {1..10}; do
         for concurrency in 1 10; do
-            main_task $vpf $path_size $concurrency $deployment_type
-        done
-    done
-done
-
-
-# We now run independent test cycles for each amount (10 and 100), combined with each combination
-# of authorization and verify-transaction concurrency (ranging from 1 to 5).
-for auth_test in ${VERSIONS[@]}; do
-    for verify_test in ${VERSIONS[@]}; do
-        for concurrency in 1 5; do
-            if [[ $concurrency -eq 5 ]] && [[ $auth_test != "attack" || $verify_test != "attack" ]]; then
+            if [[ $concurrency -gt 1 && $deployment_type == "normal" ]]; then
                 continue
             fi
-
-            ##########################
-            # 1. REBOOT CLUSTER MACHINES AND WAIT FOR CLUSTER TO BE READY
-            ##########################
-            reboot_machines
-            wait_for_cluster
-
-            # Create a unique directory for this test run (parameters in name)
-            test_timestamp=$(date +%Y%m%d%H%M%S)
-            test_dir="${BASE_RESULT_DIR}/test_amt-${amount}_auth-${auth_test}_verify-${verify_test}_concurrency-${concurrency}_${test_timestamp}"
-            mkdir -p "$test_dir"
-            echo "-------------------------------------------------------"
-            echo "Starting test run with parameters:" 
-            echo "  Amount: $amount"
-            echo "  Authorization version: $auth_test"
-            echo "  Verify-transaction version: $verify_test"
-            echo "  Test Directory: $test_dir"
-
-            ##########################
-            # 2. INSTALL HELM CHART WITH GIVEN PARAMETERS
-            ##########################
-            echo "Installing helm chart..."
-            tmp_values_file=$(mktemp)
-            cp "$HELM_CHART_DIR/values.yaml" "$tmp_values_file"
-            yq eval ".multiVersionServices[0].deploymentType = \"$auth_test\"" -i "$tmp_values_file"
-            yq eval ".multiVersionServices[1].deploymentType = \"$verify_test\"" -i "$tmp_values_file"
-            yq eval ".multiVersionServices[0].concurrency = $concurrency" -i "$tmp_values_file"
-            yq eval ".multiVersionServices[1].concurrency = $concurrency" -i "$tmp_values_file"
-            helm install "$RELEASE_NAME" "$HELM_CHART_DIR" -f "$tmp_values_file"
-
-            # Wait until helm install is ready
-            sleep 60
-            wait_for_helm_ready
-            ./top.sh $NAMESPACE $test_dir $WAIT_PERIOD &
-            top_pid=$!
-
-            echo "Saving logs from pods during execution"
-            pods_to_log=$(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name || true)
-            for pod in $pods_to_log; do
-                pod_log_file="${test_dir}/pod_${pod}_logs_pre.txt"
-                echo "Saving logs for pod $pod to $pod_log_file"
-                kubectl logs "$pod" -c user-container -n "$NAMESPACE" --follow > "$pod_log_file" &
-            done
-
-            ##########################
-            # 3. PERFORM REQUESTS WITH CURL (TRACE SAVED)
-            ##########################
-            result_trace_file="${test_dir}/requests_trace.txt"
-            echo "Recording request traces in $result_trace_file"
-            echo "Test run parameters: Amount=$amount, Auth version=$auth_test, Verify version=$verify_test, Timestamp=$test_timestamp" > "$result_trace_file"
-            echo "-------------------------------------------------------" >> "$result_trace_file"
-
-            token=$(curl -s -D - --data '{"username": "admin", "password": "olaadeus"}' http://login.mofaas-bank-app.10.255.30.133.sslip.io -H "Content-Type: application/json" | grep -i authorization | awk '{print $3}' | tr -d '\r')
-            for (( i=1; i<=REQUEST_COUNT; i++ )); do
-                req_start=$(date +%s.%N)
-                echo "Request $i start: $req_start" >> "$result_trace_file"
-                
-                # Build JSON payload
-                payload="{\"destination_client\": \"attacker\", \"amount\": $amount}"
-                # Build curl headers
-                headers=(-H "Authorization: Bearer $token" -H "Content-Type: application/json")
-
-                # Execute curl request and capture response
-                response=$(curl --silent --data "$payload" "$ENTRY_URL" "${headers[@]}")
-                req_end=$(date +%s.%N)
-                echo "Request $i end: $req_end" >> "$result_trace_file"
-                echo "Response: $response" >> "$result_trace_file"
-                echo "-------------------------------------------------------" >> "$result_trace_file"
-
-                sleep "$WAIT_PERIOD"
-            done
-
-            # Stop top from getting more results
-            kill -9 $top_pid
-
-            ##########################
-            # 4. SAVE POD LOGS BEFORE UNINSTALLING THE HELM RELEASE
-            ##########################
-            echo "Saving logs from pods"
-            pods_to_log=$(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name || true)
-            for pod in $pods_to_log; do
-                pod_log_file="${test_dir}/pod_${pod}_logs.txt"
-                echo "Saving logs for pod $pod to $pod_log_file"
-                kubectl logs "$pod" -c user-container -n "$NAMESPACE" > "$pod_log_file"
-
-                # Check if the pod has a previous instance and save its logs
-                echo "Saving logs for previous instance of pod $pod" >> "$pod_log_file"
-                kubectl logs "$pod" -c user-container -n "$NAMESPACE" --previous >> "$pod_log_file"
-            done
-
-            ##########################
-            # 5. UNINSTALL THE HELM RELEASE AND WAIT FOR PODS TO TERMINATE
-            ##########################
-            echo "Uninstalling helm release '$RELEASE_NAME'"
-            helm uninstall "$RELEASE_NAME"
-            wait_for_pods_termination
-
-            echo "Test run completed. Results saved in directory: $test_dir"
-            echo "-------------------------------------------------------"
+            main_task $vpf $path_size $concurrency $deployment_type
         done
     done
 done
