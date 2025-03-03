@@ -13,10 +13,10 @@ oneVersionServices:
       networking.knative.dev/visibility: cluster-local
 multiVersionServices:
   - name: function
-    deploymentType: "attack"    # attack or normal
+    deploymentType: "normal"    # attack or normal
     concurrency: 1
-    pathSize: 3
-    versions: 5
+    pathSize: 5
+    versions: 7
     ignoreHeaders:
       - ce-id
       - Date
