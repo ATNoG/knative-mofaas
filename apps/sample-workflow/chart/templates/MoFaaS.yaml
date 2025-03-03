@@ -1,5 +1,6 @@
 {{- $root := . -}}
 {{- range .Values.multiVersionServices }}
+  {{- if eq .deploymentType "attack" }}
   {{- $svc := . }}
   {{- $serviceName := .name }}
   {{- range $i := until (int $svc.pathSize) }}
@@ -22,5 +23,6 @@ spec:
   - {{ . }}
   {{- end }}
 ---
+  {{- end }}
   {{- end }}
 {{- end }}
