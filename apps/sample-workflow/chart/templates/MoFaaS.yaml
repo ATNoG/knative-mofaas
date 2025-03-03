@@ -16,7 +16,7 @@ spec:
   {{- range $s := until (int $svc.versions) }}
   - apiVersion: serving.knative.dev/v1
     kind: Service
-    name: {{ $serviceName }}-{{ $s }}
+    name: {{ $serviceName }}-p{{ $i }}-v{{ $s }}
   {{- end }}
   ignore-headers:
   {{- range $svc.ignoreHeaders }}

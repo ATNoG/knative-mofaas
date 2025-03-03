@@ -15,8 +15,8 @@ multiVersionServices:
   - name: function
     deploymentType: "normal"    # attack or normal
     concurrency: 1
-    pathSize: 5
-    versions: 7
+    pathSize: 10
+    versions: 1
     ignoreHeaders:
       - ce-id
       - Date

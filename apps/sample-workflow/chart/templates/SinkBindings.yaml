@@ -20,7 +20,7 @@ spec:
       {{- else }}
       apiVersion: serving.knative.dev/v1
       kind: Service
-      name: function-0
+      name: function-p0-v0
       {{- end }}
 ---
 {{- $svc := . }}
@@ -41,7 +41,7 @@ spec:
     {{- else }}
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: function-{{ sub $i 1 }}
+    name: function-p{{ sub $i 1 }}-v0
     {{- end }}
   sink:
     ref:
@@ -52,7 +52,7 @@ spec:
       {{- else }}
       apiVersion: serving.knative.dev/v1
       kind: Service
-      name: function-{{ $i }}
+      name: function-p{{ $i }}-v0
       {{- end }}
 ---
   {{- end }}
@@ -72,7 +72,7 @@ spec:
     {{- else }}
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: function-{{ sub .pathSize 1 }}
+    name: function-p{{ sub .pathSize 1 }}-v0
     {{- end }}
   sink:
     ref:
