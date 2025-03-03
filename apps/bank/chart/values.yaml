@@ -30,6 +30,7 @@ oneVersionServices:
       networking.knative.dev/visibility: cluster-local
 multiVersionServices:
   - name: authorization
+    deploymentType: java      # can be: attack, python, java, js, go, php
     env:
       - SECRET_KEY
     concurrency: 1
@@ -51,6 +52,7 @@ multiVersionServices:
       autoscaling.knative.dev/min-scale: "1"
       autoscaling.knative.dev/max-scale: "1"
   - name: verify-transaction
+    deploymentType: attack      # can be: attack, python, java, js, go, php
     env:
       - DIRECTUS_URL
       - DIRECTUS_TOKEN

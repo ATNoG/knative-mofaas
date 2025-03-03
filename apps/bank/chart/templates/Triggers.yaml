@@ -1,8 +1,11 @@
+{{ $root := . -}}
+{{ range .Values.multiVersionServices }}
+{{ if eq .name "verify-transaction" }}
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
   name: verify-transaction-trigger
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $root.Values.namespace }}
 spec:
   broker: broker
   filters:
@@ -10,15 +13,19 @@ spec:
         source: authorization
         dv: "true"
   subscriber:
-    # ref:
-    #   apiVersion: serving.knative.dev/v1
-    #   kind: Service
-    #   name: verify-transaction-python
     ref:
+      {{ if eq .deploymentType "attack" }}
       apiVersion: mofaas.atnog/v1
       kind: MoFaaSFunction
       name: verify-transaction
+      {{ else }}
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: verify-transaction-{{ .deploymentType }}
+      {{ end }}
     uri: /
+{{ end }}
+{{ end }}
 ---
 apiVersion: eventing.knative.dev/v1
 kind: Trigger

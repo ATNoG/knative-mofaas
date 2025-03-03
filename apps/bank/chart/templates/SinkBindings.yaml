@@ -1,8 +1,11 @@
+{{ $root := . -}}
+{{ range .Values.multiVersionServices }}
+{{ if eq .name "authorization" }}
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
   name: bind-entry-point
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $root.Values.namespace }}
 spec:
   subject:
     apiVersion: serving.knative.dev/v1
@@ -10,54 +13,86 @@ spec:
     name: entry-point
   sink:
     ref:
+      {{ if eq .deploymentType "attack" }}
       apiVersion: mofaas.atnog/v1
       kind: MoFaaSFunction
       name: authorization
-  # sink:
-  #   ref:
-  #     apiVersion: serving.knative.dev/v1
-  #     kind: Service
-  #     name: authorization-python
+      {{ else }}
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: authorization-{{ .deploymentType }}
+      {{ end }}
 ---
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
   name: bind-authorization
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $root.Values.namespace }}
 spec:
-  # subject:
-  #   apiVersion: serving.knative.dev/v1
-  #   kind: Service
-  #   name: authorization-python
   subject:
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: mofaas-chooser-authorization
+    name: {{ if eq .deploymentType "attack" }}mofaas-chooser-authorization{{ else }}authorization-{{ .deploymentType }}{{ end }}
   sink:
     ref:
       apiVersion: eventing.knative.dev/v1
       kind: Broker
       name: broker
+{{ if eq .deploymentType "attack" }}
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-authorization-result
+  namespace: {{ $root.Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-authorization
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+{{ end }}
+{{ else if eq .name "verify-transaction" }}
 ---
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
 metadata:
   name: bind-verify-transaction
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $root.Values.namespace }}
 spec:
-  # subject:
-  #   apiVersion: serving.knative.dev/v1
-  #   kind: Service
-  #   name: verify-transaction-python
   subject:
     apiVersion: serving.knative.dev/v1
     kind: Service
-    name: mofaas-chooser-verify-transaction
+    name: {{ if eq .deploymentType "attack" }}mofaas-chooser-verify-transaction{{ else }}verify-transaction-{{ .deploymentType }}{{ end }}
   sink:
     ref:
       apiVersion: eventing.knative.dev/v1
       kind: Broker
       name: broker
+{{ if eq .deploymentType "attack" }}
+---
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: bind-egress-proxy-verify-transaction-result
+  namespace: {{ $root.Values.namespace }}
+spec:
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: mofaas-egress-proxy-verify-transaction
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: result
+{{ end }}
+{{ end }}
+{{ end }} 
 ---
 apiVersion: sources.knative.dev/v1
 kind: SinkBinding
@@ -69,38 +104,6 @@ spec:
     apiVersion: serving.knative.dev/v1
     kind: Service
     name: transaction
-  sink:
-    ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: result
----
-apiVersion: sources.knative.dev/v1
-kind: SinkBinding
-metadata:
-  name: bind-egress-proxy-authorization-result
-  namespace: mofaas-bank-app
-spec:
-  subject:
-    apiVersion: serving.knative.dev/v1
-    kind: Service
-    name: mofaas-egress-proxy-authorization
-  sink:
-    ref:
-      apiVersion: serving.knative.dev/v1
-      kind: Service
-      name: result
----
-apiVersion: sources.knative.dev/v1
-kind: SinkBinding
-metadata:
-  name: bind-egress-proxy-verify-transaction-result
-  namespace: mofaas-bank-app
-spec:
-  subject:
-    apiVersion: serving.knative.dev/v1
-    kind: Service
-    name: mofaas-egress-proxy-verify-transaction
   sink:
     ref:
       apiVersion: serving.knative.dev/v1

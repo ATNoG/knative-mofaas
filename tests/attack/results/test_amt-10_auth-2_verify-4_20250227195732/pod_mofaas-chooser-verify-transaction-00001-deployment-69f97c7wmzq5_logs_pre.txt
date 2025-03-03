@@ -1,0 +1,10 @@
+1740686380.313143 - DEBUG - ======== Starting MoFaaS Chooser ========
+           Services: verify-transaction-python, verify-transaction-java, verify-transaction-php, verify-transaction-js, verify-transaction-go
+           Services URLs: http://verify-transaction-python.mofaas-bank-app.svc.cluster.local, http://verify-transaction-java.mofaas-bank-app.svc.cluster.local, http://verify-transaction-php.mofaas-bank-app.svc.cluster.local, http://verify-transaction-js.mofaas-bank-app.svc.cluster.local, http://verify-transaction-go.mofaas-bank-app.svc.cluster.local
+           Concurrency: 4
+           Ignore headers: ce-id, Date, x-envoy-upstream-service-time, Content-Length, x-powered-by
+           Egress URL: http://mofaas-egress-proxy-verify-transaction.mofaas-bank-app.svc.cluster.local
+           =========================================
+1740686380.314505 - DEBUG - Using selector: EpollSelector
+======== Running on http://0.0.0.0:8080 ========
+(Press CTRL+C to quit)
