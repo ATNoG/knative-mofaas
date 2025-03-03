@@ -43,11 +43,12 @@ spec:
   {{- $svc := . }}
   {{- $serviceName := .name }}
   {{- $serviceLabels := .labels }}
-    {{- range $i := until (int $svc.versions) }}
+    {{- range $p := until (int $svc.pathSize) }}
+      {{- range $v := until (int $svc.versions) }}
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: {{ $serviceName }}-{{ $i }}
+  name: {{ $serviceName }}-p{{ $p }}-v{{ $v }}
   namespace: {{ $root.Values.namespace }}
   {{- if $serviceLabels }}
   labels:
@@ -80,6 +81,7 @@ spec:
             {{- end }}
           {{- end }}
 ---
+      {{- end }}
     {{- end }}  
 {{- end }}
 
