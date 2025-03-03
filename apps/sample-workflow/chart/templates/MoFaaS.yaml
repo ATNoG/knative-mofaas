@@ -1,27 +1,28 @@
 {{- $root := . -}}
 {{- range .Values.multiVersionServices }}
-{{- if eq .deploymentType "attack" }}
+  {{- if eq .deploymentType "attack" }}
   {{- $svc := . }}
   {{- $serviceName := .name }}
-
+  {{- range $i := until (int $svc.pathSize) }}
 apiVersion: mofaas.atnog/v1
 kind: MoFaaSFunction
 metadata:
-  name: {{ $serviceName }}
+  name: mofaas-{{ $serviceName }}-{{ $i }}
   namespace: {{ $root.Values.namespace }}
 spec:
   concurrency: {{ $svc.concurrency }}
   private: true
   variants:
-  {{- range $svc.versions }}
+  {{- range $s := until (int $svc.versions) }}
   - apiVersion: serving.knative.dev/v1
     kind: Service
-    name: {{ $serviceName }}-{{ . }}
+    name: {{ $serviceName }}-p{{ $i }}-v{{ $s }}
   {{- end }}
   ignore-headers:
   {{- range $svc.ignoreHeaders }}
   - {{ . }}
   {{- end }}
 ---
-{{- end }}
+  {{- end }}
+  {{- end }}
 {{- end }}

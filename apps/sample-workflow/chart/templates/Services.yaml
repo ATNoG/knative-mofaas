@@ -1,0 +1,87 @@
+{{- range .Values.oneVersionServices }}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.namespace }}
+  {{- if .labels }}
+  labels:
+    {{- toYaml .labels | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      {{- if .annotations }}
+      annotations:
+        {{- toYaml .annotations | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - image: {{ $.Values.registry }}/{{ .name }}
+          {{- if .env }}
+          env:
+            {{- range .env }}
+              {{- $envName := . }}
+              {{- range $.Values.commonEnv }}
+                {{- if eq .name $envName }}
+            - name: {{ .name }}
+              {{- if .value }}
+              value: {{ .value }}
+              {{- else }}
+              valueFrom: {{ toYaml .valueFrom | nindent 16 }}
+                
+              {{- end }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+---
+{{- end }}
+
+{{- $root := . -}}
+{{- range .Values.multiVersionServices }}
+  {{- $svc := . }}
+  {{- $serviceName := .name }}
+  {{- $serviceLabels := .labels }}
+    {{- range $p := until (int $svc.pathSize) }}
+      {{- range $v := until (int $svc.versions) }}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ $serviceName }}-p{{ $p }}-v{{ $v }}
+  namespace: {{ $root.Values.namespace }}
+  {{- if $serviceLabels }}
+  labels:
+    {{- toYaml $serviceLabels | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      {{- if $svc.annotations }}
+      annotations:
+        {{- toYaml $svc.annotations | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - image: {{ $root.Values.registry }}/{{ $serviceName }}
+          {{- if $svc.env }}
+          env:
+            {{- range $svc.env }}
+              {{- $envName := . }}
+              {{- range $root.Values.commonEnv }}
+                {{- if eq .name $envName }}
+            - name: {{ .name }}
+              {{- if .value }}
+              value: {{ .value }}
+              {{- else }}
+              valueFrom: {{ toYaml .valueFrom | nindent 16 }}
+              {{- end }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+---
+      {{- end }}
+    {{- end }}  
+{{- end }}
+
