@@ -81,8 +81,8 @@ for item in os.listdir('results/'):
     amount = int(info[1].split('-')[1])
     auth_conc = int(info[2].split('-')[1])
     verify_conc = int(info[3].split('-')[1])
-    if verify_conc > 4:
-        continue
+    # if verify_conc > 4:
+    #     continue
 
     if amount not in all_results:
         all_results[amount] = {}
@@ -124,7 +124,7 @@ data = {
     "Time": []
 }
 for amount in [10, 100]:
-    for verify in range(1, 4):
+    for verify in range(3, 6):
         x = 0
         l = 1
         data["Time"].append([])
@@ -137,9 +137,9 @@ for amount in [10, 100]:
                 l += 1
         data["Test"].append(f"Amount {amount}, Verify {verify}")
         data["Probability"].append(x/l*100)
-        print(l)
+        print(x)
         # data.append(x/len(c)*100)
-print(data)
-# sns.scatterplot(data=data)
-sns.boxplot(data["Time"])
+# print(data)
+sns.scatterplot(data=data)
+# sns.boxplot(data["Time"])
 plt.show()
