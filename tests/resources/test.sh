@@ -90,8 +90,14 @@ reboot_machines() {
 # of authorization and verify-transaction concurrency (ranging from 1 to 5).
 for auth_test in ${VERSIONS[@]}; do
     for verify_test in ${VERSIONS[@]}; do
+        if [[ $auth_test == "python" || $auth_test == "java" || $auth_test == "js" || $auth_test == "go" || $auth_test == "php" ]] && [[ $verify_test == "python" || $verify_test == "java" || $verify_test == "js" || $verify_test == "go" || $verify_test == "php" ]]; then
+            continue
+        fi
         for concurrency in 1 5; do
-            if [[ $concurrency -eq 5 ]] && [[ $auth_test != "attack" || $verify_test != "attack" ]]; then
+            if [[ $concurrency -eq 1 ]]; then
+                continue
+            fi
+            if [[ $concurrency -eq 5 ]] && [[ $auth_test != "attack" && $verify_test != "attack" ]]; then
                 continue
             fi
 
