@@ -2,10 +2,18 @@ import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 import json
+import pandas as pd
+
+COMPARISON = 5
+SIZE = (7, 5)
+SIZE_RATION = SIZE[1] / COMPARISON
+
 
 RESULTS_DIR = "results/"
 
-def read_results_pod(file_name):
+CONCURRENCY = "singular"            # singular or multiple
+
+def read_results_pod(file_path):
     results = []
     with open(file_path, 'r') as f:
         content = f.read()
@@ -52,7 +60,7 @@ def read_results_pod(file_name):
     return results
 
 
-def read_requests_trace(file_name):
+def read_requests_trace(file_path):
     results = {}
     with open(file_path, 'r') as f:
         content = f.read()
@@ -68,78 +76,111 @@ def read_requests_trace(file_name):
             }
         except Exception as e:
             print("Hmmm")
-            print(file_name)
+            print(file_path)
 
     return results
-    
-# This list will hold the results from all files
-all_results = {}
 
-# Iterate over items in the current directory
-for item in os.listdir('results/'):
-    info = item.split('_')
-    amount = int(info[1].split('-')[1])
-    auth_conc = int(info[2].split('-')[1])
-    verify_conc = int(info[3].split('-')[1])
-    # if verify_conc > 4:
-    #     continue
 
-    if amount not in all_results:
-        all_results[amount] = {}
-    if auth_conc not in all_results[amount]:
-        all_results[amount][auth_conc] = {}
-    if verify_conc not in all_results[amount][auth_conc]:
-        all_results[amount][auth_conc][verify_conc] = {}
+def main():
+    # This list will hold the results from all files
+    all_results = {}
+
+    # Iterate over items in the current directory
+    for item in os.listdir('results/'):
+        info = item.split('_')
+        amount = int(info[1].split('-')[1])
+        auth_conc = int(info[2].split('-')[1])
+        verify_conc = int(info[3].split('-')[1])
+        # if verify_conc > 4:
+        #     continue
+
+        if amount not in all_results:
+            all_results[amount] = {}
+        if auth_conc not in all_results[amount]:
+            all_results[amount][auth_conc] = {}
+        if verify_conc not in all_results[amount][auth_conc]:
+            all_results[amount][auth_conc][verify_conc] = {}
+            
+        pod_results = []
+
+        print(item)
+        # Look for files that start with 'pod_result'
+        for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
+            file_path = os.path.join(RESULTS_DIR, item, filename)
+            if filename.startswith("pod_result"):
+                pod_results = read_results_pod(file_path)
+            elif filename == "requests_trace.txt":
+                for i in (r := read_requests_trace(file_path)):
+                    all_results[amount][auth_conc][verify_conc][i] = {
+                        "requests_trace": r[i]
+                    }
         
-    pod_results = []
+        for p in pod_results:
+            _id = p["headers"]["Ce-Id"]
+            if _id not in all_results[amount][auth_conc][verify_conc]:
+                all_results[amount][auth_conc][verify_conc][_id] = {}
+            all_results[amount][auth_conc][verify_conc][_id]["pod_results"] = p
+        
+        if item.startswith("test_amt-10_auth-1_verify-1"):
+            for i in (r := all_results[amount][auth_conc][verify_conc]):
+                if not r[i].get("pod_results"):
+                    print(i, r[i])
 
-    print(item)
-    # Look for files that start with 'pod_result'
-    for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
-        file_path = os.path.join(RESULTS_DIR, item, filename)
-        if filename.startswith("pod_result"):
-            pod_results = read_results_pod(file_path)
-        elif filename == "requests_trace.txt":
-            for i in (r := read_requests_trace(file_path)):
-                all_results[amount][auth_conc][verify_conc][i] = {
-                    "requests_trace": r[i]
-                }
+    # Now all_results holds the parsed data from each pod_result file.
+
+    data = {
+        "Test": [],
+        "Relative frequency": [],
+        "Time": []
+    }
+    for amount in all_results:
+        for auth in all_results[amount]:
+            if CONCURRENCY == "singular" and auth != 1:
+                continue
+            if CONCURRENCY == "multiple" and auth == 1:
+                continue
+            for verify in all_results[amount][auth]:
+                if amount == 100 and auth == 1 and verify != 1 and CONCURRENCY == "singular":
+                    continue
+                x = 0
+                l = 1
+                data["Time"].append([])
+                for r in (c := all_results[amount][auth][verify]):
+                    if 'pod_results' in c[r]:
+                        if c[r]['pod_results']["body"].get("message") == "Transaction successful":
+                            x += 1
+                            if 'requests_trace' in c[r]:
+                                data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+                        l += 1
+                data["Test"].append(f"Amount {amount}\nAuth {auth}\nVerify {verify}")
+                data["Relative frequency"].append(x/l)
+                print(x)
+                # data.append(x/len(c)*100)
     
-    for p in pod_results:
-        _id = p["headers"]["Ce-Id"]
-        if _id not in all_results[amount][auth_conc][verify_conc]:
-            all_results[amount][auth_conc][verify_conc][_id] = {}
-        all_results[amount][auth_conc][verify_conc][_id]["pod_results"] = p
+    df = pd.DataFrame(data)
+    sns.set_theme(rc={"figure.figsize": SIZE})
+    ax = sns.scatterplot(data=data, x="Test", y="Relative frequency")
     
-    if item.startswith("test_amt-10_auth-1_verify-1"):
-        for i in (r := all_results[amount][auth_conc][verify_conc]):
-            if not r[i].get("pod_results"):
-                print(i, r[i])
+    for i, row in df.iterrows():
+        # Get the x position corresponding to the categorical tick.
+        # ax.get_xticks() returns the positions of the ticks, which should align with the order of your categories.
+        xtick_positions = ax.get_xticks()
+        # Assuming the categories are in order
+        x_pos = xtick_positions[i]
+        y_pos = row["Relative frequency"]
+        # Add an offset to y to avoid overlapping the marker
+        ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
+    
+    plt.ylim(0, 1)
+    plt.title(f"Relative frequency of a successful attack with concurrency {'=' if CONCURRENCY == 'singular' else '>'} 1\n", fontdict={"size": 17*SIZE_RATION})
+    
+    ax.yaxis.label.set_fontsize(15*SIZE_RATION)
+    ax.xaxis.label.set_fontsize(15*SIZE_RATION)
+    ax.tick_params(labelsize=12*SIZE_RATION)
+    plt.tight_layout()
+    plt.savefig(f"concurrency_{CONCURRENCY}.pdf")
 
-# Now all_results holds the parsed data from each pod_result file.
+    plt.show()
 
-data = {
-    "Test": [],
-    "Probability": [],
-    "Time": []
-}
-for amount in [10, 100]:
-    for verify in range(3, 6):
-        x = 0
-        l = 1
-        data["Time"].append([])
-        for r in (c := all_results[amount][1][verify]):
-            if 'pod_results' in c[r]:
-                if c[r]['pod_results']["body"].get("message") == "Transaction successful":
-                    x += 1
-                    if 'requests_trace' in c[r]:
-                        data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
-                l += 1
-        data["Test"].append(f"Amount {amount}, Verify {verify}")
-        data["Probability"].append(x/l*100)
-        print(x)
-        # data.append(x/len(c)*100)
-# print(data)
-sns.scatterplot(data=data)
-# sns.boxplot(data["Time"])
-plt.show()
+if __name__ == "__main__":
+    main()
