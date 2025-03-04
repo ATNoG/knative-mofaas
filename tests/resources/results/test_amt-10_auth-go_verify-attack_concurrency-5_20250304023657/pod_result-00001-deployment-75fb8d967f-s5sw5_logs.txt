@@ -1,0 +1,320 @@
+ * Serving Flask app 'main'
+ * Debug mode: off
+1741056025.736128 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.42.1.13:8080
+1741056025.736435 - INFO - [33mPress CTRL+C to quit[0m
+1741056280.201640 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "1077", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "232542d1-f7c7-4632-ba99-cbfe0b43fe3f", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-e3622045e2263347c11b25253db05251-7e82646f1e129615-01", "X-B3-Sampled": "1", "X-B3-Spanid": "7e82646f1e129615", "X-B3-Traceid": "e3622045e2263347c11b25253db05251", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "5443d39e-cec0-4722-b4e0-e23190196908"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-java': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '232542d1-f7c7-4632-ba99-cbfe0b43fe3f', 'Ce-Knativekafkaoffset': '1', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': 1, 'to': None})', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'true', 'Ce-Dv': 'true', 'Ce-Id': '232542d1-f7c7-4632-ba99-cbfe0b43fe3f', 'Ce-Knativekafkaoffset': '1', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Forwarded', 'from': 1, 'to': 2})'"}
+---------------
+
+
+
+1741056280.204614 - INFO - 127.0.0.1 - - [04/Mar/2025 02:44:40] "POST / HTTP/1.1" 200 -
+1741056325.654415 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "776", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "d3b835ca-c75f-4f57-bb69-17bccba8c416", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-e718c0e1834535b8d906ba1b6156c5f7-e6b49e129e81a33e-01", "X-B3-Sampled": "1", "X-B3-Spanid": "e6b49e129e81a33e", "X-B3-Traceid": "e718c0e1834535b8d906ba1b6156c5f7", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "e40cea66-bbf6-45e9-a0e1-3937aebe1128"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-go' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'd3b835ca-c75f-4f57-bb69-17bccba8c416'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': 'd3b835ca-c75f-4f57-bb69-17bccba8c416', 'Ce-Knativekafkaoffset': '35', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': 1, 'to': None})'"}
+---------------
+
+
+
+1741056325.655142 - INFO - 127.0.0.1 - - [04/Mar/2025 02:45:25] "POST / HTTP/1.1" 200 -
+1741056340.771320 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "450", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "0830f261-9246-4046-80de-51126478659b", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-c02317f0735bf2eccb433f351f3cb5e0-1ace3be45d392ad3-01", "X-B3-Sampled": "1", "X-B3-Spanid": "1ace3be45d392ad3", "X-B3-Traceid": "c02317f0735bf2eccb433f351f3cb5e0", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "ae21d709-095c-4bd8-82ff-f323a95fc5e7"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-php': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '0830f261-9246-4046-80de-51126478659b'}, b'')', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '0830f261-9246-4046-80de-51126478659b'}, b'')'"}
+---------------
+
+
+
+1741056340.776378 - INFO - 127.0.0.1 - - [04/Mar/2025 02:45:40] "POST / HTTP/1.1" 200 -
+1741056341.061942 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "1081", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "2d7b0312-d75f-4382-a3dc-602918c97dc1", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-54b9b7b418b16ce418f1b9095d1447b0-01a171c12d438fc2-01", "X-B3-Sampled": "1", "X-B3-Spanid": "01a171c12d438fc2", "X-B3-Traceid": "54b9b7b418b16ce418f1b9095d1447b0", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "2f026557-d4d0-4ad9-8b06-40bbb22d4a03"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-php': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '2d7b0312-d75f-4382-a3dc-602918c97dc1', 'Ce-Knativekafkaoffset': '37', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'true', 'Ce-Dv': 'true', 'Ce-Id': '2d7b0312-d75f-4382-a3dc-602918c97dc1', 'Ce-Knativekafkaoffset': '37', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Forwarded', 'from': 1, 'to': 2})'"}
+---------------
+
+
+
+1741056341.062806 - INFO - 127.0.0.1 - - [04/Mar/2025 02:45:41] "POST / HTTP/1.1" 200 -
+1741056417.487529 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "1085", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "2e247af4-825a-48e8-80c3-f447b9583c77", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-dc5f15ad4f3acb77d7c529b6ce4f1ae4-50a6e1417dbc01db-01", "X-B3-Sampled": "1", "X-B3-Spanid": "50a6e1417dbc01db", "X-B3-Traceid": "dc5f15ad4f3acb77d7c529b6ce4f1ae4", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "cf36ab74-76d6-4a33-8e28-1b6126a1aed8"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-python' vs 'verify-transaction-php': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '2e247af4-825a-48e8-80c3-f447b9583c77', 'Ce-Knativekafkaoffset': '31', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'true', 'Ce-Dv': 'true', 'Ce-Id': '2e247af4-825a-48e8-80c3-f447b9583c77', 'Ce-Knativekafkaoffset': '31', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Forwarded', 'from': 1, 'to': 2})'"}
+---------------
+
+
+
+1741056417.490669 - INFO - 127.0.0.1 - - [04/Mar/2025 02:46:57] "POST / HTTP/1.1" 200 -
+1741056418.422174 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "1083", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "19944c41-bc58-49ac-abe5-1bef2c6a6069", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-bc89c25c13ff8a774d98cc13ccda8fa1-3779171f4dc666ca-01", "X-B3-Sampled": "1", "X-B3-Spanid": "3779171f4dc666ca", "X-B3-Traceid": "bc89c25c13ff8a774d98cc13ccda8fa1", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "5336c894-ada8-46e2-9454-a1fc50b79301"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-java' vs 'verify-transaction-php': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '19944c41-bc58-49ac-abe5-1bef2c6a6069', 'Ce-Knativekafkaoffset': '78', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'true', 'Ce-Dv': 'true', 'Ce-Id': '19944c41-bc58-49ac-abe5-1bef2c6a6069', 'Ce-Knativekafkaoffset': '78', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Forwarded', 'from': 1, 'to': 2})'"}
+---------------
+
+
+
+1741056418.422955 - INFO - 127.0.0.1 - - [04/Mar/2025 02:46:58] "POST / HTTP/1.1" 200 -
+1741056555.643480 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "775", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "5712ccc1-2c62-4f47-abc6-c2c7cbffaf6c", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-30215b6ecafed631eeeb165d8792f6ed-5424f3593c53a3c1-01", "X-B3-Sampled": "1", "X-B3-Spanid": "5424f3593c53a3c1", "X-B3-Traceid": "30215b6ecafed631eeeb165d8792f6ed", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "7cdf51ec-e95d-4a52-be81-b4199ae64243"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-go': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '5712ccc1-2c62-4f47-abc6-c2c7cbffaf6c', 'Ce-Knativekafkaoffset': '131', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '5712ccc1-2c62-4f47-abc6-c2c7cbffaf6c'}, b'')'"}
+---------------
+
+
+
+1741056555.646303 - INFO - 127.0.0.1 - - [04/Mar/2025 02:49:15] "POST / HTTP/1.1" 200 -
+1741056616.391289 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "780", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "8453ae77-b898-46b1-87f3-6e0f26e02d96", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-87f1b2e435ee3424f53727aa6a0782b1-099d94f1ab70d28f-01", "X-B3-Sampled": "1", "X-B3-Spanid": "099d94f1ab70d28f", "X-B3-Traceid": "87f1b2e435ee3424f53727aa6a0782b1", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "fde25b5b-46d6-454d-aa17-e40a8e87eea7"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '8453ae77-b898-46b1-87f3-6e0f26e02d96'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '8453ae77-b898-46b1-87f3-6e0f26e02d96', 'Ce-Knativekafkaoffset': '147', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})'"}
+---------------
+
+
+
+1741056616.395778 - INFO - 127.0.0.1 - - [04/Mar/2025 02:50:16] "POST / HTTP/1.1" 200 -
+1741056707.915807 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "452", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "fc9effe8-8089-41ae-a1ff-ab1848fdaf44", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-1db56417489fdfa9a8f789a5a795da0f-a5e86b66eb97664d-01", "X-B3-Sampled": "1", "X-B3-Spanid": "a5e86b66eb97664d", "X-B3-Traceid": "1db56417489fdfa9a8f789a5a795da0f", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "ba73e4e5-b184-49e6-9363-1b461a6c159b"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-java' vs 'verify-transaction-php': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'fc9effe8-8089-41ae-a1ff-ab1848fdaf44'}, b'')', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'fc9effe8-8089-41ae-a1ff-ab1848fdaf44'}, b'')'"}
+---------------
+
+
+
+1741056707.919268 - INFO - 127.0.0.1 - - [04/Mar/2025 02:51:47] "POST / HTTP/1.1" 200 -
+1741056935.164700 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "777", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "c896ed2b-3b67-41d9-a7e1-cbb50b396be1", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-350d55222cc931eec602224c532017aa-770ce9384a42d212-01", "X-B3-Sampled": "1", "X-B3-Spanid": "770ce9384a42d212", "X-B3-Traceid": "350d55222cc931eec602224c532017aa", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "7899fa17-909d-47c4-901f-6d45040a4a79"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'c896ed2b-3b67-41d9-a7e1-cbb50b396be1'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': 'c896ed2b-3b67-41d9-a7e1-cbb50b396be1', 'Ce-Knativekafkaoffset': '236', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})'"}
+---------------
+
+
+
+1741056935.167558 - INFO - 127.0.0.1 - - [04/Mar/2025 02:55:35] "POST / HTTP/1.1" 200 -
+1741056950.827719 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "451", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "10a0078a-36c4-414e-a29b-65f3d922fcee", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-309e637e6e7e9c6493530d8a5a435fa8-ab25860a0afa58a7-01", "X-B3-Sampled": "1", "X-B3-Spanid": "ab25860a0afa58a7", "X-B3-Traceid": "309e637e6e7e9c6493530d8a5a435fa8", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "afc5c893-b168-48f4-b06e-a430d8e1a6d4"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '10a0078a-36c4-414e-a29b-65f3d922fcee'}, b'')', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '10a0078a-36c4-414e-a29b-65f3d922fcee'}, b'')'"}
+---------------
+
+
+
+1741056950.829517 - INFO - 127.0.0.1 - - [04/Mar/2025 02:55:50] "POST / HTTP/1.1" 200 -
+1741056950.895661 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "780", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "10a0078a-36c4-414e-a29b-65f3d922fcee", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-950ae75d17be07616c08788254a60ded-92f8bbe7d903be96-01", "X-B3-Sampled": "1", "X-B3-Spanid": "92f8bbe7d903be96", "X-B3-Traceid": "950ae75d17be07616c08788254a60ded", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "b93be5d5-f805-4a1e-bd84-86f12dae1827"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-java': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '10a0078a-36c4-414e-a29b-65f3d922fcee', 'Ce-Knativekafkaoffset': '242', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '10a0078a-36c4-414e-a29b-65f3d922fcee'}, b'')'"}
+---------------
+
+
+
+1741056950.896682 - INFO - 127.0.0.1 - - [04/Mar/2025 02:55:50] "POST / HTTP/1.1" 200 -
+1741056966.097148 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "780", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "143cbb1d-92bd-4f4b-90a1-fc1146a73985", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-169e20bb26230c57b82331d6d12b6df3-1358c0ad896966d0-01", "X-B3-Sampled": "1", "X-B3-Spanid": "1358c0ad896966d0", "X-B3-Traceid": "169e20bb26230c57b82331d6d12b6df3", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "3ebe1ab9-b9a9-424f-bc9a-929aa550b6d0"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-go' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '143cbb1d-92bd-4f4b-90a1-fc1146a73985'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '143cbb1d-92bd-4f4b-90a1-fc1146a73985', 'Ce-Knativekafkaoffset': '243', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})'"}
+---------------
+
+
+
+1741056966.098357 - INFO - 127.0.0.1 - - [04/Mar/2025 02:56:06] "POST / HTTP/1.1" 200 -
+1741057172.605282 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "779", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "4132f20d-452a-4162-bcd6-ef5991714d04", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-e40a4636b17f8de8dcb40801cfc4901d-9835d68bf865b0f0-01", "X-B3-Sampled": "1", "X-B3-Spanid": "9835d68bf865b0f0", "X-B3-Traceid": "e40a4636b17f8de8dcb40801cfc4901d", "X-Forwarded-For": "10.42.0.246, 10.42.0.9", "X-Forwarded-Proto": "http", "X-Request-Id": "ece2928e-999a-450f-9633-51c871075126"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-python' vs 'verify-transaction-js': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '4132f20d-452a-4162-bcd6-ef5991714d04'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '4132f20d-452a-4162-bcd6-ef5991714d04', 'Ce-Knativekafkaoffset': '532', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})'"}
+---------------
+
+
+
+1741057172.608721 - INFO - 127.0.0.1 - - [04/Mar/2025 02:59:32] "POST / HTTP/1.1" 200 -
+1741057265.725589 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "450", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "456ef3aa-5c7d-4923-acc9-ada9dd17b253", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-c6aa21169ab77cd5d484cbb5b973a40a-3481ad00388d44ae-01", "X-B3-Sampled": "1", "X-B3-Spanid": "3481ad00388d44ae", "X-B3-Traceid": "c6aa21169ab77cd5d484cbb5b973a40a", "X-Forwarded-For": "10.42.0.246, 10.42.0.9", "X-Forwarded-Proto": "http", "X-Request-Id": "cf4e504a-6cb7-4e5c-9048-190a3d8054aa"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-php': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '456ef3aa-5c7d-4923-acc9-ada9dd17b253'}, b'')', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '456ef3aa-5c7d-4923-acc9-ada9dd17b253'}, b'')'"}
+---------------
+
+
+
+1741057265.726573 - INFO - 127.0.0.1 - - [04/Mar/2025 03:01:05] "POST / HTTP/1.1" 200 -
+1741057297.273122 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "779", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "c80a193b-5f69-4129-9d4b-ec81bdd1ee7c", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-a77a62b24123a15e2e0e1dc38541552d-022719bbd7a00e8d-01", "X-B3-Sampled": "1", "X-B3-Spanid": "022719bbd7a00e8d", "X-B3-Traceid": "a77a62b24123a15e2e0e1dc38541552d", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "15bb5f37-95ce-417e-a8c3-bae8dd7141b2"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-go' vs 'verify-transaction-python': expected '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'c80a193b-5f69-4129-9d4b-ec81bdd1ee7c'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': 'c80a193b-5f69-4129-9d4b-ec81bdd1ee7c', 'Ce-Knativekafkaoffset': '654', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})'"}
+---------------
+
+
+
+1741057297.274436 - INFO - 127.0.0.1 - - [04/Mar/2025 03:01:37] "POST / HTTP/1.1" 200 -
+1741057327.643550 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "1083", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "2e213d2d-ebad-4339-a61f-a2ae92691254", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-0a6c83518c44b58cf692a63c319a82db-d0cc847577b4d86b-01", "X-B3-Sampled": "1", "X-B3-Spanid": "d0cc847577b4d86b", "X-B3-Traceid": "0a6c83518c44b58cf692a63c319a82db", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "bb87fe86-94cb-4b36-a84b-3c459aeb9a9a"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-js' vs 'verify-transaction-php': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '2e213d2d-ebad-4339-a61f-a2ae92691254', 'Ce-Knativekafkaoffset': '659', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'true', 'Ce-Dv': 'true', 'Ce-Id': '2e213d2d-ebad-4339-a61f-a2ae92691254', 'Ce-Knativekafkaoffset': '659', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Forwarded', 'from': 1, 'to': 2})'"}
+---------------
+
+
+
+1741057327.646575 - INFO - 127.0.0.1 - - [04/Mar/2025 03:02:07] "POST / HTTP/1.1" 200 -
+1741057602.701260 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "451", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "3b252f8b-1e11-49d7-9324-91e8fea3b75d", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-4ae3934ff7c6fd18dd3224e24b6d4295-70966d0276720e10-01", "X-B3-Sampled": "1", "X-B3-Spanid": "70966d0276720e10", "X-B3-Traceid": "4ae3934ff7c6fd18dd3224e24b6d4295", "X-Forwarded-For": "10.42.0.246, 10.42.0.13", "X-Forwarded-Proto": "http", "X-Request-Id": "3fdcb8be-1017-44fa-8a98-3eac9587cd13"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-java' vs 'verify-transaction-js': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '3b252f8b-1e11-49d7-9324-91e8fea3b75d'}, b'')', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '3b252f8b-1e11-49d7-9324-91e8fea3b75d'}, b'')'"}
+---------------
+
+
+
+1741057602.703379 - INFO - 127.0.0.1 - - [04/Mar/2025 03:06:42] "POST / HTTP/1.1" 200 -
+1741057602.751959 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "780", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "3b252f8b-1e11-49d7-9324-91e8fea3b75d", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-9624a96ec0ce6af9e328d4ef75ff5c80-5769a3df457c73ff-01", "X-B3-Sampled": "1", "X-B3-Spanid": "5769a3df457c73ff", "X-B3-Traceid": "9624a96ec0ce6af9e328d4ef75ff5c80", "X-Forwarded-For": "10.42.0.246, 10.42.0.13", "X-Forwarded-Proto": "http", "X-Request-Id": "5a2d06ce-68d2-4c3d-9594-46b1f29ccbef"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-java' vs 'verify-transaction-go': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '3b252f8b-1e11-49d7-9324-91e8fea3b75d', 'Ce-Knativekafkaoffset': '779', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '3b252f8b-1e11-49d7-9324-91e8fea3b75d'}, b'')'"}
+---------------
+
+
+
+1741057602.752735 - INFO - 127.0.0.1 - - [04/Mar/2025 03:06:42] "POST / HTTP/1.1" 200 -
+1741057633.813344 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "452", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "0448f705-c6c6-46aa-86ca-2b08f5d00380", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-daf08767870e48318952fa9a7682782f-250f0f9ae58f3dde-01", "X-B3-Sampled": "1", "X-B3-Spanid": "250f0f9ae58f3dde", "X-B3-Traceid": "daf08767870e48318952fa9a7682782f", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "c1fc3d28-9fbb-4b6f-936e-21cce9a07dde"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-php' vs 'verify-transaction-java': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '0448f705-c6c6-46aa-86ca-2b08f5d00380'}, b'')', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '0448f705-c6c6-46aa-86ca-2b08f5d00380'}, b'')'"}
+---------------
+
+
+
+1741057633.814231 - INFO - 127.0.0.1 - - [04/Mar/2025 03:07:13] "POST / HTTP/1.1" 200 -
+1741057694.798750 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "780", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "3d8a45ca-da58-4828-8168-d4bb62055c01", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-0cbd7b7a70c0ec6408c67bb3400652cd-da87b03155ad6cac-01", "X-B3-Sampled": "1", "X-B3-Spanid": "da87b03155ad6cac", "X-B3-Traceid": "0cbd7b7a70c0ec6408c67bb3400652cd", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "b990066c-fb6e-432c-a524-bac47bee7e04"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-python' vs 'verify-transaction-php': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '3d8a45ca-da58-4828-8168-d4bb62055c01'}, b'')', got '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '3d8a45ca-da58-4828-8168-d4bb62055c01', 'Ce-Knativekafkaoffset': '822', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': 1, 'to': None})'"}
+---------------
+
+
+
+1741057694.800997 - INFO - 127.0.0.1 - - [04/Mar/2025 03:08:14] "POST / HTTP/1.1" 200 -
+1741057908.996213 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "776", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "4ecc664a-89e7-450e-ad8c-43d274c7e405", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-6087abad29e97ebb1ffc03ae2f10f33a-121f5f1bd4fb9427-01", "X-B3-Sampled": "1", "X-B3-Spanid": "121f5f1bd4fb9427", "X-B3-Traceid": "6087abad29e97ebb1ffc03ae2f10f33a", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "b08c1f21-7662-4e1f-9ed3-bc0047c0c8c7"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-php' vs 'verify-transaction-go': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '4ecc664a-89e7-450e-ad8c-43d274c7e405', 'Ce-Knativekafkaoffset': '922', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '4ecc664a-89e7-450e-ad8c-43d274c7e405'}, b'')'"}
+---------------
+
+
+
+1741057908.999252 - INFO - 127.0.0.1 - - [04/Mar/2025 03:11:48] "POST / HTTP/1.1" 200 -
+1741057909.077676 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "450", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "b240f991-b998-43bc-ab2b-c96aea5ae882", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-e0bfb9b668dd36c9fe9479a098c33dfb-f9f194f8a305fa16-01", "X-B3-Sampled": "1", "X-B3-Spanid": "f9f194f8a305fa16", "X-B3-Traceid": "e0bfb9b668dd36c9fe9479a098c33dfb", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "1564ba56-290a-4359-9384-aac58745a396"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-php' vs 'verify-transaction-go': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'b240f991-b998-43bc-ab2b-c96aea5ae882'}, b'')', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'b240f991-b998-43bc-ab2b-c96aea5ae882'}, b'')'"}
+---------------
+
+
+
+1741057909.079756 - INFO - 127.0.0.1 - - [04/Mar/2025 03:11:49] "POST / HTTP/1.1" 200 -
+1741057909.138265 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "779", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "b240f991-b998-43bc-ab2b-c96aea5ae882", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-a34e328bcb0118a7fadfecb02bdc2c5c-e0c4cad5730f5f06-01", "X-B3-Sampled": "1", "X-B3-Spanid": "e0c4cad5730f5f06", "X-B3-Traceid": "a34e328bcb0118a7fadfecb02bdc2c5c", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "2f787aec-584f-49c6-90b8-1578c8183ee8"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-php' vs 'verify-transaction-go': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': 'b240f991-b998-43bc-ab2b-c96aea5ae882', 'Ce-Knativekafkaoffset': '924', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': 'b240f991-b998-43bc-ab2b-c96aea5ae882'}, b'')'"}
+---------------
+
+
+
+1741057909.141707 - INFO - 127.0.0.1 - - [04/Mar/2025 03:11:49] "POST / HTTP/1.1" 200 -
+1741057939.774291 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "453", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "34b8263c-4974-47a3-bb20-ddb3b6c8fdf7", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-874869aaeb90caff781a40175c37ae82-ae6a3690132329e5-01", "X-B3-Sampled": "1", "X-B3-Spanid": "ae6a3690132329e5", "X-B3-Traceid": "874869aaeb90caff781a40175c37ae82", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "1c70ec1d-f09a-4381-b955-52cb5be0125c"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-python' vs 'verify-transaction-js': expected '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '34b8263c-4974-47a3-bb20-ddb3b6c8fdf7'}, b'')', got '('GET', '/items/users?filter[username][_eq]=admin', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '34b8263c-4974-47a3-bb20-ddb3b6c8fdf7'}, b'')'"}
+---------------
+
+
+
+1741057939.775074 - INFO - 127.0.0.1 - - [04/Mar/2025 03:12:19] "POST / HTTP/1.1" 200 -
+1741057939.830213 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-bank-app.svc.cluster.local", "User-Agent": "Python/3.13 aiohttp/3.10.9", "Content-Length": "782", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "34b8263c-4974-47a3-bb20-ddb3b6c8fdf7", "Ce-Source": "egress-proxy", "Ce-Specversion": "1.0", "Ce-Type": "egress-proxy-error", "Content-Type": "application/json", "Forwarded": "for=10.42.0.246;proto=http", "K-Proxy-Request": "activator", "Traceparent": "00-5449fc2a09225a2d3cfca96283d86e88-953d6c6de32c8ed4-01", "X-B3-Sampled": "1", "X-B3-Spanid": "953d6c6de32c8ed4", "X-B3-Traceid": "5449fc2a09225a2d3cfca96283d86e88", "X-Forwarded-For": "10.42.0.246, 10.42.2.73", "X-Forwarded-Proto": "http", "X-Request-Id": "e2f2ae77-b412-4632-9402-37ddced59415"}
+---------------
+BODY
+{"error_message": "Mismatch for sender 'verify-transaction-python' vs 'verify-transaction-js': expected '('POST', '/mofaas-bank-app/broker', {'Ce-Dt': 'false', 'Ce-Dv': 'true', 'Ce-Id': '34b8263c-4974-47a3-bb20-ddb3b6c8fdf7', 'Ce-Knativekafkaoffset': '940', 'Ce-Knativekafkapartition': '0', 'Ce-Source': 'verify-transaction', 'Ce-Specversion': '1.0', 'Ce-Type': 'transaction', 'Content-Type': 'application/json', 'Kn-Namespace': 'mofaas-bank-app', 'Prefer': 'reply'}, {'amount': 10, 'client': 'admin', 'destination_client': 'attacker', 'message': 'Invalid client usernames', 'from': None, 'to': None})', got '('GET', '/items/users?filter[username][_eq]=attacker', {'Authorization': 'Bearer Bdt5tYCDSLS3-n62jU8Xgt1sYrzyipsQ', 'Ce-Id': '34b8263c-4974-47a3-bb20-ddb3b6c8fdf7'}, b'')'"}
+---------------
+
+
+
+1741057939.833074 - INFO - 127.0.0.1 - - [04/Mar/2025 03:12:19] "POST / HTTP/1.1" 200 -
+Saving logs for previous instance of pod result-00001-deployment-75fb8d967f-s5sw5
