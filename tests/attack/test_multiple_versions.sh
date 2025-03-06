@@ -86,9 +86,9 @@ reboot_machines() {
 
 # We now run independent test cycles for each amount (10 and 100), combined with each combination
 # of authorization and verify-transaction concurrency (ranging from 1 to 5).
-for auth_concurrency in {1..5}; do
-    for verify_concurrency in {1..5}; do
-        for amount in 10; do
+for auth_versions in {1..5}; do
+    for verify_versions in {1..5}; do
+        for amount in 10 100; do
             ##########################
             # 1. REBOOT CLUSTER MACHINES AND WAIT FOR CLUSTER TO BE READY
             ##########################
@@ -97,13 +97,13 @@ for auth_concurrency in {1..5}; do
 
             # Create a unique directory for this test run (parameters in name)
             test_timestamp=$(date +%Y%m%d%H%M%S)
-            test_dir="${BASE_RESULT_DIR}/test_amt-${amount}_auth-${auth_concurrency}_verify-${verify_concurrency}_${test_timestamp}"
+            test_dir="${BASE_RESULT_DIR}/test_amt-${amount}_authv-${auth_versions}_verifyv-${verify_versions}_${test_timestamp}"
             mkdir -p "$test_dir"
             echo "-------------------------------------------------------"
             echo "Starting test run with parameters:" 
             echo "  Amount: $amount"
-            echo "  Authorization Concurrency: $auth_concurrency"
-            echo "  Verify-transaction Concurrency: $verify_concurrency"
+            echo "  Authorization versions: $auth_versions"
+            echo "  Verify-transaction versions: $verify_versions"
             echo "  Test Directory: $test_dir"
 
             ##########################
@@ -112,8 +112,22 @@ for auth_concurrency in {1..5}; do
             echo "Installing helm chart..."
             tmp_values_file=$(mktemp)
             cp "$HELM_CHART_DIR/values.yaml" "$tmp_values_file"
-            yq eval ".multiVersionServices[0].concurrency = $auth_concurrency" -i "$tmp_values_file"
-            yq eval ".multiVersionServices[1].concurrency = $verify_concurrency" -i "$tmp_values_file"
+
+            yq eval ".multiVersionServices[0].deploymentType = \"attack\"" -i "$tmp_values_file"
+            yq eval ".multiVersionServices[1].deploymentType = \"attack\"" -i "$tmp_values_file"
+            yq eval ".multiVersionServices[0].concurrency = 1" -i "$tmp_values_file"
+            yq eval ".multiVersionServices[1].concurrency = 1" -i "$tmp_values_file"
+
+            auth_remove=$(( 5 - auth_versions ))
+            for a in $(seq 1 $auth_remove); do
+                yq eval "del(.multiVersionServices[0].versions[1])" -i "$tmp_values_file"
+            done
+
+            verify_remove=$(( 5 - verify_versions ))
+            for v in $(seq 1 $verify_remove); do
+                yq eval "del(.multiVersionServices[1].versions[1])" -i "$tmp_values_file"
+            done
+
             helm install "$RELEASE_NAME" "$HELM_CHART_DIR" -f "$tmp_values_file"
 
             # Wait until helm install is ready
@@ -133,7 +147,7 @@ for auth_concurrency in {1..5}; do
             ##########################
             result_trace_file="${test_dir}/requests_trace.txt"
             echo "Recording request traces in $result_trace_file"
-            echo "Test run parameters: Amount=$amount, Auth Concurrency=$auth_concurrency, Verify Concurrency=$verify_concurrency, Timestamp=$test_timestamp" > "$result_trace_file"
+            echo "Test run parameters: Amount=$amount, Auth versions=$auth_versions, Verify versions=$verify_versions, Timestamp=$test_timestamp" > "$result_trace_file"
             echo "-------------------------------------------------------" >> "$result_trace_file"
 
             for (( i=1; i<=REQUEST_COUNT; i++ )); do

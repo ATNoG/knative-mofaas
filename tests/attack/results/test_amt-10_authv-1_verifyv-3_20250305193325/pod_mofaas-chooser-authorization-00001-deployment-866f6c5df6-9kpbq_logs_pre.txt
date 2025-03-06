@@ -1,0 +1,70 @@
+1741203284.705827 - DEBUG - ======== Starting MoFaaS Chooser ========
+           Services: authorization-python
+           Services URLs: http://authorization-python.mofaas-bank-app.svc.cluster.local
+           Concurrency: 1
+           Ignore headers: ce-id, Date, x-envoy-upstream-service-time, Content-Length, x-powered-by
+           Egress URL: None
+           =========================================
+1741203284.706807 - DEBUG - Using selector: EpollSelector
+1741203297.235040 - DEBUG - Chosen functions for id <5e0d086e-2e6f-4faa-a287-281cf0bfc637>: ['authorization-python']
+1741203297.235374 - WARNING - Will not send a request to the egress, as there is none
+1741203297.236242 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203297.781065 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:34:57 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '520'}
+1741203297.781671 - WARNING - Will not send a request to the egress, as there is none
+1741203297.785360 - INFO - 127.0.0.1 [05/Mar/2025:19:34:57 +0000] "POST / HTTP/1.1" 200 183 "-" "curl/8.5.0"
+1741203298.911670 - DEBUG - Chosen functions for id <3008c520-c63d-4f6a-9922-315edc4d915d>: ['authorization-python']
+1741203298.911988 - WARNING - Will not send a request to the egress, as there is none
+1741203298.912694 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203299.062816 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:34:59 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '135'}
+1741203299.063354 - WARNING - Will not send a request to the egress, as there is none
+1741203299.065081 - INFO - 127.0.0.1 [05/Mar/2025:19:34:58 +0000] "POST / HTTP/1.1" 200 183 "-" "curl/8.5.0"
+1741203300.177298 - DEBUG - Chosen functions for id <e807b020-6398-4421-8217-c03aaa4fc341>: ['authorization-python']
+1741203300.177518 - WARNING - Will not send a request to the egress, as there is none
+1741203300.177913 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203300.275829 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:00 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '86'}
+1741203300.276234 - WARNING - Will not send a request to the egress, as there is none
+1741203300.277434 - INFO - 127.0.0.1 [05/Mar/2025:19:35:00 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+1741203301.427105 - DEBUG - Chosen functions for id <1c5c505f-063c-48e3-b19c-9600d97cf571>: ['authorization-python']
+1741203301.428370 - WARNING - Will not send a request to the egress, as there is none
+1741203301.428836 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203301.500874 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:01 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '57'}
+1741203301.501166 - WARNING - Will not send a request to the egress, as there is none
+1741203301.503149 - INFO - 127.0.0.1 [05/Mar/2025:19:35:01 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+1741203302.619449 - DEBUG - Chosen functions for id <59edc80a-804b-44d8-acb9-7eff9ac07abb>: ['authorization-python']
+1741203302.619651 - WARNING - Will not send a request to the egress, as there is none
+1741203302.620035 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203302.758574 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:02 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '121'}
+1741203302.758950 - WARNING - Will not send a request to the egress, as there is none
+1741203302.759906 - INFO - 127.0.0.1 [05/Mar/2025:19:35:02 +0000] "POST / HTTP/1.1" 200 183 "-" "curl/8.5.0"
+1741203303.858038 - DEBUG - Chosen functions for id <b70e0e18-20bf-4040-a0fc-e892f86f41df>: ['authorization-python']
+1741203303.858386 - WARNING - Will not send a request to the egress, as there is none
+1741203303.858985 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203303.931416 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:03 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '53'}
+1741203303.931851 - WARNING - Will not send a request to the egress, as there is none
+1741203303.933358 - INFO - 127.0.0.1 [05/Mar/2025:19:35:03 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+1741203305.062618 - DEBUG - Chosen functions for id <b889785b-520c-416c-86e8-6a4063dec87e>: ['authorization-python']
+1741203305.063082 - WARNING - Will not send a request to the egress, as there is none
+1741203305.064777 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203305.132042 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:05 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '51'}
+1741203305.132681 - WARNING - Will not send a request to the egress, as there is none
+1741203305.134449 - INFO - 127.0.0.1 [05/Mar/2025:19:35:05 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+1741203306.273131 - DEBUG - Chosen functions for id <a82a7cb4-4e1f-4a09-8b1b-7681428a5c9f>: ['authorization-python']
+1741203306.273426 - WARNING - Will not send a request to the egress, as there is none
+1741203306.273865 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203306.400808 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:06 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '109'}
+1741203306.401227 - WARNING - Will not send a request to the egress, as there is none
+1741203306.402785 - INFO - 127.0.0.1 [05/Mar/2025:19:35:06 +0000] "POST / HTTP/1.1" 200 183 "-" "curl/8.5.0"
+1741203307.573643 - DEBUG - Chosen functions for id <9ba6c8b1-f638-4b8e-8a45-5f93cfad6518>: ['authorization-python']
+1741203307.573864 - WARNING - Will not send a request to the egress, as there is none
+1741203307.574351 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203307.678571 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:07 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '93'}
+1741203307.678987 - WARNING - Will not send a request to the egress, as there is none
+1741203307.680211 - INFO - 127.0.0.1 [05/Mar/2025:19:35:07 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+1741203308.797731 - DEBUG - Chosen functions for id <14dd92f4-734a-4d29-a728-9741e2c958b9>: ['authorization-python']
+1741203308.797996 - WARNING - Will not send a request to the egress, as there is none
+1741203308.798686 - DEBUG - Doing a request to: http://authorization-python.mofaas-bank-app.svc.cluster.local/
+1741203308.878836 - DEBUG - Sending response with status <200>, body <{"message": "Forwarded"}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 05 Mar 2025 19:35:08 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '65'}
+1741203308.879283 - WARNING - Will not send a request to the egress, as there is none
+1741203308.880605 - INFO - 127.0.0.1 [05/Mar/2025:19:35:08 +0000] "POST / HTTP/1.1" 200 182 "-" "curl/8.5.0"
+======== Running on http://0.0.0.0:8080 ========
+(Press CTRL+C to quit)
