@@ -1,0 +1,10 @@
+1741206391.650968 - DEBUG - ======== Starting MoFaaS Chooser ========
+           Services: function-p4-v0, function-p4-v1, function-p4-v2, function-p4-v3, function-p4-v4
+           Services URLs: http://function-p4-v0.mofaas-sample-workflow.svc.cluster.local, http://function-p4-v1.mofaas-sample-workflow.svc.cluster.local, http://function-p4-v2.mofaas-sample-workflow.svc.cluster.local, http://function-p4-v3.mofaas-sample-workflow.svc.cluster.local, http://function-p4-v4.mofaas-sample-workflow.svc.cluster.local
+           Concurrency: 2
+           Ignore headers: ce-id, Date, x-envoy-upstream-service-time, Content-Length, x-powered-by
+           Egress URL: http://mofaas-egress-proxy-mofaas-function-4.mofaas-sample-workflow.svc.cluster.local
+           =========================================
+1741206391.652010 - DEBUG - Using selector: EpollSelector
+======== Running on http://0.0.0.0:8080 ========
+(Press CTRL+C to quit)

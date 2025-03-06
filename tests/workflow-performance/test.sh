@@ -190,24 +190,23 @@ main_task() {
 
 
 # vary the number of versions per function and concurrency
-path_size=10
+path_size=5
 deployment_type=attack
-for vpf in {1..10}; do
+for vpf in {1..5}; do
     for concurrency in $(seq 1 $vpf); do
         main_task $vpf $path_size $concurrency $deployment_type
     done
 done
 
 # vary the path size
-vpf=10
 for deployment_type in attack normal; do
     if [[ $deployment_type == "attack" ]]; then
-        vpf=10
+        vpf=5
     else
         vpf=1
     fi
-    for path_size in {1..10}; do
-        for concurrency in 1 10; do
+    for path_size in {1..5}; do
+        for concurrency in 1 5; do
             if [[ $concurrency -gt 1 && $deployment_type == "normal" ]]; then
                 continue
             fi
