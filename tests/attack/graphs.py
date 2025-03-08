@@ -89,8 +89,10 @@ def main():
     for item in os.listdir('results/'):
         info = item.split('_')
         amount = int(info[1].split('-')[1])
-        auth_conc = int(info[2].split('-')[1])
-        verify_conc = int(info[3].split('-')[1])
+        s = info[2].split('-')
+        auth_conc = f"c{s[1]}" if s[0] == "auth" else f"v{s[1]}"
+        s = info[3].split('-')
+        verify_conc = f"c{s[1]}" if s[0] == "verify" else f"v{s[1]}"
         # if verify_conc > 4:
         #     continue
 
@@ -108,7 +110,8 @@ def main():
         for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
             file_path = os.path.join(RESULTS_DIR, item, filename)
             if filename.startswith("pod_result"):
-                pod_results = read_results_pod(file_path)
+                # pod_results = read_results_pod(file_path)
+                pod_results.extend(read_results_pod(file_path))
             elif filename == "requests_trace.txt":
                 for i in (r := read_requests_trace(file_path)):
                     all_results[amount][auth_conc][verify_conc][i] = {
@@ -121,10 +124,10 @@ def main():
                 all_results[amount][auth_conc][verify_conc][_id] = {}
             all_results[amount][auth_conc][verify_conc][_id]["pod_results"] = p
         
-        if item.startswith("test_amt-10_auth-1_verify-1"):
-            for i in (r := all_results[amount][auth_conc][verify_conc]):
-                if not r[i].get("pod_results"):
-                    print(i, r[i])
+        # if item.startswith("test_amt-10_auth-1_verify-1"):
+        #     for i in (r := all_results[amount][auth_conc][verify_conc]):
+        #         if not r[i].get("pod_results"):
+        #             print(i, r[i])
 
     # Now all_results holds the parsed data from each pod_result file.
 
@@ -133,14 +136,36 @@ def main():
         "Relative frequency": [],
         "Time": []
     }
+    # for amount in all_results:
+    #     for auth in all_results[amount]:
+    #         if CONCURRENCY == "singular" and auth != f"c{1}":
+    #             continue
+    #         if CONCURRENCY == "multiple" and auth == f"c{1}":
+    #             continue
+    #         for verify in all_results[amount][auth]:
+    #             if amount == 100 and auth == f"c{1}" and verify != f"c{1}" and CONCURRENCY == "singular":
+    #                 continue
+    #             x = 0
+    #             l = 1
+    #             data["Time"].append([])
+    #             for r in (c := all_results[amount][auth][verify]):
+    #                 if 'pod_results' in c[r]:
+    #                     if c[r]['pod_results']["body"].get("message") == "Transaction successful":
+    #                         x += 1
+    #                         if 'requests_trace' in c[r]:
+    #                             data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+    #                     l += 1
+    #             data["Test"].append(f"Amount {amount}\nAuth {auth}\nVerify {verify}")
+    #             data["Relative frequency"].append(x/l)
+    #             print(x)
+    #             # data.append(x/len(c)*100)
     for amount in all_results:
         for auth in all_results[amount]:
-            if CONCURRENCY == "singular" and auth != 1:
-                continue
-            if CONCURRENCY == "multiple" and auth == 1:
+            print(f"{auth} -> {all_results[amount][auth].keys()}")
+            if auth.startswith("c"):
                 continue
             for verify in all_results[amount][auth]:
-                if amount == 100 and auth == 1 and verify != 1 and CONCURRENCY == "singular":
+                if verify.startswith("c"):
                     continue
                 x = 0
                 l = 1
@@ -155,7 +180,6 @@ def main():
                 data["Test"].append(f"Amount {amount}\nAuth {auth}\nVerify {verify}")
                 data["Relative frequency"].append(x/l)
                 print(x)
-                # data.append(x/len(c)*100)
     
     df = pd.DataFrame(data)
     sns.set_theme(rc={"figure.figsize": SIZE})
