@@ -207,9 +207,6 @@ for deployment_type in attack normal; do
     fi
     for path_size in {1..5}; do
         for concurrency in 1 5; do
-            if [[ $concurrency -gt 1 && $deployment_type == "normal" ]]; then
-                continue
-            fi
             main_task $vpf $path_size $concurrency $deployment_type
         done
     done
