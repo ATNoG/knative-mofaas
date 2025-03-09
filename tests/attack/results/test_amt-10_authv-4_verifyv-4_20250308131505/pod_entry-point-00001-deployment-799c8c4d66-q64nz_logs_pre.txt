@@ -1,0 +1,899 @@
+1741439766.512953 - WARNING - Missing required environment variables: K_SINK
+ * Serving Flask app 'main'
+ * Debug mode: off
+1741439766.520155 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.42.0.187:8080
+1741439766.520341 - INFO - [33mPress CTRL+C to quit[0m
+1741439820.705427 - DEBUG - Received request with id <ef279cc7-ffcb-4493-b186-859316cd7a09>
+1741439820.717453 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439820.730360 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:00] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439821.812253 - DEBUG - Received request with id <8634932f-2fa2-40b7-af13-2d037d59e287>
+1741439821.814000 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439821.815974 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:01] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439822.880068 - DEBUG - Received request with id <fb5b4436-0621-4c7a-8de4-222586521aa5>
+1741439822.881101 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439822.882910 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:02] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439823.959834 - DEBUG - Received request with id <37d9c8cf-6c03-455a-9e0f-30d60514dcf1>
+1741439823.961622 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439823.963473 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:03] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439825.039695 - DEBUG - Received request with id <8deee76e-483d-4641-803d-1e57d6078a0d>
+1741439825.041979 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439825.043988 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:05] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439826.115771 - DEBUG - Received request with id <06083251-bf6c-4ce8-bfb6-3c852afa067a>
+1741439826.117552 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439826.119745 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:06] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439827.186391 - DEBUG - Received request with id <42d9587b-061e-4475-b152-59e4cb785399>
+1741439827.187789 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439827.189247 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:07] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439828.253725 - DEBUG - Received request with id <00c6b790-9ff5-4f24-a658-8363d0af0ca8>
+1741439828.254864 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439828.256281 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:08] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439829.325053 - DEBUG - Received request with id <6165c279-ee0e-4a6e-8e51-d91269cdd0ce>
+1741439829.326192 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439829.327529 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:09] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439830.385076 - DEBUG - Received request with id <f1c871ef-71e1-4121-a999-836d2978c329>
+1741439830.386427 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439830.388192 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:10] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439831.452868 - DEBUG - Received request with id <9f2536b0-2b76-4505-b0ae-d5b1b32ffeed>
+1741439831.453692 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439831.454829 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:11] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439832.521830 - DEBUG - Received request with id <959edd6e-ac5d-4c1a-8eda-effca4a63391>
+1741439832.523236 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439832.524922 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:12] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439833.571666 - DEBUG - Received request with id <e63e132a-b018-4136-8c8f-c021ba830116>
+1741439833.573397 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439833.575016 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:13] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439834.636627 - DEBUG - Received request with id <fbc4ae89-36f5-4705-af3e-9a043bcdabac>
+1741439834.638188 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439834.640360 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:14] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439835.698720 - DEBUG - Received request with id <102017eb-0aba-45d9-abb1-a224d91c4819>
+1741439835.699598 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439835.700475 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:15] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439836.763829 - DEBUG - Received request with id <3f743389-bc00-452e-983f-0e631034e870>
+1741439836.765041 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439836.766886 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:16] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439837.829790 - DEBUG - Received request with id <ab7d9be4-4ad5-4974-b7fc-035233b45ed4>
+1741439837.831357 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439837.833318 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:17] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439838.901349 - DEBUG - Received request with id <9ac2f384-180c-4379-923f-c8f7ffdb401a>
+1741439838.902977 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439838.905069 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:18] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439839.981574 - DEBUG - Received request with id <8ee16a60-46b9-4520-acac-5b03bfc5bb94>
+1741439839.984835 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439839.985744 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:19] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439841.057014 - DEBUG - Received request with id <cf5fcdc0-9522-40ea-89ba-7ceea481c636>
+1741439841.058568 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439841.060445 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:21] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439842.125516 - DEBUG - Received request with id <553c05ee-76c6-41e1-9412-ea37aba9c72a>
+1741439842.126623 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439842.127939 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:22] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439843.202194 - DEBUG - Received request with id <b00934d8-bc2c-44d3-ba9e-b7bbd7ae679b>
+1741439843.203508 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439843.205343 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:23] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439844.289338 - DEBUG - Received request with id <b74dfb37-4473-4059-be5b-7335d62314f7>
+1741439844.291064 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439844.293395 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:24] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439845.353021 - DEBUG - Received request with id <ff9ec48e-1b0b-479e-af75-23f875e25b4c>
+1741439845.354132 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439845.355597 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:25] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439846.429254 - DEBUG - Received request with id <1be69ca2-b370-4c66-af24-4234d821e4a2>
+1741439846.430990 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439846.432742 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:26] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439847.501871 - DEBUG - Received request with id <09d3f904-c4b5-46aa-8572-e1e89c425e16>
+1741439847.502874 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439847.504014 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:27] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439848.561437 - DEBUG - Received request with id <5915a7d9-825c-44ad-9978-1093fc5afeec>
+1741439848.562534 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439848.563704 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:28] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439849.614869 - DEBUG - Received request with id <e00f28d7-13da-4827-8c7e-687427431a9e>
+1741439849.615762 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439849.616815 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:29] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439850.683524 - DEBUG - Received request with id <5ce4f9f7-516e-41f5-a84d-37f209649bd0>
+1741439850.684585 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439850.685768 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:30] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439851.744158 - DEBUG - Received request with id <3bb52831-98a6-43a4-8006-fbfe578464f4>
+1741439851.745437 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439851.746695 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:31] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439852.817248 - DEBUG - Received request with id <28a06ecf-9128-4688-8bcd-a32cbe7cec55>
+1741439852.818153 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439852.819092 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:32] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439853.895898 - DEBUG - Received request with id <cf64cb6b-3aba-4bea-a907-2a713be5a078>
+1741439853.897550 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439853.899539 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:33] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+1741439854.968527 - DEBUG - Received request with id <1ba8bef2-35c0-4dbd-8b8c-7ceb0396a0ef>
+1741439854.969576 - ERROR - Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 29, in forward_to_broker
+    response = requests.post(K_SINK, json=event, headers=headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'None': No scheme supplied. Perhaps you meant https://None?
+1741439854.970733 - INFO - 127.0.0.1 - - [08/Mar/2025 13:17:34] "[35m[1mPOST / HTTP/1.1[0m" 500 -

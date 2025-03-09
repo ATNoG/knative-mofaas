@@ -1,0 +1,356 @@
+ * Serving Flask app 'main'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.42.1.28:8080
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [08/Mar/2025 19:27:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:28:27] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:38] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:46] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:29:56] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:30:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:30:27] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:31:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:32:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:32:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:32:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:33:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:34:17] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:34:41] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:34:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:34:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:35:24] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:35:38] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:36:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:36:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:36:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:36:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:37:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:37:11] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:37:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:38:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:39:02] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:39:41] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:40:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:42:04] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:42:11] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:42:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:42:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:44:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:44:10] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:44:42] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:45:11] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:45:14] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:45:27] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:45:39] "POST / HTTP/1.1" 200 -
+[2025-03-08 19:46:13,888] ERROR in app: Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 974, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/local/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 45, in create_transaction
+    forward_to_broker({**data, "message": message, "success": code == 200, "details": response.json()}, request.headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+127.0.0.1 - - [08/Mar/2025 19:46:14] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+127.0.0.1 - - [08/Mar/2025 19:46:20] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:47:10] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:47:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:47:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:07] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:10] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:20] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:48:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:49:18] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:50:00] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:51:24] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:51:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:51:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:52:36] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:53:40] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:53:49] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:54:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:54:34] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:54:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:55:09] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:55:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:55:35] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:55:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:55:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:56:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:56:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:58:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:58:49] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:59:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 19:59:38] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:00:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:00:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:01:04] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:01:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:01:19] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:02:24] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:03:02] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:03:03] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:03:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:03:50] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:03:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:04:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:04:50] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:05:02] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:05:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:05:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:05:36] "POST / HTTP/1.1" 200 -
+[2025-03-08 20:06:15,288] ERROR in app: Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 974, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/local/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/app/main.py", line 45, in create_transaction
+    forward_to_broker({**data, "message": message, "success": code == 200, "details": response.json()}, request.headers)
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+127.0.0.1 - - [08/Mar/2025 20:06:15] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+127.0.0.1 - - [08/Mar/2025 20:06:28] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:06:28] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:06:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:07:12] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:07:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:02] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:44] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:08:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:09:03] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:09:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:10:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:10:12] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:10:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:10:37] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:10:46] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:11:38] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:12:07] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:13:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:14:03] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:14:31] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:09] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:31] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:34] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:38] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:15:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:16:17] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:17:36] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:18:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:18:09] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:18:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:18:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:18:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:19:20] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:19:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:19:34] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:19:54] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:19:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:20:11] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:21:06] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:21:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:22:03] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:22:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:22:56] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:23:03] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:23:35] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:24:10] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:24:15] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:24:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:24:36] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:25:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:25:12] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:25:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:25:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:26:20] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:26:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:26:42] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:28:41] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:28:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:29:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:29:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:29:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:30:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:30:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:31:17] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:32:00] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:32:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:32:25] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:32:41] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:33:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:33:36] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:33:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:34:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:34:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:35:14] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:36:17] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:36:40] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:36:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:37:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:38:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:38:42] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:38:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:38:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:38:58] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:39:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:39:06] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:39:12] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:39:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:39:34] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:41:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:41:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:43:06] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:43:07] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:43:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:43:44] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:44:32] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:44:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:44:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:46:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:46:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:46:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:47:10] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:47:52] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:47:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:06] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:28] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:30] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:48:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:49:44] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:49:56] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:51:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:51:35] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:51:50] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:52:07] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:52:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:52:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:52:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:52:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:53:05] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:53:26] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:53:51] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:53:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:55:36] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:55:37] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:56:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:56:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:56:40] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:57:01] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:57:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:57:46] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:58:28] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:58:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:59:47] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 20:59:49] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:00] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:06] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:20] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:25] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:00:41] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:01:13] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:01:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:01:39] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:01:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:02:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:02:34] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:02:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:03:04] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:03:18] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:03:40] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:04:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:06:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:06:40] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:06:43] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:07:12] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:07:24] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:07:27] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:08:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:09:07] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:09:22] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:09:42] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:09:48] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:09:58] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:10:16] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:10:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:10:46] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:11:29] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:12:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:12:15] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:13:14] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:14:08] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:14:19] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:14:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:14:59] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:15:11] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:15:21] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:15:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:16:27] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:16:37] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:16:58] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:18:14] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:18:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:18:35] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:18:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:19:23] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:19:28] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:19:33] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:19:45] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:19:57] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:20:53] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:20:55] "POST / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Mar/2025 21:21:40] "POST / HTTP/1.1" 200 -
+Saving logs for previous instance of pod transaction-00002-deployment-6f558cdd69-xvxqh
