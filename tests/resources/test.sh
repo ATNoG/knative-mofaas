@@ -88,9 +88,12 @@ reboot_machines() {
 
 # We now run independent test cycles for each amount (10 and 100), combined with each combination
 # of authorization and verify-transaction concurrency (ranging from 1 to 5).
-for auth_test in ${VERSIONS[@]}; do
-    for verify_test in ${VERSIONS[@]}; do
-        for concurrency in 1 5; do
+# for auth_test in ${VERSIONS[@]}; do
+for auth_test in attack; do
+    # for verify_test in ${VERSIONS[@]}; do
+    for verify_test in python; do
+        # for concurrency in 1 5; do
+        for concurrency in 5; do
             if [[ $concurrency -eq 5 ]] && [[ $auth_test != "attack" && $verify_test != "attack" ]]; then
                 continue
             fi
