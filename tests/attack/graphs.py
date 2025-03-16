@@ -1,8 +1,10 @@
 import os
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import json
 import pandas as pd
+from matplotlib.lines import Line2D  # Import Line2D for the line legend
 
 COMPARISON = 5
 SIZE = (7, 5)
@@ -12,6 +14,8 @@ SIZE_RATION = SIZE[1] / COMPARISON
 RESULTS_DIR = "results/"
 
 CONCURRENCY = "singular"            # singular or multiple
+AMOUNT = 10                         # 10 or 100
+MAX_ITERATIONS = 5000
 
 def read_results_pod(file_path):
     results = []
@@ -64,9 +68,11 @@ def read_requests_trace(file_path):
     results = {}
     with open(file_path, 'r') as f:
         content = f.read()
-    for result in content.split("\n-------------------------------------------------------\n")[1:5000]:
+    for result in content.split("\n-------------------------------------------------------\n"):
         try:
             lines = result.split("\n")
+            if not lines[0]:
+                break
             response = json.loads(lines[2].split('Response: ')[1])
             results[response['id']] = {
                 "response": response,
@@ -78,8 +84,17 @@ def read_requests_trace(file_path):
             print("Hmmm")
             print(file_path)
 
-    return results
+    return dict(list(results.items())[-MAX_ITERATIONS:])
 
+def sort_dict(d):
+    """Recursively sort the keys of a dictionary."""
+    if isinstance(d, dict):
+        return {k: sort_dict(d[k]) if isinstance(d[k], dict) else d[k] for k in sorted(d)}
+    return d
+
+# Define the function
+def f(x, second=1):
+    return 1 / x * second
 
 def main():
     # This list will hold the results from all files
@@ -93,8 +108,6 @@ def main():
         auth_conc = f"c{s[1]}" if s[0] == "auth" else f"v{s[1]}"
         s = info[3].split('-')
         verify_conc = f"c{s[1]}" if s[0] == "verify" else f"v{s[1]}"
-        # if verify_conc > 4:
-        #     continue
 
         if amount not in all_results:
             all_results[amount] = {}
@@ -110,7 +123,6 @@ def main():
         for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
             file_path = os.path.join(RESULTS_DIR, item, filename)
             if filename.startswith("pod_result"):
-                # pod_results = read_results_pod(file_path)
                 pod_results.extend(read_results_pod(file_path))
             elif filename == "requests_trace.txt":
                 for i in (r := read_requests_trace(file_path)):
@@ -121,88 +133,98 @@ def main():
         for p in pod_results:
             _id = p["headers"]["Ce-Id"]
             if _id not in all_results[amount][auth_conc][verify_conc]:
-                all_results[amount][auth_conc][verify_conc][_id] = {}
+                continue
+            #     all_results[amount][auth_conc][verify_conc][_id] = {}
             all_results[amount][auth_conc][verify_conc][_id]["pod_results"] = p
-        
-        # if item.startswith("test_amt-10_auth-1_verify-1"):
-        #     for i in (r := all_results[amount][auth_conc][verify_conc]):
-        #         if not r[i].get("pod_results"):
-        #             print(i, r[i])
 
-    # Now all_results holds the parsed data from each pod_result file.
-
+    all_results = sort_dict(all_results)
+    experiment = 'versions' if CONCURRENCY == 'singular' else 'concurrency'
     data = {
-        "Test": [],
+        f"Authorization {experiment}": [],
+        f"Verify {experiment}": [],
         "Relative frequency": [],
-        "Time": []
     }
-    # for amount in all_results:
-    #     for auth in all_results[amount]:
-    #         if CONCURRENCY == "singular" and auth != f"c{1}":
-    #             continue
-    #         if CONCURRENCY == "multiple" and auth == f"c{1}":
-    #             continue
-    #         for verify in all_results[amount][auth]:
-    #             if amount == 100 and auth == f"c{1}" and verify != f"c{1}" and CONCURRENCY == "singular":
-    #                 continue
-    #             x = 0
-    #             l = 1
-    #             data["Time"].append([])
-    #             for r in (c := all_results[amount][auth][verify]):
-    #                 if 'pod_results' in c[r]:
-    #                     if c[r]['pod_results']["body"].get("message") == "Transaction successful":
-    #                         x += 1
-    #                         if 'requests_trace' in c[r]:
-    #                             data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
-    #                     l += 1
-    #             data["Test"].append(f"Amount {amount}\nAuth {auth}\nVerify {verify}")
-    #             data["Relative frequency"].append(x/l)
-    #             print(x)
-    #             # data.append(x/len(c)*100)
     for amount in all_results:
+        if amount != AMOUNT:
+            continue
         for auth in all_results[amount]:
             print(f"{auth} -> {all_results[amount][auth].keys()}")
-            if auth.startswith("c"):
+            if CONCURRENCY == 'singular' and auth.startswith("c"):
+                continue
+            if CONCURRENCY == 'multiple' and auth.startswith("v"):
                 continue
             for verify in all_results[amount][auth]:
-                if verify.startswith("c"):
+                if CONCURRENCY == 'singular' and verify.startswith("c"):
+                    continue
+                if CONCURRENCY == 'multiple' and verify.startswith("v"):
                     continue
                 x = 0
                 l = 1
-                data["Time"].append([])
+                print(f"Len {len(all_results[amount][auth][verify])}")
                 for r in (c := all_results[amount][auth][verify]):
                     if 'pod_results' in c[r]:
                         if c[r]['pod_results']["body"].get("message") == "Transaction successful":
                             x += 1
-                            if 'requests_trace' in c[r]:
-                                data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
                         l += 1
-                data["Test"].append(f"Amount {amount}\nAuth {auth}\nVerify {verify}")
+                data[f"Authorization {experiment}"].append(int(auth[1:]))
+                data[f"Verify {experiment}"].append(int(verify[1:]))
                 data["Relative frequency"].append(x/l)
                 print(x)
+
     
-    df = pd.DataFrame(data)
+    fig, ax = plt.subplots()
     sns.set_theme(rc={"figure.figsize": SIZE})
-    ax = sns.scatterplot(data=data, x="Test", y="Relative frequency")
-    
-    for i, row in df.iterrows():
-        # Get the x position corresponding to the categorical tick.
-        # ax.get_xticks() returns the positions of the ticks, which should align with the order of your categories.
-        xtick_positions = ax.get_xticks()
-        # Assuming the categories are in order
-        x_pos = xtick_positions[i]
-        y_pos = row["Relative frequency"]
-        # Add an offset to y to avoid overlapping the marker
-        ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
+    ax = sns.scatterplot(data=data, x=f"Authorization {experiment}", hue=f"Verify {experiment}", y="Relative frequency", palette=sns.color_palette("colorblind"), ax=ax)
+    scatter_legend = ax.legend(title=f"Verify {experiment}", bbox_to_anchor=(0.62, 1), loc="upper right")
+    ax.add_artist(scatter_legend)
+    # ax2 = ax.twinx()
+    # for i, row in df.iterrows():
+    #     # Get the x position corresponding to the categorical tick.
+    #     # ax.get_xticks() returns the positions of the ticks, which should align with the order of your categories.
+    #     xtick_positions = ax.get_xticks()
+    #     # Assuming the categories are in order
+    #     x_pos = xtick_positions[i]
+    #     y_pos = row["Relative frequency"]
+    #     # Add an offset to y to avoid overlapping the marker
+    #     ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
     
     plt.ylim(0, 1)
-    plt.title(f"Relative frequency of a successful attack with concurrency {'=' if CONCURRENCY == 'singular' else '>'} 1\n", fontdict={"size": 17*SIZE_RATION})
-    
+    plt.title(f"Relative frequency of a successful attack with\nconcurrency {'=' if CONCURRENCY == 'singular' else '>'} 1 and amount = {AMOUNT}\n", fontdict={"size": 17*SIZE_RATION})
     ax.yaxis.label.set_fontsize(15*SIZE_RATION)
     ax.xaxis.label.set_fontsize(15*SIZE_RATION)
     ax.tick_params(labelsize=12*SIZE_RATION)
+    
+    x_values = np.linspace(1, 5, 500)
+    print(x_values)
+    x_values = x_values[x_values != 0]  # Remove zero to avoid division error
+
+    # Compute y values
+    if AMOUNT == 10:
+        y_values = f(x_values)
+        df = pd.DataFrame({"x": x_values, "y": y_values})
+        sns.lineplot(data=df, x="x", y="y", linestyle="dashed", ax=ax)
+        plt.legend([Line2D([0], [0], linestyle='dashed', color=sns.color_palette()[0], linewidth=2)], [r"$P = \frac{1}{v_a}$"], title=r"Theoretical probability" + "\n" + r"($P = \frac{1}{v_a}$)", bbox_to_anchor=(1, 1), loc="upper right", fontsize=12*SIZE_RATION)
+    else:
+        labels = []
+        labels_lines = []
+        for i in range(1, 6):
+            y_values = f(x_values, second=1/i)
+            df = pd.DataFrame({"x": x_values, "y": y_values})
+            sns.lineplot(data=df, x="x", y="y", linestyle="dashed", ax=ax)
+            labels.append(r'$P = \frac{1}{v_a}*\frac{1}{' + str(i) + r'}$')
+            labels_lines.append(Line2D([0], [0], linestyle='dashed', color=sns.color_palette()[i - 1], linewidth=2))
+        plt.legend(labels_lines, labels, title=r"Theoretical probability" + "\n" + r"($P = \frac{1}{v_a}*\frac{1}{v_t}$)", bbox_to_anchor=(1, 1), loc="upper right", fontsize=12*SIZE_RATION)
+    
+    # Create a DataFrame for seaborn
+    # plt.legend([Line2D([0], [0], linestyle='dashed', linewidth=2), Line2D([0], [0], linestyle='dashed', linewidth=2)], ["Theoretical values", "test"], bbox_to_anchor=(1, 1), loc="upper right")
+    
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.grid(True)
+    ax.set_xticks(list(range(1, 6)))
+
     plt.tight_layout()
-    plt.savefig(f"concurrency_{CONCURRENCY}.pdf")
+    plt.savefig(f"concurrency_c{CONCURRENCY}_a{AMOUNT}.pdf")
 
     plt.show()
 
