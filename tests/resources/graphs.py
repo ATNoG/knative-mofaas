@@ -162,7 +162,7 @@ def main():
     # df = pd.DataFrame(data)
     # sns.set_theme(rc={"figure.figsize": SIZE})
     # ax = sns.scatterplot(data=data, x="Test", y="Relative frequency")
-    ax = sns.pointplot(data=data, x="Verify Transaction Version", hue="Authorization Version", y="Memory", linestyle="none")
+    ax = sns.pointplot(data=data, x="Verify Transaction Version", hue="Authorization Version", y="Memory", linestyle="none", palette=sns.color_palette("colorblind"))
     
     # for i, row in df.iterrows():
     #     # Get the x position corresponding to the categorical tick.
