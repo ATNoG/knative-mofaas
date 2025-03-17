@@ -10,6 +10,8 @@ SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
+RESULT = "vpf"              # vpf or ps
+MAX_ITERATIONS = 1000
 
 def read_results_pod(file_path):
     results = []
@@ -55,7 +57,7 @@ def read_results_pod(file_path):
         })
             
         pos = next_index_body
-    return results
+    return results[-MAX_ITERATIONS:]
 
 
 def read_requests_trace(file_path):
@@ -76,7 +78,7 @@ def read_requests_trace(file_path):
             print("Hmmm")
             print(file_path)
 
-    return results
+    return dict(list(results.items())[-MAX_ITERATIONS:])
 
 
 def sort_dict(d):
@@ -141,66 +143,67 @@ def main():
     # Now all_results holds the parsed data from each pod_result file.
 
     all_results = sort_dict(all_results)
-    data = {
-        "Versions per function": [],
-        "Execution time (s)": [],
-        "Path Size": [],
-        "Concurrency": []
-    }
-    for versfunc in all_results:
-        for pathsize in all_results[versfunc]:
-            if pathsize != 5:
-                continue
-            for concurrency in all_results[versfunc][pathsize]:
-                for dt in all_results[versfunc][pathsize][concurrency]:
-                    if dt == "normal":
-                        continue
-                    for r in (c := all_results[versfunc][pathsize][concurrency][dt]):
-                        if 'requests_trace' in c[r]:
-                            if 'pod_results' in c[r]:
-                                data["Execution time (s)"].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
-                            # data["Execution time (s)"].append(c[r]['requests_trace']['stop'] - c[r]['requests_trace']['start'])
-                                data["Versions per function"].append(versfunc)      # \nConcurrency {concurrency}
-                                data["Concurrency"].append(concurrency)
-                                data["Path Size"].append(pathsize)
     
-    # all_results = sort_dict(all_results)
-    # data = {
-    #     "Protection": [],            # concurrency 5
-    #     "Time": [],
-    #     "Path Size": [],
-    # }
-    # for versfunc in all_results:
-    #     if versfunc != 5 and versfunc != 1:
-    #         continue
-    #     for pathsize in all_results[versfunc]:
-    #         for concurrency in all_results[versfunc][pathsize]:
-    #             if concurrency != 5 and concurrency != 1:
-    #                 continue
-    #             print(concurrency)
-    #             for dt in all_results[versfunc][pathsize][concurrency]:
-    #                 # if dt == "attack" and concurrency == 1:
-    #                 #     continue
-    #                 for r in (c := all_results[versfunc][pathsize][concurrency][dt]):
-    #                     if 'requests_trace' in c[r]:
-    #                         if 'pod_results' in c[r]:
-    #                             data["Time"].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
-    #                     # if 'requests_trace' in (r := all_results[versfunc][pathsize][concurrency][dt]):
-    #                         # data["Time"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
-    #                             # data["Time"].append(c[r]['requests_trace']['stop'] - c[r]['requests_trace']['start'])
-    #                         # data["Test"].append(f"Versions per function {versfunc}\nDeployment type {dt}\nConcurrency {concurrency}")   
-    #                             data["Protection"].append(f"With MoFaaS and Concurrency = {concurrency}" if dt == "attack" else "Without MoFaaS")
-    #                             data["Path Size"].append(pathsize)
+    if RESULT == "vpf":
+        data = {
+            "Versions per function": [],
+            "Execution time (s)": [],
+            "Path size": [],
+            "Concurrency": []
+        }
+        for versfunc in all_results:
+            for pathsize in all_results[versfunc]:
+                if pathsize != 5:
+                    continue
+                for concurrency in all_results[versfunc][pathsize]:
+                    for dt in all_results[versfunc][pathsize][concurrency]:
+                        if dt == "normal":
+                            continue
+                        for r in (c := all_results[versfunc][pathsize][concurrency][dt]):
+                            if 'requests_trace' in c[r]:
+                                if 'pod_results' in c[r]:
+                                    data["Execution time (s)"].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+                                # data["Execution time (s)"].append(c[r]['requests_trace']['stop'] - c[r]['requests_trace']['start'])
+                                    data["Versions per function"].append(versfunc)      # \nConcurrency {concurrency}
+                                    data["Concurrency"].append(concurrency)
+                                    data["Path size"].append(pathsize)
+        ax = sns.pointplot(data=data, x="Versions per function", y="Execution time (s)", hue="Concurrency", linestyle="none", palette=sns.color_palette("colorblind"))
+        plt.title(f"Execution time varying the\npath size and concurrency", fontdict={"size": 17 * SIZE_RATION})
+    else:
+        data = {
+            "Protection": [],
+            "Execution time (s)": [],
+            "Path size": [],
+        }
+        for versfunc in all_results:
+            if versfunc != 5 and versfunc != 1:
+                continue
+            for pathsize in all_results[versfunc]:
+                for concurrency in all_results[versfunc][pathsize]:
+                    if concurrency != 5 and concurrency != 1:
+                        continue
+                    print(concurrency)
+                    for dt in all_results[versfunc][pathsize][concurrency]:
+                        # if dt == "attack" and concurrency == 1:
+                        #     continue
+                        for r in (c := all_results[versfunc][pathsize][concurrency][dt]):
+                            if 'requests_trace' in c[r]:
+                                if 'pod_results' in c[r]:
+                                    data["Execution time (s)"].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+                            # if 'requests_trace' in (r := all_results[versfunc][pathsize][concurrency][dt]):
+                                # data["Execution time (s)"][-1].append(c[r]['pod_results']["time"] - c[r]['requests_trace']['start'])
+                                    # data["Execution time (s)"].append(c[r]['requests_trace']['stop'] - c[r]['requests_trace']['start'])
+                                # data["Test"].append(f"Versions per function {versfunc}\nDeployment type {dt}\nConcurrency {concurrency}")   
+                                    data["Protection"].append(f"With MoFaaS and concurrency = {concurrency}" if dt == "attack" else "Without MoFaaS")
+                                    data["Path size"].append(pathsize)
+        ax = sns.pointplot(data=data, x="Path size", y="Execution time (s)", hue="Protection", linestyle="none", palette=sns.color_palette("colorblind"))
+        plt.title(f"Execution time varying the\npath size and concurrency", fontdict={"size": 17 * SIZE_RATION})
 
-    sns.set_theme(rc={"figure.figsize": SIZE})
-    ax = sns.pointplot(data=data, x="Versions per function", y="Execution time (s)", hue="Concurrency", linestyle="none", palette=sns.color_palette("colorblind"))
-    # ax = sns.pointplot(data=data, x="Path Size", y="Time", hue="Protection", linestyle="none", palette=sns.color_palette("colorblind"))
-    print(ax.get_lines()[0].get_data())
-    for i in ax.get_lines():
-        print(i.get_data())
+    # print(ax.get_lines()[0].get_data())
+    # for i in ax.get_lines():
+    #     print(i.get_data())
 
     plt.ylim(0, 0.9)
-    plt.title(f"Execution time varying the path size and concurrency", fontdict={"size": 17 * SIZE_RATION})
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.grid(True)
@@ -209,7 +212,7 @@ def main():
     ax.xaxis.label.set_fontsize(15*SIZE_RATION)
     ax.tick_params(labelsize=12*SIZE_RATION)
     plt.tight_layout()
-    plt.savefig(f"concurrency_{CONCURRENCY}.pdf")
+    plt.savefig(f"{RESULT}.pdf")
 
     plt.show()
 

@@ -10,8 +10,8 @@ SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
-RESULT = "Memory"  # Memory or CPU
-
+RESULT = "CPU"  # Memory or CPU
+MAX_ITERATIONS = 1000
 
 def read_results_pod(file_path):
     results = []
@@ -61,7 +61,7 @@ def read_results_pod(file_path):
         )
 
         pos = next_index_body
-    return results
+    return results[-MAX_ITERATIONS:]
 
 
 def read_requests_trace(file_path):
@@ -84,7 +84,7 @@ def read_requests_trace(file_path):
             print("Hmmm")
             print(file_path)
 
-    return results
+    return dict(list(results.items())[-MAX_ITERATIONS:])
 
 
 def read_top(file_path):
@@ -111,7 +111,7 @@ def read_top(file_path):
             if info[0] not in results[-1]["top"]:
                 results[-1]["top"][info[0]] = {}
             results[-1]["top"][info[0]][info[1]] = {"cpu": info[2], "mem": info[3]}
-    return results
+    return results[-MAX_ITERATIONS:]
 
 
 def sort_dict(d):
