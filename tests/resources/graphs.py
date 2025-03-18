@@ -132,21 +132,24 @@ def main():
         info = item.split("_")
         auth_conc = info[2].split("-")[1]
         verify_conc = info[3].split("-")[1]
-        concurrency = info[4].split("-")[1]
+        concurrency1 = info[4].split("-")[1]
+        concurrency2 = info[5].split("-")[1]
 
         if auth_conc not in all_results:
             all_results[auth_conc] = {}
         if verify_conc not in all_results[auth_conc]:
             all_results[auth_conc][verify_conc] = {}
-        if concurrency not in all_results[auth_conc][verify_conc]:
-            all_results[auth_conc][verify_conc][concurrency] = {}
+        if concurrency1 not in all_results[auth_conc][verify_conc]:
+            all_results[auth_conc][verify_conc][concurrency1] = {}
+        if concurrency2 not in all_results[auth_conc][verify_conc][concurrency1]:
+            all_results[auth_conc][verify_conc][concurrency1][concurrency2] = {}
 
         print(item)
         # Look for files that start with 'pod_result'
         for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
             file_path = os.path.join(RESULTS_DIR, item, filename)
             if filename == "top.txt":
-                all_results[auth_conc][verify_conc][concurrency] = read_top(file_path)
+                all_results[auth_conc][verify_conc][concurrency1][concurrency2] = read_top(file_path)
 
     all_results = sort_dict(all_results)
 
@@ -163,30 +166,31 @@ def main():
         for verify_conc in all_results[auth_conc]:
             # if verify_conc == "attack":
             #     continue
-            for concurrency in all_results[auth_conc][verify_conc]:
-                for r in all_results[auth_conc][verify_conc][concurrency]:
-                    cpu = 0
-                    memory = 0
-                    for service in r["top"]:
-                        for container in r["top"][service]:
-                            cpu += int(
-                                r["top"][service][container]["cpu"].split("m")[0]
-                            )/10
-                            memory += int(
-                                r["top"][service][container]["mem"].split("Mi")[0]
-                            )
-                    data["Authorization version"].append(
-                        auth_conc
-                        if auth_conc != "attack"
-                        else f"c = {concurrency}"
-                    )
-                    data["Verify version"].append(
-                        verify_conc
-                        if verify_conc != "attack"
-                        else f"c = {concurrency}"
-                    )
-                    data[f"CPU ({unit})"].append(cpu)
-                    data[f"Memory ({unit})"].append(memory)
+            for concurrency1 in all_results[auth_conc][verify_conc]:
+                for concurrency2 in all_results[auth_conc][verify_conc][concurrency1]:
+                    for r in all_results[auth_conc][verify_conc][concurrency1][concurrency2]:
+                        cpu = 0
+                        memory = 0
+                        for service in r["top"]:
+                            for container in r["top"][service]:
+                                cpu += int(
+                                    r["top"][service][container]["cpu"].split("m")[0]
+                                )/10
+                                memory += int(
+                                    r["top"][service][container]["mem"].split("Mi")[0]
+                                )
+                        data["Authorization version"].append(
+                            auth_conc
+                            if auth_conc != "attack"
+                            else f"c = {concurrency1}"
+                        )
+                        data["Verify version"].append(
+                            verify_conc
+                            if verify_conc != "attack"
+                            else f"c = {concurrency2}"
+                        )
+                        data[f"CPU ({unit})"].append(cpu)
+                        data[f"Memory ({unit})"].append(memory)
 
     # df = pd.DataFrame(data)
     # sns.set_theme(rc={"figure.figsize": SIZE})

@@ -111,7 +111,7 @@ for auth_test in attack; do
 
                 # Create a unique directory for this test run (parameters in name)
                 test_timestamp=$(date +%Y%m%d%H%M%S)
-                test_dir="${BASE_RESULT_DIR}/test_amt-${amount}_auth-${auth_test}_verify-${verify_test}_concurrency_auth-${concurrency_auth}_concurrency_verify-${concurrency_verify}_${test_timestamp}"
+                test_dir="${BASE_RESULT_DIR}/test_amt-${amount}_auth-${auth_test}_verify-${verify_test}_concurrency-${concurrency_auth}_concurrency-${concurrency_verify}_${test_timestamp}"
                 mkdir -p "$test_dir"
                 echo "-------------------------------------------------------"
                 echo "Starting test run with parameters:" 
