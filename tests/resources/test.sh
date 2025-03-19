@@ -94,8 +94,8 @@ reboot_machines() {
 #             for concurrency_verify in 1 5; do
 for auth_test in attack; do
     for verify_test in attack; do
-        for concurrency_auth in 5; do
-            for concurrency_verify in 1; do
+        for concurrency_auth in 1; do
+            for concurrency_verify in 5; do
                 if [[ $concurrency_auth -eq 5 ]] && [[ $auth_test != "attack" ]]; then
                     continue
                 fi
