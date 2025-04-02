@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 REGISTRY=ghcr.io/atnog/knative-mofaas
 paths=(egress-proxy function-chooser init-iptables modified-envoy)
 
