@@ -215,9 +215,9 @@ def main():
     #     ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
 
     if RESULT == "CPU":
-        plt.ylim(0, 110)
-    else:
-        plt.ylim(0)
+        plt.legend(loc='lower left')
+
+    plt.ylim(0)
     plt.title(f"{RESULT} used in each setup", fontdict={"size": 17 * SIZE_RATION})
     
     ax.spines["top"].set_visible(False)
