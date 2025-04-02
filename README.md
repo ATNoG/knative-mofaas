@@ -81,6 +81,10 @@ helm install sample-workflow .
 
 You can modify the `values.yaml` file to change the size of the workflow and the number of variants for each function.
 
+## MoFaaS LLM Feedback Loop
+
+The MoFaaS LLM Feedback Loop was implemented and is available in another repository: https://github.com/ATNoG/mofaas-version-generation. Please refer to it if you want to try it and contribute.
+
 ## Contributing
 
 We welcome contributions! Please open an issue or submit a pull request.
