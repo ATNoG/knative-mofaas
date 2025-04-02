@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REGISTRY=10.43.67.161:5000/sample-workflow
+REGISTRY=ghcr.io/atnog/knative-mofaas/sample-workflow
 paths=(entry-point function result)
 
 for p in ${paths[@]}; do
