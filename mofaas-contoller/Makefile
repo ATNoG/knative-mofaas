@@ -1,5 +1,7 @@
 # Image URL to use all building/pushing image targets
-IMG ?= 10.43.67.161:5000/controller:latest
+IMG ?= ghcr.io/atnog/knative-mofaas/controller:latest
+FUNCTION_CHOOSER_IMG ?= ghcr.io/atnog/knative-mofaas/function-chooser:latest
+EGRESS_PROXY_IMG ?= ghcr.io/atnog/knative-mofaas/egress-proxy:latest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.31.0
 
@@ -84,7 +86,7 @@ build: manifests generate fmt vet ## Build manager binary.
 
 .PHONY: run
 run: manifests generate fmt vet ## Run a controller from your host.
-	go run ./cmd/main.go --function-chooser-image 10.43.67.161:5000/function-chooser --egress-proxy-image 10.43.67.161:5000/egress-proxy
+	go run ./cmd/main.go --function-chooser-image ${FUNCTION_CHOOSER_IMG} --egress-proxy-image ${EGRESS_PROXY_IMG}
 
 # If you wish to build the manager image targeting other platforms you can use the --platform flag.
 # (i.e. docker build --platform linux/arm64). However, you must enable docker buildKit for it.

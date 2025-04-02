@@ -71,7 +71,7 @@ spec:
         spec:
           initContainers:
           - name: init-iptables
-            image: 10.43.67.161:5000/init-iptables
+            image: ghcr.io/atnog/knative-mofaas/init-iptables:latest
             securityContext:
               capabilities:
                 add:
@@ -83,7 +83,7 @@ spec:
                 runAsUser: 65532
                 runAsGroup: 65532
             - name: envoy
-              image: 10.43.67.161:5000/envoy:latest
+              image: ghcr.io/atnog/knative-mofaas/envoy:latest
               ports:
               - containerPort: 10000
               securityContext:

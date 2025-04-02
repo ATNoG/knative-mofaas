@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REGISTRY=10.43.67.161:5000/bank-app
+REGISTRY=ghcr.io/atnog/knative-mofaas/bank-app
 paths=(entry-point login authorization verify-transaction transaction result)
 languages=(python java php js go)
 

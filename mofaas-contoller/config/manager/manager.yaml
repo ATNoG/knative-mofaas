@@ -63,8 +63,8 @@ spec:
         args:
           - --leader-elect
           - --health-probe-bind-address=:8081
-          - --function-chooser-image=10.43.67.161:5000/function-chooser
-          - --egress-proxy-image=10.43.67.161:5000/egress-proxy
+          - --function-chooser-image=ghcr.io/atnog/knative-mofaas/function-chooser:latest
+          - --egress-proxy-image=ghcr.io/atnog/knative-mofaas/egress-proxy:latest
         image: controller:latest
         name: manager
         securityContext:
