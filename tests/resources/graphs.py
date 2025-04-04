@@ -10,7 +10,7 @@ SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
-RESULT = "CPU"  # Memory or CPU
+RESULT = "Memory"  # Memory or CPU
 MAX_ITERATIONS = 1000
 
 def read_results_pod(file_path):
@@ -202,6 +202,7 @@ def main():
         y=f"{RESULT} ({unit})",
         linestyle="none",
         palette=sns.color_palette("colorblind"),
+        scale=1.7
     )
 
     # for i, row in df.iterrows():
@@ -214,11 +215,12 @@ def main():
     #     # Add an offset to y to avoid overlapping the marker
     #     ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
 
-    if RESULT == "CPU":
-        plt.legend(loc='lower left')
+    # if RESULT == "CPU":
+    #     plt.legend()
 
     plt.ylim(0)
     plt.title(f"{RESULT} used in each setup", fontdict={"size": 17 * SIZE_RATION})
+    ax.legend(title="Verify version", loc='lower left', fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION, ncol=3)
     
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)

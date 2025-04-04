@@ -10,7 +10,7 @@ SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
-RESULT = "vpf"              # vpf or ps
+RESULT = "ps"              # vpf or ps
 MAX_ITERATIONS = 1000
 
 def read_results_pod(file_path):
@@ -167,8 +167,9 @@ def main():
                                     data["Versions per function"].append(versfunc)      # \nConcurrency {concurrency}
                                     data["Concurrency"].append(concurrency)
                                     data["Path size"].append(pathsize)
-        ax = sns.pointplot(data=data, x="Versions per function", y="Execution time (s)", hue="Concurrency", linestyle="none", palette=sns.color_palette("colorblind"))
+        ax = sns.pointplot(data=data, x="Versions per function", y="Execution time (s)", hue="Concurrency", linestyle="none", palette=sns.color_palette("colorblind"), scale=1.7)
         plt.title(f"Execution time varying the\npath size and concurrency", fontdict={"size": 17 * SIZE_RATION})
+        ax.legend(title="Concurrency", fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION)
     else:
         data = {
             "Protection": [],
@@ -196,8 +197,9 @@ def main():
                                 # data["Test"].append(f"Versions per function {versfunc}\nDeployment type {dt}\nConcurrency {concurrency}")   
                                     data["Protection"].append(f"With MoFaaS and concurrency = {concurrency}" if dt == "attack" else "Without MoFaaS")
                                     data["Path size"].append(pathsize)
-        ax = sns.pointplot(data=data, x="Path size", y="Execution time (s)", hue="Protection", linestyle="none", palette=sns.color_palette("colorblind"))
+        ax = sns.pointplot(data=data, x="Path size", y="Execution time (s)", hue="Protection", linestyle="none", palette=sns.color_palette("colorblind"), scale=1.7)
         plt.title(f"Execution time varying the\npath size and concurrency", fontdict={"size": 17 * SIZE_RATION})
+        ax.legend(title="Protection", fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION)
 
     # print(ax.get_lines()[0].get_data())
     # for i in ax.get_lines():

@@ -13,7 +13,7 @@ SIZE_RATION = SIZE[1] / COMPARISON
 
 RESULTS_DIR = "results/"
 
-CONCURRENCY = "multiple"  # singular or multiple
+CONCURRENCY = "singular"  # singular or multiple
 AMOUNT = 100  # 10 or 100
 MAX_ITERATIONS = 5000
 
@@ -195,9 +195,10 @@ def main():
         y="Relative frequency",
         palette=sns.color_palette("colorblind"),
         ax=ax,
+        s=170
     )
     scatter_legend = ax.legend(
-        title=f"Verify {experiment}", bbox_to_anchor=(0.62 if CONCURRENCY == 'singular' else 0.59 if AMOUNT == 10 else 0.41, 1), loc="upper right"
+        title=f"Verify {experiment}", bbox_to_anchor=(0.63 if CONCURRENCY == 'singular' else 0.56 if AMOUNT == 10 else 0.37, 1), loc="upper right", fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION
     )
     ax.add_artist(scatter_legend)
     # ax2 = ax.twinx()
@@ -248,7 +249,8 @@ def main():
             title=r"Theoretical probability",
             bbox_to_anchor=(1, 1),
             loc="upper right",
-            fontsize=12 * SIZE_RATION,
+            fontsize=13 * SIZE_RATION,
+            title_fontsize=13 * SIZE_RATION
         )
     else:
         labels = []
@@ -275,7 +277,8 @@ def main():
             + r"($P = \frac{1}{v_a}*\frac{1}{v_t}$)",
             bbox_to_anchor=(1, 1),
             loc="upper right",
-            fontsize=12 * SIZE_RATION,
+            fontsize=13 * SIZE_RATION,
+            title_fontsize=13 * SIZE_RATION
         )
 
     # Create a DataFrame for seaborn
