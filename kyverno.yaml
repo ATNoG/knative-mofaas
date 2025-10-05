@@ -71,7 +71,7 @@ spec:
         spec:
           initContainers:
           - name: init-iptables
-            image: ghcr.io/atnog/knative-mofaas/init-iptables:latest
+            image: ghcr.io/atnog/knative-mofaas/init-iptables@sha256:104c0238c0206268d6fd5f0017bb31a31bdb995a2407ca2cb5ce41c5275ad5c2
             securityContext:
               capabilities:
                 add:
@@ -83,7 +83,7 @@ spec:
                 runAsUser: 65532
                 runAsGroup: 65532
             - name: envoy
-              image: ghcr.io/atnog/knative-mofaas/envoy:latest
+              image: ghcr.io/atnog/knative-mofaas/modified-envoy@sha256:41bee7470f4039f20d3dec36062d25a295979b3efe2ec7f54de5c23b2e11393b
               ports:
               - containerPort: 10000
               securityContext:

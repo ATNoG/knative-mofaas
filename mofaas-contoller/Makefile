@@ -1,7 +1,7 @@
 # Image URL to use all building/pushing image targets
-IMG ?= ghcr.io/atnog/knative-mofaas/controller:latest
-FUNCTION_CHOOSER_IMG ?= ghcr.io/atnog/knative-mofaas/function-chooser:latest
-EGRESS_PROXY_IMG ?= ghcr.io/atnog/knative-mofaas/egress-proxy:latest
+IMG ?= ghcr.io/atnog/knative-mofaas/controller@sha256:b6d601b0f074f76d0cc32836a23f70deaa61679a19c571886e64e63c129c3c9f
+FUNCTION_CHOOSER_IMG ?= ghcr.io/atnog/knative-mofaas/function-chooser@sha256:1f67cf284383a4c34d97ca33c9adf3b8eb2ce6ed6f0ea45f7b0fe15315f9ddf7
+EGRESS_PROXY_IMG ?= ghcr.io/atnog/knative-mofaas/egress-proxy@sha256:2e76a304776fbc274e654bede8eb143bb24207b702a6667561a716590efa3f2f
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.31.0
 

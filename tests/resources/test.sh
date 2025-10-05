@@ -6,15 +6,15 @@
 ##########################
 SSH_PASSWORD="olaadeus"                     # SSH password for the Kubernetes cluster machines
 MACHINE_USER="ubuntu"                     # SSH user (assumed to have sudo privileges for reboot)
-MACHINES=("10.255.30.133" "10.255.30.120" "10.255.30.35")  # IPs of the 3 Kubernetes machines
+MACHINES=("10.255.30.249" "10.255.30.206" "10.255.30.191")  # IPs of the 3 Kubernetes machines
 HELM_CHART_DIR="../../apps/bank/chart/"             # Path to the helm chart directory
 REQUEST_COUNT=1500                                 # Number of consecutive curl requests per test cycle
 WAIT_PERIOD=1                                    # Seconds to wait between each request
 NAMESPACE="mofaas-bank-app"                       # Kubernetes namespace for helm chart deployment
 RELEASE_NAME="bank"                      # Helm release name to be used for installation
-ENTRY_URL="http://entry-point.mofaas-bank-app.10.255.30.133.sslip.io"  # URL to contact for test requests
+ENTRY_URL="http://entry-point.mofaas-bank-app.10.255.30.249.sslip.io"  # URL to contact for test requests
 WAIT_REBOOT=280                                  # Seconds to wait after rebooting the cluster machines
-VERSIONS=(python java js go php attack)
+VERSIONS=(attack python java js go php)
 amount=10
 
 # Base directory to store test results (trace file and pod logs)
@@ -27,15 +27,42 @@ mkdir -p "$BASE_RESULT_DIR"
 
 # Wait until the only pod in the namespace has a name starting with "result"
 wait_for_helm_ready() {
+    concurrency_verify=$1
+    concurrency_auth=$2
+    verify_test=$3
+    auth_test=$4
+
+    needed_pods=14
+    if [[ $verify_test == "attack" ]]; then
+        if [[ $concurrency_verify -ge 1 ]]; then
+            needed_pods=$(( needed_pods + 1 ))
+        fi
+        if [[ $concurrency_verify -ge 2 ]]; then
+            needed_pods=$(( needed_pods + 1 ))
+        fi
+    fi
+    if [[ $auth_test == "attack" ]]; then
+        if [[ $concurrency_auth -ge 1 ]]; then
+            needed_pods=$(( needed_pods + 1 ))
+        fi
+        if [[ $concurrency_auth -ge 2 ]]; then
+            needed_pods=$(( needed_pods + 1 ))
+        fi
+    fi
+    
+
     echo "Waiting for helm install to be ready (only one pod starting with 'result')..."
     while true; do
-        # mapfile -t pods < <(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name)
-        number_pods=$(kubectl get pods -n mofaas-bank-app | grep Running | wc | awk '{print $1}')
-        if [[ $number_pods -eq 14 ]]; then
-            echo "Helm chart is ready."
+        # Count running pods
+        number_running=$(kubectl get pods -n "$NAMESPACE" | grep -c 'Running')
+        # Count terminating pods
+        number_terminating=$(kubectl get pods -n "$NAMESPACE" | grep -c 'Terminating')
+
+        if [[ $number_running -eq $needed_pods && $number_terminating -eq 0 ]]; then
+            echo "Helm chart is ready: $number_running running pods, no terminating pods."
             break
         else
-            echo "Not the required number of pods yet (there are $number_pods pods). Retrying in 5 seconds..."
+            echo "Waiting: $number_running running pods, $number_terminating terminating pods (need $needed_pods running). Retrying in 5 seconds..."
             sleep 5
         fi
     done
@@ -92,16 +119,28 @@ reboot_machines() {
 #     for verify_test in ${VERSIONS[@]}; do
 #         for concurrency_auth in 1 5; do
 #             for concurrency_verify in 1 5; do
-for auth_test in attack; do
-    for verify_test in attack; do
-        for concurrency_auth in 1; do
-            for concurrency_verify in 5; do
+for auth_test in ${VERSIONS[@]}; do
+    for verify_test in python js go php; do
+        for concurrency_auth in 1 2 5; do
+            for concurrency_verify in 1; do
                 if [[ $concurrency_auth -eq 5 ]] && [[ $auth_test != "attack" ]]; then
                     continue
                 fi
                 if [[ $concurrency_verify -eq 5 ]] && [[ $verify_test != "attack" ]]; then
                     continue
                 fi
+                if [[ $concurrency_auth -eq 2 ]] && [[ $auth_test != "attack" ]]; then
+                    continue
+                fi
+                if [[ $concurrency_verify -eq 2 ]] && [[ $verify_test != "attack" ]]; then
+                    continue
+                fi
+                # if [[ $concurrency_auth -eq 5 ]] && [[ $verify_test == "java" ]]; then
+                #     continue
+                # fi
+                # if [[ $concurrency_verify -ne 2 ]] && [[ $concurrency_auth -ne 2 ]]; then
+                #     continue
+                # fi
 
                 ##########################
                 # 1. REBOOT CLUSTER MACHINES AND WAIT FOR CLUSTER TO BE READY
@@ -132,13 +171,27 @@ for auth_test in attack; do
                 yq eval ".multiVersionServices[1].deploymentType = \"$verify_test\"" -i "$tmp_values_file"
                 yq eval ".multiVersionServices[0].concurrency = $concurrency_auth" -i "$tmp_values_file"
                 yq eval ".multiVersionServices[1].concurrency = $concurrency_verify" -i "$tmp_values_file"
-                helm install "$RELEASE_NAME" "$HELM_CHART_DIR" -f "$tmp_values_file"
 
-                # Wait until helm install is ready
-                sleep 60
-                wait_for_helm_ready
+                while true; do
+                    helm install "$RELEASE_NAME" "$HELM_CHART_DIR" -f "$tmp_values_file"
+                    if [ "$?" -eq 0 ]; then
+                        break
+                    else
+                        echo "Helm chart not installed with success; trying again..."
+                        helm uninstall "$RELEASE_NAME"
+                        kubectl delete namespace $NAMESPACE
+                        sleep 60
+                    fi
+                done
+
+                # Wait until helm install is ready (3 times in a row, because sometimes there are updates)
+                for i in {1..3}; do
+                    sleep 30
+                    wait_for_helm_ready $concurrency_verify $concurrency_auth $verify_test $auth_test
+                done
                 ./top.sh $NAMESPACE $test_dir $WAIT_PERIOD &
                 top_pid=$!
+                sleep 60
 
                 echo "Saving logs from pods during execution"
                 pods_to_log=$(kubectl get pods -n "$NAMESPACE" --no-headers -o custom-columns=NAME:.metadata.name || true)
@@ -156,7 +209,7 @@ for auth_test in attack; do
                 echo "Test run parameters: Amount=$amount, Auth version=$auth_test, Verify version=$verify_test, Timestamp=$test_timestamp" > "$result_trace_file"
                 echo "-------------------------------------------------------" >> "$result_trace_file"
 
-                token=$(curl -s -D - --data '{"username": "admin", "password": "olaadeus"}' http://login.mofaas-bank-app.10.255.30.133.sslip.io -H "Content-Type: application/json" | grep -i authorization | awk '{print $3}' | tr -d '\r')
+                token=$(curl -s -D - --data '{"username": "admin", "password": "olaadeus"}' http://login.mofaas-bank-app.10.255.30.249.sslip.io -H "Content-Type: application/json" | grep -i authorization | awk '{print $3}' | tr -d '\r')
                 for (( i=1; i<=REQUEST_COUNT; i++ )); do
                     req_start=$(date +%s.%N)
                     echo "Request $i start: $req_start" >> "$result_trace_file"
@@ -198,8 +251,22 @@ for auth_test in attack; do
                 # 5. UNINSTALL THE HELM RELEASE AND WAIT FOR PODS TO TERMINATE
                 ##########################
                 echo "Uninstalling helm release '$RELEASE_NAME'"
-                helm uninstall "$RELEASE_NAME"
+
+                while true; do
+                    helm uninstall "$RELEASE_NAME"
+                    if [ "$?" -eq 0 ]; then
+                        break
+                    else
+                        echo "Helm chart not uninstalled with success; trying again..."
+                        sleep 60
+                    fi
+                done
+
                 wait_for_pods_termination
+
+                git add .
+                git commit -s -m "redoo test again for $amount amount, $auth_test authorization version, $verify_test verify version, $concurrency_auth concurrency auth, and $concurrency_verify concurrency verify"
+                git push
 
                 echo "Test run completed. Results saved in directory: $test_dir"
                 echo "-------------------------------------------------------"

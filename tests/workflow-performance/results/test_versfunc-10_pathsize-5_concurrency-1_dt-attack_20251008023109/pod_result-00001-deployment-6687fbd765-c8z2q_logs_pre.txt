@@ -1,0 +1,20 @@
+ * Serving Flask app 'main'
+ * Debug mode: off
+1759890680.938722 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.42.0.50:8080
+1759890680.938879 - INFO - [33mPress CTRL+C to quit[0m
+1759891588.722830 - INFO - Received response:
+---------------
+HEADERS
+{"Host": "result.mofaas-sample-workflow.svc.cluster.local", "User-Agent": "curl/8.5.0", "Content-Length": "2", "Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Ce-Id": "ead9a090-0a2e-49c7-ad4d-19da2c3031a3", "Ce-Source": "http-event-source", "Ce-Specversion": "1.0", "Ce-Type": "http.request.received", "Content-Type": "application/json", "Forwarded": "for=10.42.0.39;proto=http", "K-Proxy-Request": "activator", "X-Forwarded-For": "10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239, 10.42.0.39, 10.42.1.239", "X-Forwarded-Proto": "http", "X-K-Sink": "http://result.mofaas-sample-workflow.svc.cluster.local", "X-Request-Id": "fdebbce7-cf75-40d8-8755-42f210637303"}
+---------------
+BODY
+{}
+---------------
+
+
+
+1759891588.724261 - INFO - 127.0.0.1 - - [08/Oct/2025 02:46:28] "POST / HTTP/1.1" 200 -
+failed to create fsnotify watcher: too many open files

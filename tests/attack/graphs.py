@@ -6,17 +6,19 @@ import json
 import pandas as pd
 from matplotlib.lines import Line2D  # Import Line2D for the line legend
 
-COMPARISON = 5
+COMPARISON = 4.5
 SIZE = (7, 5)
 SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
 
-CONCURRENCY = "singular"  # singular or multiple
-AMOUNT = 100  # 10 or 100
+CONCURRENCY = "multiple"  # singular or multiple
+AMOUNT = 10  # 10 or 100
 MAX_ITERATIONS = 5000
 
+MARKERS = ["o", "s", "X", "P", "|", "d", ">"]
+LINESTYLES = ["-", "--", "-.", ":", (0, (3, 1, 1, 1, 1, 1)), (0, (5, 2, 1, 2)), (0, (10, 3, 3, 3))]
 
 def read_results_pod(file_path):
     results = []
@@ -188,18 +190,21 @@ def main():
 
     fig, ax = plt.subplots()
     sns.set_theme(rc={"figure.figsize": SIZE})
-    ax = sns.scatterplot(
+    ax = sns.pointplot(
         data=data,
         x=f"Authorization {experiment}",
         hue=f"Verify {experiment}",
         y="Relative frequency",
         palette=sns.color_palette("colorblind"),
         ax=ax,
-        s=170
+        markers=MARKERS,
+        linestyle="none",
+        # s=170
     )
     scatter_legend = ax.legend(
-        title=f"Verify {experiment}", bbox_to_anchor=(0.63 if CONCURRENCY == 'singular' else 0.56 if AMOUNT == 10 else 0.37, 1), loc="upper right", fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION
+        title=f"Verify\n{experiment}", bbox_to_anchor=(0.59 if CONCURRENCY == 'singular' else 0.56 if AMOUNT == 10 else 0.32, 1.1), loc="upper right", fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION
     )
+    scatter_legend.get_title().set_ha("center")
     ax.add_artist(scatter_legend)
     # ax2 = ax.twinx()
     # for i, row in df.iterrows():
@@ -212,9 +217,8 @@ def main():
     #     # Add an offset to y to avoid overlapping the marker
     #     ax.text(x=x_pos, y=y_pos + 0.02, s=f"{y_pos:.3f}", ha='center', va='bottom', fontdict={"size": 12*SIZE_RATION})
 
-    plt.ylim(0, 1)
     plt.title(
-        f"Relative frequency of a successful attack with\nconcurrency {'=' if CONCURRENCY == 'singular' else r'$\geq$'} 1 and amount = {AMOUNT}\n",
+        f"Relative frequency of a successful attack\nwith concurrency {'=' if CONCURRENCY == 'singular' else r'$\geq$'} 1 and amount = {AMOUNT}\n",
         fontdict={"size": 17 * SIZE_RATION},
     )
     ax.yaxis.label.set_fontsize(15 * SIZE_RATION)
@@ -222,7 +226,6 @@ def main():
     ax.tick_params(labelsize=12 * SIZE_RATION)
 
     x_values = np.linspace(1, 5 if CONCURRENCY == 'singular' else 3, 500)
-    print(x_values)
     x_values = x_values[x_values != 0]  # Remove zero to avoid division error
 
     # Compute y values
@@ -230,24 +233,24 @@ def main():
         y_values = f(x_values) if CONCURRENCY == "singular" else x_values[1:] * 0
         df = pd.DataFrame(
             {
-                "x": x_values if CONCURRENCY == "singular" else x_values[1:],
+                "x": x_values - 1 if CONCURRENCY == "singular" else x_values[1:] - 1,
                 "y": y_values,
             }
         )
-        sns.lineplot(data=df, x="x", y="y", linestyle="dashed", ax=ax)
+        sns.lineplot(data=df, x="x", y="y", linestyle=LINESTYLES[0], ax=ax, color=sns.color_palette("colorblind")[0])
         plt.legend(
             [
                 Line2D(
                     [0],
                     [0],
-                    linestyle="dashed",
-                    color=sns.color_palette()[0],
+                    linestyle=LINESTYLES[0],
+                    color=sns.color_palette("colorblind")[0],
                     linewidth=2,
                 )
             ],
             [r"$P = \frac{1}{v_a}$" if CONCURRENCY == 'singular' else r"$P = \left\{ \substack{ \frac{1}{v_a}\quad \text{if } c_a = 1 \\ 0\quad \text{otherwise} } \right.$" if AMOUNT == 10 else r"$P = \left\{ \substack{ \frac{1}{v_a}*\frac{1}{v_t}\quad \text{if } c_a = 1 \text{ and } c_t = 1 \\ 0\quad \text{otherwise} } \right.$"],
             title=r"Theoretical probability",
-            bbox_to_anchor=(1, 1),
+            bbox_to_anchor=(1.07, 1.1),
             loc="upper right",
             fontsize=13 * SIZE_RATION,
             title_fontsize=13 * SIZE_RATION
@@ -257,15 +260,15 @@ def main():
         labels_lines = []
         for i in range(1, 6):
             y_values = f(x_values, second=1 / i)
-            df = pd.DataFrame({"x": x_values, "y": y_values})
-            sns.lineplot(data=df, x="x", y="y", linestyle="dashed", ax=ax)
+            df = pd.DataFrame({"x": x_values - 1, "y": y_values})
+            sns.lineplot(data=df, x="x", y="y", linestyle=LINESTYLES[i-1], ax=ax, color=sns.color_palette("colorblind")[i - 1])
             labels.append(r"$P = \frac{1}{v_a}*\frac{1}{" + str(i) + r"}$")
             labels_lines.append(
                 Line2D(
                     [0],
                     [0],
-                    linestyle="dashed",
-                    color=sns.color_palette()[i - 1],
+                    linestyle=LINESTYLES[i-1],
+                    color=sns.color_palette("colorblind")[i - 1],
                     linewidth=2,
                 )
             )
@@ -275,7 +278,7 @@ def main():
             title=r"Theoretical probability"
             + "\n"
             + r"($P = \frac{1}{v_a}*\frac{1}{v_t}$)",
-            bbox_to_anchor=(1, 1),
+            bbox_to_anchor=(1.07, 1.1),
             loc="upper right",
             fontsize=13 * SIZE_RATION,
             title_fontsize=13 * SIZE_RATION
@@ -287,13 +290,15 @@ def main():
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.grid(True)
-    ax.set_xticks(list(range(1, 6)) if CONCURRENCY == "singular" else list(range(1, 4)))
+    ax.set_xticks(list(range(0, 5)) if CONCURRENCY == "singular" else list(range(0, 3)))
+
+    plt.ylim(0, 1.1)
+    plt.xlim(-0.1, len(ax.get_xticks()) - 0.9)
 
     plt.tight_layout()
     plt.savefig(f"concurrency_c{CONCURRENCY}_a{AMOUNT}.pdf")
 
     plt.show()
-
 
 if __name__ == "__main__":
     main()

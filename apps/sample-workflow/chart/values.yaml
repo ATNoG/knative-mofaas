@@ -2,10 +2,12 @@ namespace: mofaas-sample-workflow
 registry: "ghcr.io/atnog/knative-mofaas/sample-workflow"
 oneVersionServices:
   - name: entry-point
+    digest: "@sha256:182b12d481dc5ef74cf35c9381f96dffc02c7d00263e6963bafab170d106d8cf"
     annotations:
       autoscaling.knative.dev/min-scale: "1"
       autoscaling.knative.dev/max-scale: "1"
   - name: result
+    digest: "@sha256:b18dfb8c2336e24aa868acadc1fa685929e7fc501dd2565954ff6277e3aa68b7"
     annotations:
       autoscaling.knative.dev/min-scale: "1"
       autoscaling.knative.dev/max-scale: "1"
@@ -13,10 +15,11 @@ oneVersionServices:
       networking.knative.dev/visibility: cluster-local
 multiVersionServices:
   - name: function
-    deploymentType: "normal"    # attack or normal
-    concurrency: 1
-    pathSize: 10
-    versions: 1
+    digest: "@sha256:fb97c836892b84c7834a4d6deaed7f7169e25bfcc55937ad6a83860821d7ec72"
+    deploymentType: "attack"    # attack or normal
+    concurrency: 2
+    pathSize: 3
+    versions: 6
     ignoreHeaders:
       - ce-id
       - Date

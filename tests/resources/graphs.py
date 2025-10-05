@@ -1,90 +1,19 @@
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
-import json
 import pandas as pd
 
-COMPARISON = 5
+COMPARISON = 4.5
 SIZE = (7, 5)
 SIZE_RATION = SIZE[1] / COMPARISON
 
 
 RESULTS_DIR = "results/"
-RESULT = "Memory"  # Memory or CPU
+RESULT = "CPU"  # Memory or CPU
+REMOVE_IDLE = True
 MAX_ITERATIONS = 1000
 
-def read_results_pod(file_path):
-    results = []
-    with open(file_path, "r") as f:
-        content = f.read()
-
-    pos = 0
-    while pos < len(content):
-        # Locate the "HEADERS" marker
-        headers_marker = content.find("HEADERS", pos)
-        if headers_marker == -1:
-            break
-        # Locate the first '{' after "HEADERS"
-        header_start = content.find("{", headers_marker)
-        if header_start == -1:
-            break
-
-        try:
-            headers, next_index = json.JSONDecoder().raw_decode(content, header_start)
-        except Exception as e:
-            headers = {}
-            next_index = header_start + 1
-
-        # Locate the "BODY" marker after the headers JSON
-        body_marker = content.find("BODY", next_index)
-        if body_marker == -1:
-            break
-        # Locate the first '{' after "BODY"
-        body_start = content.find("{", body_marker)
-        if body_start == -1:
-            break
-
-        try:
-            body, next_index_body = json.JSONDecoder().raw_decode(content, body_start)
-        except Exception as e:
-            body = {}
-            next_index_body = body_start + 1
-
-        results.append(
-            {
-                "headers": headers,
-                "body": body,
-                "time": float(
-                    content[headers_marker - 18 - 28 - 16 : headers_marker - 18 - 28]
-                ),
-            }
-        )
-
-        pos = next_index_body
-    return results[-MAX_ITERATIONS:]
-
-
-def read_requests_trace(file_path):
-    results = {}
-    with open(file_path, "r") as f:
-        content = f.read()
-    for result in content.split(
-        "\n-------------------------------------------------------\n"
-    )[1:5000]:
-        try:
-            lines = result.split("\n")
-            response = json.loads(lines[2].split("Response: ")[1])
-            results[response["id"]] = {
-                "response": response,
-                "start": float(lines[0].split("start: ")[1]),
-                "stop": float(lines[1].split("end: ")[1]),
-                "number": int(lines[1].split(" ")[1]),
-            }
-        except Exception as e:
-            print("Hmmm")
-            print(file_path)
-
-    return dict(list(results.items())[-MAX_ITERATIONS:])
+MARKERS = ["o", "s", "X", "P", "d", "^", ">", "<"]
 
 
 def read_top(file_path):
@@ -123,6 +52,25 @@ def sort_dict(d):
     return d
 
 
+def delete_idle(result, function: str, ver: str, conc: str):
+    if ver != "attack":
+        for i in range(len(result)):
+            keys = list(result[i]["top"].keys())
+            for k in keys:
+                if function in k:
+                    if k != f"{function}-{ver}":
+                        if REMOVE_IDLE:
+                            del result[i]["top"][k]
+                        # else:   
+                        #     del result[i]["top"][k]["envoy"]
+    # for i in range(len(result)):
+    #     keys = list(result[i]["top"].keys())
+    #     for k in keys:
+    #         if "envoy" in result[i]["top"][k]:
+    #             del result[i]["top"][k]["envoy"]
+    
+
+
 def main():
     # This list will hold the results from all files
     all_results = {}
@@ -149,7 +97,33 @@ def main():
         for filename in os.listdir(os.path.join(RESULTS_DIR, item)):
             file_path = os.path.join(RESULTS_DIR, item, filename)
             if filename == "top.txt":
-                all_results[auth_conc][verify_conc][concurrency1][concurrency2] = read_top(file_path)
+                all_results[auth_conc][verify_conc][concurrency1][concurrency2] = (
+                    read_top(file_path)
+                )
+                delete_idle(
+                    result=all_results[auth_conc][verify_conc][concurrency1][
+                        concurrency2
+                    ],
+                    function="authorization",
+                    ver=auth_conc,
+                    conc=concurrency1,
+                )
+                delete_idle(
+                    result=all_results[auth_conc][verify_conc][concurrency1][
+                        concurrency2
+                    ],
+                    function="verify-transaction",
+                    ver=verify_conc,
+                    conc=concurrency2,
+                )
+                # if concurrency1 == "0":
+                #     print(all_results[auth_conc][verify_conc][concurrency1][concurrency2][0])
+                # exit()
+
+                # print(verify_conc)
+                # print(concurrency1)
+                # print(concurrency2)
+                # exit()
 
     all_results = sort_dict(all_results)
 
@@ -168,14 +142,21 @@ def main():
             #     continue
             for concurrency1 in all_results[auth_conc][verify_conc]:
                 for concurrency2 in all_results[auth_conc][verify_conc][concurrency1]:
-                    for r in all_results[auth_conc][verify_conc][concurrency1][concurrency2]:
+                    for r in all_results[auth_conc][verify_conc][concurrency1][
+                        concurrency2
+                    ]:
                         cpu = 0
                         memory = 0
                         for service in r["top"]:
                             for container in r["top"][service]:
-                                cpu += int(
-                                    r["top"][service][container]["cpu"].split("m")[0]
-                                )/10
+                                cpu += (
+                                    int(
+                                        r["top"][service][container]["cpu"].split("m")[
+                                            0
+                                        ]
+                                    )
+                                    / 10
+                                )
                                 memory += int(
                                     r["top"][service][container]["mem"].split("Mi")[0]
                                 )
@@ -202,8 +183,29 @@ def main():
         y=f"{RESULT} ({unit})",
         linestyle="none",
         palette=sns.color_palette("colorblind"),
-        scale=1.7
+        markers=MARKERS,
+        scale=1.7,
     )
+
+        # --- identify main lines (with markers) ---
+    main_lines = [line for line in ax.lines if line.get_marker() != 'None']
+
+    # get hue labels from legend
+    _, hue_labels = ax.get_legend_handles_labels()
+
+    # sanity check
+    print(f"Detected {len(main_lines)} main lines for {len(hue_labels)} hues")
+
+    # --- extract data for each hue ---
+    grouped = {}
+    for label, line in zip(hue_labels, main_lines):
+        xy = line.get_xydata()
+        grouped[label] = pd.DataFrame(xy, columns=["x", "y"])
+
+    # --- display results ---
+    for hue, df in grouped.items():
+        print(f"\nHue: {hue}")
+        print(df.to_string(index=False))
 
     # for i, row in df.iterrows():
     #     # Get the x position corresponding to the categorical tick.
@@ -218,10 +220,24 @@ def main():
     # if RESULT == "CPU":
     #     plt.legend()
 
-    plt.ylim(0)
-    plt.title(f"{RESULT} used in each setup", fontdict={"size": 17 * SIZE_RATION})
-    ax.legend(title="Verify version", loc='lower left', fontsize=13 * SIZE_RATION, title_fontsize=13 * SIZE_RATION, ncol=3)
-    
+    if RESULT == "CPU":
+        plt.ylim(0, 50)
+    else:
+        plt.ylim(0, 1210)
+    plt.xlim(-0.2, 7.5)
+    plt.title(
+        f"{RESULT} used in each setup{'\nwithout idle variants' if REMOVE_IDLE else ''}",
+        fontdict={"size": 17 * SIZE_RATION},
+    )
+    ax.legend(
+        title="Verify version",
+        loc="lower left",               #  if RESULT != "CPU" or REMOVE_IDLE else "upper right"
+        fontsize=13 * SIZE_RATION,
+        title_fontsize=13 * SIZE_RATION,
+        ncol=2,
+        bbox_to_anchor=(-0.02, -0.02),          #  if RESULT != "CPU" or REMOVE_IDLE else (1.05, 1.05)
+    )
+
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.grid(True)
@@ -230,7 +246,9 @@ def main():
     ax.xaxis.label.set_fontsize(15 * SIZE_RATION)
     ax.tick_params(labelsize=12 * SIZE_RATION)
     plt.tight_layout()
-    plt.savefig(f"resources_{RESULT}.pdf")
+    plt.savefig(
+        f"resources_{RESULT}.pdf" if not REMOVE_IDLE else f"resources_{RESULT}_idle.pdf"
+    )
 
     plt.show()
 

@@ -1,0 +1,15 @@
+1759685186.962540 - DEBUG - ======== Starting MoFaaS Chooser ========
+           Services: function-p0-v0, function-p0-v1, function-p0-v2, function-p0-v3, function-p0-v4
+           Services URLs: http://function-p0-v0.mofaas-sample-workflow.svc.cluster.local, http://function-p0-v1.mofaas-sample-workflow.svc.cluster.local, http://function-p0-v2.mofaas-sample-workflow.svc.cluster.local, http://function-p0-v3.mofaas-sample-workflow.svc.cluster.local, http://function-p0-v4.mofaas-sample-workflow.svc.cluster.local
+           Concurrency: 1
+           Ignore headers: ce-id, Date, x-envoy-upstream-service-time, Content-Length, x-powered-by
+           Egress URL: None
+           =========================================
+1759685186.963965 - DEBUG - Using selector: EpollSelector
+1759685948.579623 - DEBUG - Chosen functions for id <75d4c44f-2273-4c7b-bc2c-799f890872aa>: ['function-p0-v3']
+1759685948.580898 - WARNING - Will not send a request to the egress, as there is none
+1759685948.587428 - DEBUG - Doing a request to: http://function-p0-v3.mofaas-sample-workflow.svc.cluster.local/
+1759685949.469041 - DEBUG - Sending response with status <200>, body <{"forwarded-response": {"forwarded-response": {"forwarded-response": {"forwarded-response": {"forwarded-response": {"forwarded-response": {"message": "success"}}}}}}}>, headers {'Content-Type': 'application/json', 'Date': 'Sun, 05 Oct 2025 17:39:09 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '842'}
+1759685949.469873 - WARNING - Will not send a request to the egress, as there is none
+1759685949.473321 - INFO - 127.0.0.1 [05/Oct/2025:17:39:08 +0000] "POST / HTTP/1.1" 200 326 "-" "curl/8.5.0"
+failed to create fsnotify watcher: too many open files

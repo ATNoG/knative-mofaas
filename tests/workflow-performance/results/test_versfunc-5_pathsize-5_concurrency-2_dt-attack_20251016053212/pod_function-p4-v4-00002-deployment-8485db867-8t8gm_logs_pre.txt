@@ -1,0 +1,1802 @@
+ * Serving Flask app 'main'
+ * Debug mode: off
+1760592786.720794 - WARNING - Missing required environment variables: K_SINK
+1760592786.724585 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.42.0.15:8080
+1760592786.724693 - INFO - [33mPress CTRL+C to quit[0m
+1760593722.869738 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593722.916507 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593722.918861 - INFO - 127.0.0.1 - - [16/Oct/2025 05:48:42] "POST / HTTP/1.1" 200 -
+1760593727.607659 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593727.646966 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593727.648796 - INFO - 127.0.0.1 - - [16/Oct/2025 05:48:47] "POST / HTTP/1.1" 200 -
+1760593729.163114 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593729.198232 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593729.200344 - INFO - 127.0.0.1 - - [16/Oct/2025 05:48:49] "POST / HTTP/1.1" 200 -
+1760593733.698184 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593733.730894 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593733.733263 - INFO - 127.0.0.1 - - [16/Oct/2025 05:48:53] "POST / HTTP/1.1" 200 -
+1760593735.160779 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593735.195574 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593735.197477 - INFO - 127.0.0.1 - - [16/Oct/2025 05:48:55] "POST / HTTP/1.1" 200 -
+1760593748.356700 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593748.393381 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593748.395534 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:08] "POST / HTTP/1.1" 200 -
+1760593751.267798 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593751.317296 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593751.318964 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:11] "POST / HTTP/1.1" 200 -
+1760593754.101552 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593754.139252 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593754.140979 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:14] "POST / HTTP/1.1" 200 -
+1760593755.557668 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593755.589805 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593755.593227 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:15] "POST / HTTP/1.1" 200 -
+1760593758.499237 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593758.531689 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593758.534123 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:18] "POST / HTTP/1.1" 200 -
+1760593762.899984 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593762.927697 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593762.929401 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:22] "POST / HTTP/1.1" 200 -
+1760593770.410526 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593770.445037 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593770.447087 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:30] "POST / HTTP/1.1" 200 -
+1760593771.937784 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593771.976286 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593771.979625 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:31] "POST / HTTP/1.1" 200 -
+1760593773.397379 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593773.436385 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593773.438602 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:33] "POST / HTTP/1.1" 200 -
+1760593776.424248 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593776.451327 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593776.455270 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:36] "POST / HTTP/1.1" 200 -
+1760593780.729450 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593780.757922 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593780.760475 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:40] "POST / HTTP/1.1" 200 -
+1760593783.580349 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593783.604892 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593783.605879 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:43] "POST / HTTP/1.1" 200 -
+1760593790.915380 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593790.949235 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593790.951386 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:50] "POST / HTTP/1.1" 200 -
+1760593799.721069 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593799.752614 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593799.754566 - INFO - 127.0.0.1 - - [16/Oct/2025 05:49:59] "POST / HTTP/1.1" 200 -
+1760593801.163640 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593801.194744 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593801.197937 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:01] "POST / HTTP/1.1" 200 -
+1760593802.636421 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593802.667282 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593802.668805 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:02] "POST / HTTP/1.1" 200 -
+1760593804.120128 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593804.151482 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593804.153652 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:04] "POST / HTTP/1.1" 200 -
+1760593805.584957 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593805.616762 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593805.618633 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:05] "POST / HTTP/1.1" 200 -
+1760593808.464101 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593808.494359 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593808.496289 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:08] "POST / HTTP/1.1" 200 -
+1760593817.178113 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593817.216892 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593817.218413 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:17] "POST / HTTP/1.1" 200 -
+1760593820.140318 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593820.174821 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593820.177631 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:20] "POST / HTTP/1.1" 200 -
+1760593837.979868 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593838.002965 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593838.004634 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:38] "POST / HTTP/1.1" 200 -
+1760593839.369276 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593839.401670 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593839.403198 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:39] "POST / HTTP/1.1" 200 -
+1760593845.158875 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593845.189556 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593845.190577 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:45] "POST / HTTP/1.1" 200 -
+1760593846.613308 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593846.646233 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593846.648423 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:46] "POST / HTTP/1.1" 200 -
+1760593852.520569 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593852.555783 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593852.557822 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:52] "POST / HTTP/1.1" 200 -
+1760593853.969398 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593854.002023 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593854.004686 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:54] "POST / HTTP/1.1" 200 -
+1760593855.428978 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593855.461379 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593855.463059 - INFO - 127.0.0.1 - - [16/Oct/2025 05:50:55] "POST / HTTP/1.1" 200 -
+1760593862.808203 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593862.836299 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593862.838256 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:02] "POST / HTTP/1.1" 200 -
+1760593867.205534 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593867.234539 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593867.235546 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:07] "POST / HTTP/1.1" 200 -
+1760593870.113106 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593870.152010 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593870.155319 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:10] "POST / HTTP/1.1" 200 -
+1760593871.559740 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593871.590954 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593871.593456 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:11] "POST / HTTP/1.1" 200 -
+1760593872.971227 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593872.999616 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593873.000975 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:13] "POST / HTTP/1.1" 200 -
+1760593874.412455 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593874.444046 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593874.445400 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:14] "POST / HTTP/1.1" 200 -
+1760593875.837600 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593875.865160 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593875.866426 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:15] "POST / HTTP/1.1" 200 -
+1760593878.754765 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593878.776546 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593878.779431 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:18] "POST / HTTP/1.1" 200 -
+1760593880.105741 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593880.127817 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593880.129136 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:20] "POST / HTTP/1.1" 200 -
+1760593887.468327 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593887.502786 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593887.507373 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:27] "POST / HTTP/1.1" 200 -
+1760593888.944488 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593888.972074 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593888.974424 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:28] "POST / HTTP/1.1" 200 -
+1760593896.090812 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593896.117278 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593896.118850 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:36] "POST / HTTP/1.1" 200 -
+1760593898.865844 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593898.888105 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593898.889300 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:38] "POST / HTTP/1.1" 200 -
+1760593900.240405 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593900.262402 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593900.263872 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:40] "POST / HTTP/1.1" 200 -
+1760593901.632977 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593901.663071 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593901.664637 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:41] "POST / HTTP/1.1" 200 -
+1760593903.050476 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593903.096123 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593903.097753 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:43] "POST / HTTP/1.1" 200 -
+1760593905.920228 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593905.952360 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593905.954045 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:45] "POST / HTTP/1.1" 200 -
+1760593908.846288 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593908.879452 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593908.882123 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:48] "POST / HTTP/1.1" 200 -
+1760593916.257493 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593916.284405 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593916.286314 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:56] "POST / HTTP/1.1" 200 -
+1760593919.197105 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593919.228102 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593919.230096 - INFO - 127.0.0.1 - - [16/Oct/2025 05:51:59] "POST / HTTP/1.1" 200 -
+1760593920.672750 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593920.705782 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593920.707611 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:00] "POST / HTTP/1.1" 200 -
+1760593922.128400 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593922.164642 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593922.166336 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:02] "POST / HTTP/1.1" 200 -
+1760593923.606235 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593923.638142 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593923.640028 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:03] "POST / HTTP/1.1" 200 -
+1760593928.051558 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593928.079149 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593928.081872 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:08] "POST / HTTP/1.1" 200 -
+1760593935.308465 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593935.336445 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593935.337478 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:15] "POST / HTTP/1.1" 200 -
+1760593942.539199 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593942.582895 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593942.584575 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:22] "POST / HTTP/1.1" 200 -
+1760593946.829600 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593946.859017 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593946.861256 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:26] "POST / HTTP/1.1" 200 -
+1760593949.765194 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593949.794874 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593949.796491 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:29] "POST / HTTP/1.1" 200 -
+1760593954.214494 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593954.246561 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593954.248426 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:34] "POST / HTTP/1.1" 200 -
+1760593955.708905 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593955.739821 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593955.742292 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:35] "POST / HTTP/1.1" 200 -
+1760593957.139124 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593957.166339 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593957.167687 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:37] "POST / HTTP/1.1" 200 -
+1760593958.538337 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593958.563544 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593958.564715 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:38] "POST / HTTP/1.1" 200 -
+1760593961.371115 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593961.396167 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593961.397218 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:41] "POST / HTTP/1.1" 200 -
+1760593965.692289 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593965.724475 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593965.726508 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:45] "POST / HTTP/1.1" 200 -
+1760593968.647203 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593968.676875 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593968.678513 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:48] "POST / HTTP/1.1" 200 -
+1760593970.167745 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593970.201509 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593970.204543 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:50] "POST / HTTP/1.1" 200 -
+1760593971.635419 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593971.666209 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593971.668256 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:51] "POST / HTTP/1.1" 200 -
+1760593973.115474 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593973.140007 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593973.142162 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:53] "POST / HTTP/1.1" 200 -
+1760593978.966952 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593978.999290 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593979.000631 - INFO - 127.0.0.1 - - [16/Oct/2025 05:52:59] "POST / HTTP/1.1" 200 -
+1760593980.433669 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593980.461860 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593980.463470 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:00] "POST / HTTP/1.1" 200 -
+1760593983.280172 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593983.306820 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593983.308111 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:03] "POST / HTTP/1.1" 200 -
+1760593989.153675 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593989.180429 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593989.182805 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:09] "POST / HTTP/1.1" 200 -
+1760593992.071419 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593992.111336 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593992.112578 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:12] "POST / HTTP/1.1" 200 -
+1760593993.524550 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593993.561252 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593993.563591 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:13] "POST / HTTP/1.1" 200 -
+1760593994.966760 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593994.996976 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593994.998327 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:14] "POST / HTTP/1.1" 200 -
+1760593996.388637 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760593996.423783 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760593996.425529 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:16] "POST / HTTP/1.1" 200 -
+1760594003.618883 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594003.649437 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594003.651955 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:23] "POST / HTTP/1.1" 200 -
+1760594006.546940 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594006.584417 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594006.586707 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:26] "POST / HTTP/1.1" 200 -
+1760594012.446805 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594012.480977 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594012.483555 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:32] "POST / HTTP/1.1" 200 -
+1760594016.887312 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594016.918484 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594016.923949 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:36] "POST / HTTP/1.1" 200 -
+1760594018.320750 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594018.346133 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594018.348855 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:38] "POST / HTTP/1.1" 200 -
+1760594021.210066 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594021.239641 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594021.240660 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:41] "POST / HTTP/1.1" 200 -
+1760594022.648387 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594022.682497 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594022.685216 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:42] "POST / HTTP/1.1" 200 -
+1760594024.162101 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594024.186313 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594024.187495 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:44] "POST / HTTP/1.1" 200 -
+1760594028.498430 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594028.527989 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594028.530049 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:48] "POST / HTTP/1.1" 200 -
+1760594029.926638 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594029.958715 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594029.960419 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:49] "POST / HTTP/1.1" 200 -
+1760594037.201184 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594037.231269 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594037.233575 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:57] "POST / HTTP/1.1" 200 -
+1760594038.663505 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594038.697607 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594038.699331 - INFO - 127.0.0.1 - - [16/Oct/2025 05:53:58] "POST / HTTP/1.1" 200 -
+1760594040.117318 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594040.153313 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594040.155047 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:00] "POST / HTTP/1.1" 200 -
+1760594041.575031 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594041.604963 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594041.606740 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:01] "POST / HTTP/1.1" 200 -
+1760594044.495973 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594044.529249 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594044.533603 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:04] "POST / HTTP/1.1" 200 -
+1760594047.416865 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594047.445574 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594047.447124 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:07] "POST / HTTP/1.1" 200 -
+1760594048.871501 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594048.908162 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594048.909143 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:08] "POST / HTTP/1.1" 200 -
+1760594050.347626 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594050.386542 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594050.388706 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:10] "POST / HTTP/1.1" 200 -
+1760594059.073039 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594059.104001 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594059.106876 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:19] "POST / HTTP/1.1" 200 -
+1760594060.524981 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594060.554155 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594060.556123 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:20] "POST / HTTP/1.1" 200 -
+1760594061.994540 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594062.024391 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594062.026814 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:22] "POST / HTTP/1.1" 200 -
+1760594066.478075 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594066.522763 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594066.524933 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:26] "POST / HTTP/1.1" 200 -
+1760594067.993245 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594068.026663 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594068.029799 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:28] "POST / HTTP/1.1" 200 -
+1760594069.498888 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594069.531301 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594069.533068 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:29] "POST / HTTP/1.1" 200 -
+1760594075.413102 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594075.446307 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594075.450877 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:35] "POST / HTTP/1.1" 200 -
+1760594076.875973 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594076.905249 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594076.907287 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:36] "POST / HTTP/1.1" 200 -
+1760594081.304199 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594081.331551 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594081.333209 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:41] "POST / HTTP/1.1" 200 -
+1760594084.153691 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594084.184720 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594084.186049 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:44] "POST / HTTP/1.1" 200 -
+1760594088.508224 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594088.537590 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594088.538965 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:48] "POST / HTTP/1.1" 200 -
+1760594095.830206 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594095.862774 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594095.864623 - INFO - 127.0.0.1 - - [16/Oct/2025 05:54:55] "POST / HTTP/1.1" 200 -
+1760594100.117210 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594100.158104 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594100.159886 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:00] "POST / HTTP/1.1" 200 -
+1760594104.510675 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594104.545596 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594104.548381 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:04] "POST / HTTP/1.1" 200 -
+1760594111.843156 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594111.877589 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594111.879655 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:11] "POST / HTTP/1.1" 200 -
+1760594113.349018 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594113.381955 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594113.383870 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:13] "POST / HTTP/1.1" 200 -
+1760594114.820950 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594114.852479 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594114.854095 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:14] "POST / HTTP/1.1" 200 -
+1760594120.680680 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594120.709174 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594120.712077 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:20] "POST / HTTP/1.1" 200 -
+1760594122.120041 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594122.150374 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594122.152276 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:22] "POST / HTTP/1.1" 200 -
+1760594125.198211 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594125.234457 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594125.237911 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:25] "POST / HTTP/1.1" 200 -
+1760594126.694070 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594126.732182 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594126.734146 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:26] "POST / HTTP/1.1" 200 -
+1760594134.064117 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594134.097104 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594134.099882 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:34] "POST / HTTP/1.1" 200 -
+1760594138.313421 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594138.349335 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594138.351934 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:38] "POST / HTTP/1.1" 200 -
+1760594142.630041 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594142.655792 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594142.657708 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:42] "POST / HTTP/1.1" 200 -
+1760594144.030171 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594144.055447 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594144.056544 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:44] "POST / HTTP/1.1" 200 -
+1760594148.293967 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594148.328650 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594148.330975 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:48] "POST / HTTP/1.1" 200 -
+1760594149.774501 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594149.807956 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594149.809637 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:49] "POST / HTTP/1.1" 200 -
+1760594151.267159 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594151.300246 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594151.301816 - INFO - 127.0.0.1 - - [16/Oct/2025 05:55:51] "POST / HTTP/1.1" 200 -
+1760594163.043099 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594163.073946 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594163.076559 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:03] "POST / HTTP/1.1" 200 -
+1760594164.531671 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594164.564162 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594164.565781 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:04] "POST / HTTP/1.1" 200 -
+1760594169.073359 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594169.109407 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594169.111501 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:09] "POST / HTTP/1.1" 200 -
+1760594179.271733 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594179.291216 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594179.293081 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:19] "POST / HTTP/1.1" 200 -
+1760594183.551670 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594183.580727 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594183.582921 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:23] "POST / HTTP/1.1" 200 -
+1760594184.977534 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594185.004217 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594185.005796 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:25] "POST / HTTP/1.1" 200 -
+1760594186.417153 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594186.448752 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594186.451645 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:26] "POST / HTTP/1.1" 200 -
+1760594193.615656 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594193.641946 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594193.642960 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:33] "POST / HTTP/1.1" 200 -
+1760594197.934531 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594197.962009 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594197.963047 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:37] "POST / HTTP/1.1" 200 -
+1760594199.397470 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594199.428548 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594199.430350 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:39] "POST / HTTP/1.1" 200 -
+1760594202.313413 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594202.344943 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594202.347113 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:42] "POST / HTTP/1.1" 200 -
+1760594203.709001 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594203.741440 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594203.742762 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:43] "POST / HTTP/1.1" 200 -
+1760594209.481710 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594209.513453 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594209.515204 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:49] "POST / HTTP/1.1" 200 -
+1760594219.847900 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594219.880609 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594219.882230 - INFO - 127.0.0.1 - - [16/Oct/2025 05:56:59] "POST / HTTP/1.1" 200 -
+1760594221.308395 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594221.341881 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594221.344101 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:01] "POST / HTTP/1.1" 200 -
+1760594224.220173 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594224.250643 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594224.253175 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:04] "POST / HTTP/1.1" 200 -
+1760594225.686689 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594225.722623 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594225.725754 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:05] "POST / HTTP/1.1" 200 -
+1760594240.337116 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594240.373189 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594240.376646 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:20] "POST / HTTP/1.1" 200 -
+1760594241.793698 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594241.827764 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594241.832088 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:21] "POST / HTTP/1.1" 200 -
+1760594243.242872 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594243.272571 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594243.275539 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:23] "POST / HTTP/1.1" 200 -
+1760594250.497052 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594250.528444 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594250.530049 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:30] "POST / HTTP/1.1" 200 -
+1760594253.420379 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594253.447365 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594253.449492 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:33] "POST / HTTP/1.1" 200 -
+1760594254.910681 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594254.940640 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594254.942119 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:34] "POST / HTTP/1.1" 200 -
+1760594256.322139 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594256.347876 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594256.349022 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:36] "POST / HTTP/1.1" 200 -
+1760594259.217666 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594259.252607 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594259.254435 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:39] "POST / HTTP/1.1" 200 -
+1760594267.764019 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594267.788084 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594267.789941 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:47] "POST / HTTP/1.1" 200 -
+1760594272.222586 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594272.257816 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594272.261351 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:52] "POST / HTTP/1.1" 200 -
+1760594273.711068 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594273.745381 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594273.747562 - INFO - 127.0.0.1 - - [16/Oct/2025 05:57:53] "POST / HTTP/1.1" 200 -
+1760594282.449119 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594282.479097 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594282.482126 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:02] "POST / HTTP/1.1" 200 -
+1760594291.307074 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594291.329953 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594291.332944 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:11] "POST / HTTP/1.1" 200 -
+1760594292.738991 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594292.773206 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594292.774771 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:12] "POST / HTTP/1.1" 200 -
+1760594294.179564 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594294.209913 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594294.211491 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:14] "POST / HTTP/1.1" 200 -
+1760594297.093669 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594297.123276 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594297.125863 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:17] "POST / HTTP/1.1" 200 -
+1760594304.288557 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594304.323532 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594304.326669 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:24] "POST / HTTP/1.1" 200 -
+1760594305.746751 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594305.788551 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594305.790293 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:25] "POST / HTTP/1.1" 200 -
+1760594307.203727 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594307.229933 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594307.231246 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:27] "POST / HTTP/1.1" 200 -
+1760594308.623320 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594308.653887 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594308.656019 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:28] "POST / HTTP/1.1" 200 -
+1760594310.076446 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594310.106642 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594310.108184 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:30] "POST / HTTP/1.1" 200 -
+1760594312.983647 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594313.010875 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594313.011935 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:33] "POST / HTTP/1.1" 200 -
+1760594314.429808 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594314.464548 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594314.465904 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:34] "POST / HTTP/1.1" 200 -
+1760594317.341949 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594317.382479 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594317.384314 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:37] "POST / HTTP/1.1" 200 -
+1760594318.839808 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594318.874080 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594318.876460 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:38] "POST / HTTP/1.1" 200 -
+1760594320.397593 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594320.427297 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594320.429091 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:40] "POST / HTTP/1.1" 200 -
+1760594324.822728 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594324.850587 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594324.851709 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:44] "POST / HTTP/1.1" 200 -
+1760594327.622742 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594327.653639 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594327.654998 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:47] "POST / HTTP/1.1" 200 -
+1760594330.395610 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594330.420849 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594330.422108 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:50] "POST / HTTP/1.1" 200 -
+1760594331.816568 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594331.851948 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594331.853877 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:51] "POST / HTTP/1.1" 200 -
+1760594336.317482 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594336.349609 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594336.351303 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:56] "POST / HTTP/1.1" 200 -
+1760594337.816128 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594337.854755 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594337.856382 - INFO - 127.0.0.1 - - [16/Oct/2025 05:58:57] "POST / HTTP/1.1" 200 -
+1760594340.760653 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594340.790431 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594340.792055 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:00] "POST / HTTP/1.1" 200 -
+1760594345.210029 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594345.239525 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594345.241229 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:05] "POST / HTTP/1.1" 200 -
+1760594360.133297 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594360.170190 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594360.173455 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:20] "POST / HTTP/1.1" 200 -
+1760594364.424929 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594364.460713 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594364.463052 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:24] "POST / HTTP/1.1" 200 -
+1760594365.864626 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594365.898214 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594365.899951 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:25] "POST / HTTP/1.1" 200 -
+1760594367.383639 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594367.415122 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594367.416754 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:27] "POST / HTTP/1.1" 200 -
+1760594371.805033 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594371.840647 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594371.843031 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:31] "POST / HTTP/1.1" 200 -
+1760594373.261143 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594373.292650 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594373.294779 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:33] "POST / HTTP/1.1" 200 -
+1760594376.155660 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594376.183272 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594376.184712 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:36] "POST / HTTP/1.1" 200 -
+1760594379.031045 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594379.064006 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594379.065656 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:39] "POST / HTTP/1.1" 200 -
+1760594380.510737 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594380.533421 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594380.534503 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:40] "POST / HTTP/1.1" 200 -
+1760594387.647194 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594387.677119 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594387.679031 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:47] "POST / HTTP/1.1" 200 -
+1760594390.459251 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594390.488024 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594390.489113 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:50] "POST / HTTP/1.1" 200 -
+1760594391.893193 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594391.933348 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594391.935108 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:51] "POST / HTTP/1.1" 200 -
+1760594393.375309 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594393.403979 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594393.406088 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:53] "POST / HTTP/1.1" 200 -
+1760594394.839596 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594394.881288 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594394.883204 - INFO - 127.0.0.1 - - [16/Oct/2025 05:59:54] "POST / HTTP/1.1" 200 -
+1760594403.635604 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594403.667029 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594403.668674 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:03] "POST / HTTP/1.1" 200 -
+1760594406.568762 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594406.599208 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594406.600932 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:06] "POST / HTTP/1.1" 200 -
+1760594410.937230 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594410.971722 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594410.974098 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:10] "POST / HTTP/1.1" 200 -
+1760594412.426425 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594412.447516 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594412.449181 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:12] "POST / HTTP/1.1" 200 -
+1760594419.806334 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594419.833759 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594419.835526 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:19] "POST / HTTP/1.1" 200 -
+1760594425.595175 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594425.624001 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594425.625595 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:25] "POST / HTTP/1.1" 200 -
+1760594427.038430 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594427.071237 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594427.072982 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:27] "POST / HTTP/1.1" 200 -
+1760594428.463322 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594428.496213 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594428.498683 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:28] "POST / HTTP/1.1" 200 -
+1760594443.077665 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594443.107602 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594443.108998 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:43] "POST / HTTP/1.1" 200 -
+1760594444.531676 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594444.561424 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594444.562965 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:44] "POST / HTTP/1.1" 200 -
+1760594450.206160 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594450.227610 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594450.229064 - INFO - 127.0.0.1 - - [16/Oct/2025 06:00:50] "POST / HTTP/1.1" 200 -
+1760594460.477929 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594460.509411 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594460.512257 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:00] "POST / HTTP/1.1" 200 -
+1760594461.945287 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594461.980529 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594461.982309 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:01] "POST / HTTP/1.1" 200 -
+1760594463.424318 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594463.457577 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594463.460118 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:03] "POST / HTTP/1.1" 200 -
+1760594464.973613 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594465.009609 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594465.013146 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:05] "POST / HTTP/1.1" 200 -
+1760594470.951379 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594470.981451 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594470.983340 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:10] "POST / HTTP/1.1" 200 -
+1760594472.403483 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594472.439502 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594472.441332 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:12] "POST / HTTP/1.1" 200 -
+1760594473.867820 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594473.904115 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594473.905894 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:13] "POST / HTTP/1.1" 200 -
+1760594475.320468 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594475.349675 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594475.352077 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:15] "POST / HTTP/1.1" 200 -
+1760594476.780310 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594476.807622 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594476.808587 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:16] "POST / HTTP/1.1" 200 -
+1760594478.219203 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594478.264553 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594478.266242 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:18] "POST / HTTP/1.1" 200 -
+1760594481.036789 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594481.064574 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594481.066683 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:21] "POST / HTTP/1.1" 200 -
+1760594485.412748 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594485.443575 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594485.445466 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:25] "POST / HTTP/1.1" 200 -
+1760594491.096395 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594491.127474 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594491.131071 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:31] "POST / HTTP/1.1" 200 -
+1760594492.517445 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594492.548097 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594492.549913 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:32] "POST / HTTP/1.1" 200 -
+1760594495.420867 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594495.453922 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594495.456227 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:35] "POST / HTTP/1.1" 200 -
+1760594498.322083 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594498.350663 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594498.352570 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:38] "POST / HTTP/1.1" 200 -
+1760594499.756097 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594499.789153 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594499.791577 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:39] "POST / HTTP/1.1" 200 -
+1760594502.638471 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594502.671340 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594502.673681 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:42] "POST / HTTP/1.1" 200 -
+1760594504.112592 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594504.146928 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594504.149183 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:44] "POST / HTTP/1.1" 200 -
+1760594507.044422 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594507.087114 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594507.089143 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:47] "POST / HTTP/1.1" 200 -
+1760594509.898012 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594509.924813 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594509.926947 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:49] "POST / HTTP/1.1" 200 -
+1760594511.323655 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594511.354289 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594511.355531 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:51] "POST / HTTP/1.1" 200 -
+1760594514.224125 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594514.256623 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594514.257775 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:54] "POST / HTTP/1.1" 200 -
+1760594515.743361 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594515.792652 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594515.794512 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:55] "POST / HTTP/1.1" 200 -
+1760594517.215484 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594517.247243 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594517.248618 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:57] "POST / HTTP/1.1" 200 -
+1760594518.675378 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594518.706375 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594518.709120 - INFO - 127.0.0.1 - - [16/Oct/2025 06:01:58] "POST / HTTP/1.1" 200 -
+1760594524.535250 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594524.565157 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594524.567487 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:04] "POST / HTTP/1.1" 200 -
+1760594526.024858 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594526.056952 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594526.059078 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:06] "POST / HTTP/1.1" 200 -
+1760594528.961085 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594528.992593 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594528.995635 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:08] "POST / HTTP/1.1" 200 -
+1760594536.305562 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594536.337225 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594536.338659 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:16] "POST / HTTP/1.1" 200 -
+1760594539.223605 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594539.256669 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594539.258601 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:19] "POST / HTTP/1.1" 200 -
+1760594540.674763 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594540.708321 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594540.709783 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:20] "POST / HTTP/1.1" 200 -
+1760594542.103612 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594542.132944 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594542.136337 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:22] "POST / HTTP/1.1" 200 -
+1760594547.766393 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594547.799288 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594547.800601 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:27] "POST / HTTP/1.1" 200 -
+1760594549.198110 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594549.235034 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594549.237167 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:29] "POST / HTTP/1.1" 200 -
+1760594550.637944 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594550.670439 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594550.671958 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:30] "POST / HTTP/1.1" 200 -
+1760594560.782552 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594560.826991 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594560.828713 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:40] "POST / HTTP/1.1" 200 -
+1760594565.091064 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594565.115087 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594565.116998 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:45] "POST / HTTP/1.1" 200 -
+1760594568.018764 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594568.051205 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594568.052503 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:48] "POST / HTTP/1.1" 200 -
+1760594569.428862 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594569.461070 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594569.462100 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:49] "POST / HTTP/1.1" 200 -
+1760594570.845739 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594570.882271 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594570.883521 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:50] "POST / HTTP/1.1" 200 -
+1760594573.779778 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594573.808587 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594573.810031 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:53] "POST / HTTP/1.1" 200 -
+1760594575.235344 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594575.260783 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594575.262097 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:55] "POST / HTTP/1.1" 200 -
+1760594578.130451 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594578.164851 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594578.166929 - INFO - 127.0.0.1 - - [16/Oct/2025 06:02:58] "POST / HTTP/1.1" 200 -
+1760594581.073329 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594581.107685 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594581.110246 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:01] "POST / HTTP/1.1" 200 -
+1760594588.491314 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594588.522327 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594588.526111 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:08] "POST / HTTP/1.1" 200 -
+1760594589.969111 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594590.005906 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594590.010804 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:10] "POST / HTTP/1.1" 200 -
+1760594592.867780 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594592.900889 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594592.903335 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:12] "POST / HTTP/1.1" 200 -
+1760594594.317206 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594594.346243 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594594.348648 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:14] "POST / HTTP/1.1" 200 -
+1760594597.239338 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594597.274731 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594597.276131 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:17] "POST / HTTP/1.1" 200 -
+1760594601.604654 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594601.633575 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594601.636143 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:21] "POST / HTTP/1.1" 200 -
+1760594610.311435 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594610.341262 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594610.342888 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:30] "POST / HTTP/1.1" 200 -
+1760594611.743205 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594611.774879 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594611.776184 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:31] "POST / HTTP/1.1" 200 -
+1760594614.566038 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594614.593816 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594614.595471 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:34] "POST / HTTP/1.1" 200 -
+1760594617.395269 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594617.420773 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594617.422803 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:37] "POST / HTTP/1.1" 200 -
+1760594621.878694 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594621.912492 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594621.913703 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:41] "POST / HTTP/1.1" 200 -
+1760594632.105099 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594632.128177 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594632.129770 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:52] "POST / HTTP/1.1" 200 -
+1760594633.544781 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594633.575506 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594633.577743 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:53] "POST / HTTP/1.1" 200 -
+1760594635.012547 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594635.047546 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594635.049469 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:55] "POST / HTTP/1.1" 200 -
+1760594636.498636 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594636.527297 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594636.529603 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:56] "POST / HTTP/1.1" 200 -
+1760594639.469990 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594639.506177 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594639.508713 - INFO - 127.0.0.1 - - [16/Oct/2025 06:03:59] "POST / HTTP/1.1" 200 -
+1760594642.439102 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594642.467897 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594642.472126 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:02] "POST / HTTP/1.1" 200 -
+1760594649.813391 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594649.842697 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594649.844547 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:09] "POST / HTTP/1.1" 200 -
+1760594657.061749 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594657.095440 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594657.096798 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:17] "POST / HTTP/1.1" 200 -
+1760594664.229414 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594664.260633 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594664.262280 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:24] "POST / HTTP/1.1" 200 -
+1760594667.203698 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594667.236038 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594667.237733 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:27] "POST / HTTP/1.1" 200 -
+1760594671.534191 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594671.565718 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594671.567524 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:31] "POST / HTTP/1.1" 200 -
+1760594672.940651 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594672.962046 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594672.963368 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:32] "POST / HTTP/1.1" 200 -
+1760594674.379416 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594674.411461 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594674.413199 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:34] "POST / HTTP/1.1" 200 -
+1760594677.296559 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594677.326209 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594677.329090 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:37] "POST / HTTP/1.1" 200 -
+1760594680.243507 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594680.287599 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594680.289290 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:40] "POST / HTTP/1.1" 200 -
+1760594691.803380 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594691.828862 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594691.830514 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:51] "POST / HTTP/1.1" 200 -
+1760594693.239194 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594693.272592 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594693.274805 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:53] "POST / HTTP/1.1" 200 -
+1760594697.667239 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594697.699555 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594697.701273 - INFO - 127.0.0.1 - - [16/Oct/2025 06:04:57] "POST / HTTP/1.1" 200 -
+1760594700.589418 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594700.622233 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594700.624416 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:00] "POST / HTTP/1.1" 200 -
+1760594702.027063 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594702.073371 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594702.075367 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:02] "POST / HTTP/1.1" 200 -
+1760594721.009075 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594721.045632 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594721.048484 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:21] "POST / HTTP/1.1" 200 -
+1760594725.359990 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594725.388800 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594725.392804 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:25] "POST / HTTP/1.1" 200 -
+1760594731.079715 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594731.112203 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594731.116130 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:31] "POST / HTTP/1.1" 200 -
+1760594735.453244 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594735.484053 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594735.485779 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:35] "POST / HTTP/1.1" 200 -
+1760594738.380943 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594738.418508 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594738.421937 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:38] "POST / HTTP/1.1" 200 -
+1760594739.893178 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594739.937372 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594739.938775 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:39] "POST / HTTP/1.1" 200 -
+1760594742.862646 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594742.892631 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594742.894646 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:42] "POST / HTTP/1.1" 200 -
+1760594751.579107 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594751.605303 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594751.607596 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:51] "POST / HTTP/1.1" 200 -
+1760594752.963552 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594752.988482 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594752.989930 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:52] "POST / HTTP/1.1" 200 -
+1760594757.384480 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594757.417716 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594757.419416 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:57] "POST / HTTP/1.1" 200 -
+1760594758.814873 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594758.840231 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594758.842357 - INFO - 127.0.0.1 - - [16/Oct/2025 06:05:58] "POST / HTTP/1.1" 200 -
+1760594760.274615 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594760.304942 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594760.306565 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:00] "POST / HTTP/1.1" 200 -
+1760594761.722153 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594761.752789 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594761.754167 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:01] "POST / HTTP/1.1" 200 -
+1760594767.598776 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594767.639764 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594767.640921 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:07] "POST / HTTP/1.1" 200 -
+1760594770.624357 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594770.654340 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594770.657647 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:10] "POST / HTTP/1.1" 200 -
+1760594773.525452 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594773.562770 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594773.565150 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:13] "POST / HTTP/1.1" 200 -
+1760594774.966742 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594774.998101 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594774.999632 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:14] "POST / HTTP/1.1" 200 -
+1760594776.414968 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594776.446220 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594776.448473 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:16] "POST / HTTP/1.1" 200 -
+1760594777.879400 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594777.908300 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594777.910231 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:17] "POST / HTTP/1.1" 200 -
+1760594780.631110 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594780.661989 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594780.663775 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:20] "POST / HTTP/1.1" 200 -
+1760594782.042673 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594782.071454 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594782.073038 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:22] "POST / HTTP/1.1" 200 -
+1760594786.461765 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594786.494737 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594786.496431 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:26] "POST / HTTP/1.1" 200 -
+1760594793.643754 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594793.683791 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594793.686035 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:33] "POST / HTTP/1.1" 200 -
+1760594796.593018 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594796.622362 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594796.624722 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:36] "POST / HTTP/1.1" 200 -
+1760594799.487950 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594799.519876 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594799.522018 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:39] "POST / HTTP/1.1" 200 -
+1760594806.928313 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594806.965715 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594806.968125 - INFO - 127.0.0.1 - - [16/Oct/2025 06:06:46] "POST / HTTP/1.1" 200 -
+1760594822.826376 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594822.853723 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594822.856002 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:02] "POST / HTTP/1.1" 200 -
+1760594831.642586 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594831.681393 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594831.685525 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:11] "POST / HTTP/1.1" 200 -
+1760594833.161922 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594833.199789 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594833.202282 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:13] "POST / HTTP/1.1" 200 -
+1760594839.006325 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594839.041719 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594839.043025 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:19] "POST / HTTP/1.1" 200 -
+1760594843.394395 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594843.425281 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594843.427873 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:23] "POST / HTTP/1.1" 200 -
+1760594847.739024 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594847.766497 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594847.768130 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:27] "POST / HTTP/1.1" 200 -
+1760594856.347990 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594856.380424 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594856.382727 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:36] "POST / HTTP/1.1" 200 -
+1760594857.823034 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594857.857571 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594857.859699 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:37] "POST / HTTP/1.1" 200 -
+1760594859.303124 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594859.331272 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594859.333511 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:39] "POST / HTTP/1.1" 200 -
+1760594862.274474 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594862.306984 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594862.308745 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:42] "POST / HTTP/1.1" 200 -
+1760594863.774150 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594863.802243 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594863.804671 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:43] "POST / HTTP/1.1" 200 -
+1760594865.259983 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594865.291791 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594865.293661 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:45] "POST / HTTP/1.1" 200 -
+1760594868.165326 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594868.195306 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594868.199178 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:48] "POST / HTTP/1.1" 200 -
+1760594873.832431 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594873.860954 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594873.862052 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:53] "POST / HTTP/1.1" 200 -
+1760594875.296815 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594875.324967 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594875.326375 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:55] "POST / HTTP/1.1" 200 -
+1760594876.718799 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594876.747047 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594876.748007 - INFO - 127.0.0.1 - - [16/Oct/2025 06:07:56] "POST / HTTP/1.1" 200 -
+1760594882.587142 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594882.624326 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594882.625634 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:02] "POST / HTTP/1.1" 200 -
+1760594888.555756 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594888.591604 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594888.595962 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:08] "POST / HTTP/1.1" 200 -
+1760594890.042234 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594890.069508 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594890.071244 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:10] "POST / HTTP/1.1" 200 -
+1760594891.503412 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594891.536595 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594891.538438 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:11] "POST / HTTP/1.1" 200 -
+1760594894.456721 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594894.490573 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594894.492383 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:14] "POST / HTTP/1.1" 200 -
+1760594904.689561 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594904.721503 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594904.725285 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:24] "POST / HTTP/1.1" 200 -
+1760594906.145577 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594906.177918 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594906.181374 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:26] "POST / HTTP/1.1" 200 -
+1760594907.596426 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594907.626259 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594907.627870 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:27] "POST / HTTP/1.1" 200 -
+1760594909.058729 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594909.093156 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594909.096449 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:29] "POST / HTTP/1.1" 200 -
+1760594910.496769 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594910.541479 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594910.543297 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:30] "POST / HTTP/1.1" 200 -
+1760594913.332543 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594913.366885 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594913.368526 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:33] "POST / HTTP/1.1" 200 -
+1760594916.199184 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594916.227407 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594916.229417 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:36] "POST / HTTP/1.1" 200 -
+1760594917.615614 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594917.643126 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594917.644874 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:37] "POST / HTTP/1.1" 200 -
+1760594923.411862 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594923.448014 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594923.450812 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:43] "POST / HTTP/1.1" 200 -
+1760594930.710048 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594930.744397 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594930.746165 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:50] "POST / HTTP/1.1" 200 -
+1760594932.173190 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594932.201189 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594932.203091 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:52] "POST / HTTP/1.1" 200 -
+1760594934.988101 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594935.011140 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594935.012365 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:55] "POST / HTTP/1.1" 200 -
+1760594936.397533 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594936.419114 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594936.421286 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:56] "POST / HTTP/1.1" 200 -
+1760594937.877136 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594937.911435 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594937.913493 - INFO - 127.0.0.1 - - [16/Oct/2025 06:08:57] "POST / HTTP/1.1" 200 -
+1760594940.735196 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594940.766916 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594940.769543 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:00] "POST / HTTP/1.1" 200 -
+1760594945.069650 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594945.091083 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594945.093581 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:05] "POST / HTTP/1.1" 200 -
+1760594947.979506 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594948.010961 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594948.011995 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:08] "POST / HTTP/1.1" 200 -
+1760594950.850684 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594950.878455 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594950.880800 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:10] "POST / HTTP/1.1" 200 -
+1760594959.470595 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594959.504364 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594959.506034 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:19] "POST / HTTP/1.1" 200 -
+1760594960.915424 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594960.944413 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594960.946965 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:20] "POST / HTTP/1.1" 200 -
+1760594968.264040 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594968.299737 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594968.301488 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:28] "POST / HTTP/1.1" 200 -
+1760594971.170045 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594971.200636 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594971.203569 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:31] "POST / HTTP/1.1" 200 -
+1760594973.977587 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594974.005496 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594974.008371 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:34] "POST / HTTP/1.1" 200 -
+1760594975.430128 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594975.463478 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594975.465156 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:35] "POST / HTTP/1.1" 200 -
+1760594979.885637 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594979.911458 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594979.913404 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:39] "POST / HTTP/1.1" 200 -
+1760594982.731125 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594982.769490 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594982.773666 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:42] "POST / HTTP/1.1" 200 -
+1760594985.715222 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594985.744688 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594985.746559 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:45] "POST / HTTP/1.1" 200 -
+1760594988.660367 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594988.694580 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594988.697177 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:48] "POST / HTTP/1.1" 200 -
+1760594993.148490 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760594993.179511 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760594993.181297 - INFO - 127.0.0.1 - - [16/Oct/2025 06:09:53] "POST / HTTP/1.1" 200 -
+1760595000.352126 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595000.386615 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595000.389997 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:00] "POST / HTTP/1.1" 200 -
+1760595008.984149 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595009.018299 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595009.020805 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:09] "POST / HTTP/1.1" 200 -
+1760595010.440338 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595010.473473 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595010.474915 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:10] "POST / HTTP/1.1" 200 -
+1760595017.755549 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595017.790291 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595017.791881 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:17] "POST / HTTP/1.1" 200 -
+1760595019.223309 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595019.251568 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595019.253082 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:19] "POST / HTTP/1.1" 200 -
+1760595020.688880 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595020.722119 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595020.724162 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:20] "POST / HTTP/1.1" 200 -
+1760595022.156413 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595022.186760 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595022.188370 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:22] "POST / HTTP/1.1" 200 -
+1760595035.303900 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595035.333132 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595035.334786 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:35] "POST / HTTP/1.1" 200 -
+1760595041.101413 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595041.136461 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595041.139048 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:41] "POST / HTTP/1.1" 200 -
+1760595043.993272 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595044.028571 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595044.030466 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:44] "POST / HTTP/1.1" 200 -
+1760595048.391366 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595048.433951 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595048.435273 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:48] "POST / HTTP/1.1" 200 -
+1760595049.883539 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595049.927921 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595049.930454 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:49] "POST / HTTP/1.1" 200 -
+1760595051.380362 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595051.411877 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595051.413719 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:51] "POST / HTTP/1.1" 200 -
+1760595052.864176 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595052.892671 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595052.894572 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:52] "POST / HTTP/1.1" 200 -
+1760595055.689673 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595055.719063 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595055.720568 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:55] "POST / HTTP/1.1" 200 -
+1760595057.110314 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595057.135537 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595057.137032 - INFO - 127.0.0.1 - - [16/Oct/2025 06:10:57] "POST / HTTP/1.1" 200 -
+1760595061.477688 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595061.508487 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595061.512876 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:01] "POST / HTTP/1.1" 200 -
+1760595064.430370 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595064.459899 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595064.461675 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:04] "POST / HTTP/1.1" 200 -
+1760595068.825553 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595068.854867 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595068.856419 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:08] "POST / HTTP/1.1" 200 -
+1760595080.309768 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595080.330241 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595080.331587 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:20] "POST / HTTP/1.1" 200 -
+1760595084.605447 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595084.629757 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595084.630820 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:24] "POST / HTTP/1.1" 200 -
+1760595088.890513 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595088.922606 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595088.924793 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:28] "POST / HTTP/1.1" 200 -
+1760595090.359130 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595090.391716 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595090.393222 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:30] "POST / HTTP/1.1" 200 -
+1760595096.066692 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595096.091789 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595096.092916 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:36] "POST / HTTP/1.1" 200 -
+1760595097.517098 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595097.546365 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595097.549038 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:37] "POST / HTTP/1.1" 200 -
+1760595098.978401 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595099.010064 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595099.012815 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:39] "POST / HTTP/1.1" 200 -
+1760595101.951859 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595101.982783 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595101.984503 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:41] "POST / HTTP/1.1" 200 -
+1760595106.316271 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595106.352106 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595106.354537 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:46] "POST / HTTP/1.1" 200 -
+1760595110.876632 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595110.906928 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595110.908579 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:50] "POST / HTTP/1.1" 200 -
+1760595112.356427 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595112.390019 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595112.391800 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:52] "POST / HTTP/1.1" 200 -
+1760595115.424880 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595115.456193 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595115.457928 - INFO - 127.0.0.1 - - [16/Oct/2025 06:11:55] "POST / HTTP/1.1" 200 -
+1760595121.057363 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595121.082700 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595121.085667 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:01] "POST / HTTP/1.1" 200 -
+1760595122.529176 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595122.564981 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595122.566802 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:02] "POST / HTTP/1.1" 200 -
+1760595126.920795 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595126.954046 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595126.955778 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:06] "POST / HTTP/1.1" 200 -
+1760595128.393464 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595128.425441 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595128.427051 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:08] "POST / HTTP/1.1" 200 -
+1760595131.332382 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595131.358789 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595131.360098 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:11] "POST / HTTP/1.1" 200 -
+1760595132.785953 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595132.820702 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595132.822602 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:12] "POST / HTTP/1.1" 200 -
+1760595141.552885 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595141.585231 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595141.587169 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:21] "POST / HTTP/1.1" 200 -
+1760595145.894305 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595145.923380 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595145.925090 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:25] "POST / HTTP/1.1" 200 -
+1760595147.311387 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595147.339621 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595147.341469 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:27] "POST / HTTP/1.1" 200 -
+1760595150.220643 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595150.247952 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595150.249575 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:30] "POST / HTTP/1.1" 200 -
+1760595155.960876 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595155.987444 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595155.989064 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:35] "POST / HTTP/1.1" 200 -
+1760595166.058625 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595166.089640 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595166.092000 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:46] "POST / HTTP/1.1" 200 -
+1760595169.065804 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595169.103762 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595169.107255 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:49] "POST / HTTP/1.1" 200 -
+1760595170.542627 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595170.574302 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595170.577354 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:50] "POST / HTTP/1.1" 200 -
+1760595173.483462 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595173.512050 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595173.514303 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:53] "POST / HTTP/1.1" 200 -
+1760595174.949533 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595174.979294 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595174.981698 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:54] "POST / HTTP/1.1" 200 -
+1760595177.895571 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595177.917776 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595177.919202 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:57] "POST / HTTP/1.1" 200 -
+1760595179.306250 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595179.333084 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595179.335474 - INFO - 127.0.0.1 - - [16/Oct/2025 06:12:59] "POST / HTTP/1.1" 200 -
+1760595193.690250 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595193.726034 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595193.729356 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:13] "POST / HTTP/1.1" 200 -
+1760595195.147956 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595195.180026 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595195.181375 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:15] "POST / HTTP/1.1" 200 -
+1760595196.602582 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595196.641392 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595196.642640 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:16] "POST / HTTP/1.1" 200 -
+1760595199.551461 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595199.580291 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595199.582739 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:19] "POST / HTTP/1.1" 200 -
+1760595200.959655 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595200.993613 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595200.994990 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:20] "POST / HTTP/1.1" 200 -
+1760595218.390296 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595218.422537 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595218.423794 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:38] "POST / HTTP/1.1" 200 -
+1760595221.357175 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595221.391130 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595221.393094 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:41] "POST / HTTP/1.1" 200 -
+1760595222.777614 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595222.816280 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595222.818820 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:42] "POST / HTTP/1.1" 200 -
+1760595225.613576 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595225.638158 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595225.639349 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:45] "POST / HTTP/1.1" 200 -
+1760595227.071628 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595227.104160 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595227.107642 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:47] "POST / HTTP/1.1" 200 -
+1760595237.392245 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595237.424688 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595237.426476 - INFO - 127.0.0.1 - - [16/Oct/2025 06:13:57] "POST / HTTP/1.1" 200 -
+1760595240.297642 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595240.325654 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595240.326932 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:00] "POST / HTTP/1.1" 200 -
+1760595244.519093 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595244.545002 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595244.546245 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:04] "POST / HTTP/1.1" 200 -
+1760595248.987792 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595249.019114 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595249.020313 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:09] "POST / HTTP/1.1" 200 -
+1760595252.021326 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595252.046469 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595252.048713 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:12] "POST / HTTP/1.1" 200 -
+1760595256.475009 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595256.508763 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595256.511446 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:16] "POST / HTTP/1.1" 200 -
+1760595262.288081 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595262.323340 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595262.325867 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:22] "POST / HTTP/1.1" 200 -
+1760595268.121048 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595268.146655 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595268.148527 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:28] "POST / HTTP/1.1" 200 -
+1760595269.532384 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595269.563076 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595269.566253 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:29] "POST / HTTP/1.1" 200 -
+1760595270.994192 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595271.025267 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595271.026812 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:31] "POST / HTTP/1.1" 200 -
+1760595272.473338 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595272.508495 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595272.509561 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:32] "POST / HTTP/1.1" 200 -
+1760595273.910948 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595273.942692 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595273.944518 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:33] "POST / HTTP/1.1" 200 -
+1760595276.797503 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595276.836627 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595276.839141 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:36] "POST / HTTP/1.1" 200 -
+1760595278.227901 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595278.257572 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595278.259293 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:38] "POST / HTTP/1.1" 200 -
+1760595281.138751 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595281.166342 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595281.168311 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:41] "POST / HTTP/1.1" 200 -
+1760595282.602527 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595282.635707 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595282.637791 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:42] "POST / HTTP/1.1" 200 -
+1760595284.069038 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595284.098455 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595284.100550 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:44] "POST / HTTP/1.1" 200 -
+1760595285.519010 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595285.577915 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595285.578930 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:45] "POST / HTTP/1.1" 200 -
+1760595291.434783 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595291.469374 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595291.471034 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:51] "POST / HTTP/1.1" 200 -
+1760595294.393294 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595294.423786 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595294.426291 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:54] "POST / HTTP/1.1" 200 -
+1760595298.772907 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595298.799430 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595298.802220 - INFO - 127.0.0.1 - - [16/Oct/2025 06:14:58] "POST / HTTP/1.1" 200 -
+1760595308.742584 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595308.774218 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595308.776068 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:08] "POST / HTTP/1.1" 200 -
+1760595314.611762 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595314.646774 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595314.648975 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:14] "POST / HTTP/1.1" 200 -
+1760595316.107921 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595316.142451 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595316.145036 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:16] "POST / HTTP/1.1" 200 -
+1760595317.607092 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595317.638751 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595317.640144 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:17] "POST / HTTP/1.1" 200 -
+1760595320.553648 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595320.586424 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595320.589396 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:20] "POST / HTTP/1.1" 200 -
+1760595326.419209 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595326.451592 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595326.453120 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:26] "POST / HTTP/1.1" 200 -
+1760595329.358763 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595329.388989 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595329.390529 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:29] "POST / HTTP/1.1" 200 -
+1760595330.775180 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595330.805062 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595330.807048 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:30] "POST / HTTP/1.1" 200 -
+1760595333.675067 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595333.706614 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595333.707936 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:33] "POST / HTTP/1.1" 200 -
+1760595343.697605 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595343.729610 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595343.733520 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:43] "POST / HTTP/1.1" 200 -
+1760595345.132579 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595345.158533 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595345.160093 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:45] "POST / HTTP/1.1" 200 -
+1760595346.574165 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595346.604302 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595346.606414 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:46] "POST / HTTP/1.1" 200 -
+1760595348.007555 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595348.036480 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595348.037636 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:48] "POST / HTTP/1.1" 200 -
+1760595352.372658 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595352.416459 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595352.418238 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:52] "POST / HTTP/1.1" 200 -
+1760595353.856678 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595353.890226 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595353.892097 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:53] "POST / HTTP/1.1" 200 -
+1760595356.779846 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595356.812686 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595356.814298 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:56] "POST / HTTP/1.1" 200 -
+1760595358.219101 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595358.249039 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595358.250756 - INFO - 127.0.0.1 - - [16/Oct/2025 06:15:58] "POST / HTTP/1.1" 200 -
+1760595361.082591 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595361.126196 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595361.128785 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:01] "POST / HTTP/1.1" 200 -
+1760595374.328922 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595374.363393 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595374.366126 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:14] "POST / HTTP/1.1" 200 -
+1760595375.793178 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595375.819867 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595375.821523 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:15] "POST / HTTP/1.1" 200 -
+1760595378.635884 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595378.658490 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595378.659480 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:18] "POST / HTTP/1.1" 200 -
+1760595381.382133 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595381.419250 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595381.421716 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:21] "POST / HTTP/1.1" 200 -
+1760595384.269860 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595384.299873 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595384.302301 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:24] "POST / HTTP/1.1" 200 -
+1760595387.160462 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595387.185989 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595387.187101 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:27] "POST / HTTP/1.1" 200 -
+1760595395.820938 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595395.853721 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595395.855276 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:35] "POST / HTTP/1.1" 200 -
+1760595400.085255 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595400.117646 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595400.119088 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:40] "POST / HTTP/1.1" 200 -
+1760595405.745341 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595405.771049 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595405.773453 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:45] "POST / HTTP/1.1" 200 -
+1760595407.178899 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595407.212121 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595407.214198 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:47] "POST / HTTP/1.1" 200 -
+1760595411.571570 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595411.612707 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595411.614743 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:51] "POST / HTTP/1.1" 200 -
+1760595413.078788 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595413.113675 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595413.115322 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:53] "POST / HTTP/1.1" 200 -
+1760595414.548422 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595414.583778 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595414.585311 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:54] "POST / HTTP/1.1" 200 -
+1760595417.481129 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595417.513498 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595417.515555 - INFO - 127.0.0.1 - - [16/Oct/2025 06:16:57] "POST / HTTP/1.1" 200 -
+1760595420.397130 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595420.430017 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595420.431578 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:00] "POST / HTTP/1.1" 200 -
+1760595424.596842 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595424.621205 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595424.623814 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:04] "POST / HTTP/1.1" 200 -
+1760595425.967669 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595425.992145 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595425.994010 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:05] "POST / HTTP/1.1" 200 -
+1760595428.765135 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595428.796974 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595428.798796 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:08] "POST / HTTP/1.1" 200 -
+1760595430.228540 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595430.254954 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595430.256081 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:10] "POST / HTTP/1.1" 200 -
+1760595433.142364 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595433.174666 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595433.177641 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:13] "POST / HTTP/1.1" 200 -
+1760595434.647099 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595434.679714 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595434.681403 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:14] "POST / HTTP/1.1" 200 -
+1760595437.533115 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595437.564669 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595437.567207 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:17] "POST / HTTP/1.1" 200 -
+1760595440.475086 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595440.503335 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595440.505549 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:20] "POST / HTTP/1.1" 200 -
+1760595441.904515 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595441.942024 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595441.943810 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:21] "POST / HTTP/1.1" 200 -
+1760595444.826340 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595444.854601 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595444.856225 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:24] "POST / HTTP/1.1" 200 -
+1760595450.491253 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595450.518115 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595450.520514 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:30] "POST / HTTP/1.1" 200 -
+1760595451.918466 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595451.948954 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595451.950528 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:31] "POST / HTTP/1.1" 200 -
+1760595454.778734 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595454.810367 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595454.811637 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:34] "POST / HTTP/1.1" 200 -
+1760595457.663241 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595457.692767 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595457.694244 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:37] "POST / HTTP/1.1" 200 -
+1760595459.123576 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595459.156425 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595459.158918 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:39] "POST / HTTP/1.1" 200 -
+1760595469.287567 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595469.329887 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595469.330843 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:49] "POST / HTTP/1.1" 200 -
+1760595472.290969 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595472.320951 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595472.322696 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:52] "POST / HTTP/1.1" 200 -
+1760595473.778816 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595473.818141 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595473.820298 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:53] "POST / HTTP/1.1" 200 -
+1760595475.252499 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595475.283006 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595475.285199 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:55] "POST / HTTP/1.1" 200 -
+1760595478.119040 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595478.149923 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595478.153044 - INFO - 127.0.0.1 - - [16/Oct/2025 06:17:58] "POST / HTTP/1.1" 200 -
+1760595485.199315 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595485.222531 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595485.223554 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:05] "POST / HTTP/1.1" 200 -
+1760595492.191322 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595492.216930 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595492.219285 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:12] "POST / HTTP/1.1" 200 -
+1760595493.600295 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595493.631538 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595493.639896 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:13] "POST / HTTP/1.1" 200 -
+1760595495.041644 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595495.072557 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595495.074937 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:15] "POST / HTTP/1.1" 200 -
+1760595498.013303 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595498.048054 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595498.050890 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:18] "POST / HTTP/1.1" 200 -
+1760595509.725204 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595509.753073 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595509.756895 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:29] "POST / HTTP/1.1" 200 -
+1760595514.114666 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595514.145090 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595514.149092 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:34] "POST / HTTP/1.1" 200 -
+1760595525.666674 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595525.693737 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595525.694705 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:45] "POST / HTTP/1.1" 200 -
+1760595527.082604 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595527.114623 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595527.117866 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:47] "POST / HTTP/1.1" 200 -
+1760595531.464163 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595531.497112 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595531.500391 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:51] "POST / HTTP/1.1" 200 -
+1760595534.415338 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595534.449294 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595534.452125 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:54] "POST / HTTP/1.1" 200 -
+1760595538.687294 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595538.723564 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595538.725008 - INFO - 127.0.0.1 - - [16/Oct/2025 06:18:58] "POST / HTTP/1.1" 200 -
+1760595540.172457 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595540.215798 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595540.219785 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:00] "POST / HTTP/1.1" 200 -
+1760595546.028500 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595546.055973 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595546.059170 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:06] "POST / HTTP/1.1" 200 -
+1760595547.422145 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595547.450011 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595547.451191 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:07] "POST / HTTP/1.1" 200 -
+1760595548.804350 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595548.828641 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595548.830187 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:08] "POST / HTTP/1.1" 200 -
+1760595557.511523 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595557.551244 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595557.554271 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:17] "POST / HTTP/1.1" 200 -
+1760595578.006963 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595578.036642 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595578.039405 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:38] "POST / HTTP/1.1" 200 -
+1760595580.948395 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595580.978501 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595580.981117 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:40] "POST / HTTP/1.1" 200 -
+1760595585.207423 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595585.240981 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595585.242562 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:45] "POST / HTTP/1.1" 200 -
+1760595588.089725 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595588.119808 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595588.121544 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:48] "POST / HTTP/1.1" 200 -
+1760595591.042748 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595591.071056 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595591.072989 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:51] "POST / HTTP/1.1" 200 -
+1760595593.922074 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595593.956197 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595593.961112 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:53] "POST / HTTP/1.1" 200 -
+1760595595.389508 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595595.421203 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595595.423212 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:55] "POST / HTTP/1.1" 200 -
+1760595596.849479 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595596.877954 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595596.880225 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:56] "POST / HTTP/1.1" 200 -
+1760595598.293977 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595598.326719 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595598.328332 - INFO - 127.0.0.1 - - [16/Oct/2025 06:19:58] "POST / HTTP/1.1" 200 -
+1760595601.220006 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595601.254641 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595601.256162 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:01] "POST / HTTP/1.1" 200 -
+1760595605.536271 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595605.569740 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595605.572741 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:05] "POST / HTTP/1.1" 200 -
+1760595618.536008 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595618.569022 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595618.572137 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:18] "POST / HTTP/1.1" 200 -
+1760595622.932503 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595622.965952 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595622.970688 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:22] "POST / HTTP/1.1" 200 -
+1760595633.038325 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595633.068301 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595633.069727 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:33] "POST / HTTP/1.1" 200 -
+1760595637.345919 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595637.377149 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595637.378911 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:37] "POST / HTTP/1.1" 200 -
+1760595638.782393 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595638.807732 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595638.809321 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:38] "POST / HTTP/1.1" 200 -
+1760595645.901814 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595645.931455 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595645.944124 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:45] "POST / HTTP/1.1" 200 -
+1760595648.834669 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595648.867386 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595648.870161 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:48] "POST / HTTP/1.1" 200 -
+1760595651.785339 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595651.811299 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595651.812654 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:51] "POST / HTTP/1.1" 200 -
+1760595654.664087 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595654.696203 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595654.699141 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:54] "POST / HTTP/1.1" 200 -
+1760595659.095191 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595659.129011 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595659.131118 - INFO - 127.0.0.1 - - [16/Oct/2025 06:20:59] "POST / HTTP/1.1" 200 -
+1760595661.955989 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595661.985614 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595661.986610 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:01] "POST / HTTP/1.1" 200 -
+1760595666.398236 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595666.430389 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595666.431557 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:06] "POST / HTTP/1.1" 200 -
+1760595680.632316 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595680.660431 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595680.662273 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:20] "POST / HTTP/1.1" 200 -
+1760595682.057938 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595682.091067 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595682.093243 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:22] "POST / HTTP/1.1" 200 -
+1760595685.011434 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595685.043642 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595685.045199 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:25] "POST / HTTP/1.1" 200 -
+1760595689.305892 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595689.336495 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595689.338230 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:29] "POST / HTTP/1.1" 200 -
+1760595690.769504 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595690.813083 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595690.814232 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:30] "POST / HTTP/1.1" 200 -
+1760595693.661653 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595693.696537 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595693.698705 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:33] "POST / HTTP/1.1" 200 -
+1760595699.522565 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595699.564404 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595699.566956 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:39] "POST / HTTP/1.1" 200 -
+1760595701.017119 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595701.052881 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595701.054535 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:41] "POST / HTTP/1.1" 200 -
+1760595702.493697 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595702.528593 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595702.529637 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:42] "POST / HTTP/1.1" 200 -
+1760595703.904133 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595703.930142 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595703.932705 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:43] "POST / HTTP/1.1" 200 -
+1760595709.665312 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595709.693430 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595709.696111 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:49] "POST / HTTP/1.1" 200 -
+1760595711.189392 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595711.221252 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595711.223497 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:51] "POST / HTTP/1.1" 200 -
+1760595714.136817 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595714.173610 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595714.175868 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:54] "POST / HTTP/1.1" 200 -
+1760595717.036520 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595717.065332 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595717.067292 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:57] "POST / HTTP/1.1" 200 -
+1760595718.476483 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595718.512376 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595718.514701 - INFO - 127.0.0.1 - - [16/Oct/2025 06:21:58] "POST / HTTP/1.1" 200 -
+1760595722.825114 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595722.854211 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595722.856624 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:02] "POST / HTTP/1.1" 200 -
+1760595725.817407 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595725.851553 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595725.854044 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:05] "POST / HTTP/1.1" 200 -
+1760595730.170215 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595730.194651 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595730.197400 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:10] "POST / HTTP/1.1" 200 -
+1760595733.032143 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595733.062034 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595733.064057 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:13] "POST / HTTP/1.1" 200 -
+1760595734.510457 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595734.541059 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595734.543524 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:14] "POST / HTTP/1.1" 200 -
+1760595744.966806 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595745.000553 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595745.002156 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:25] "POST / HTTP/1.1" 200 -
+1760595747.934715 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595747.967610 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595747.969467 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:27] "POST / HTTP/1.1" 200 -
+1760595752.348370 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595752.387979 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595752.392282 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:32] "POST / HTTP/1.1" 200 -
+1760595755.248358 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595755.279480 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595755.281372 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:35] "POST / HTTP/1.1" 200 -
+1760595759.604273 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595759.630063 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595759.632231 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:39] "POST / HTTP/1.1" 200 -
+1760595761.055083 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595761.090115 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595761.092485 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:41] "POST / HTTP/1.1" 200 -
+1760595766.783193 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595766.815600 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595766.817034 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:46] "POST / HTTP/1.1" 200 -
+1760595768.204369 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595768.234410 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595768.236505 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:48] "POST / HTTP/1.1" 200 -
+1760595769.685422 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595769.723562 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595769.725645 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:49] "POST / HTTP/1.1" 200 -
+1760595775.602722 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595775.632901 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595775.634736 - INFO - 127.0.0.1 - - [16/Oct/2025 06:22:55] "POST / HTTP/1.1" 200 -
+1760595781.475495 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595781.500414 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595781.502869 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:01] "POST / HTTP/1.1" 200 -
+1760595787.486638 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595787.512538 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595787.515392 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:07] "POST / HTTP/1.1" 200 -
+1760595788.899292 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595788.925310 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595788.926687 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:08] "POST / HTTP/1.1" 200 -
+1760595790.318949 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595790.343421 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595790.344595 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:10] "POST / HTTP/1.1" 200 -
+1760595794.691355 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595794.720546 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595794.722492 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:14] "POST / HTTP/1.1" 200 -
+1760595796.126222 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595796.157560 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595796.160800 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:16] "POST / HTTP/1.1" 200 -
+1760595797.600937 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595797.629356 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595797.631947 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:17] "POST / HTTP/1.1" 200 -
+1760595804.928872 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595804.958176 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595804.959306 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:24] "POST / HTTP/1.1" 200 -
+1760595806.367209 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595806.401483 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595806.403639 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:26] "POST / HTTP/1.1" 200 -
+1760595807.843041 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595807.874443 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595807.875983 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:27] "POST / HTTP/1.1" 200 -
+1760595815.067511 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595815.095960 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595815.097269 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:35] "POST / HTTP/1.1" 200 -
+1760595816.519094 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595816.550074 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595816.552085 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:36] "POST / HTTP/1.1" 200 -
+1760595819.469044 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595819.504708 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595819.507199 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:39] "POST / HTTP/1.1" 200 -
+1760595820.944521 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595820.981050 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595820.983923 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:40] "POST / HTTP/1.1" 200 -
+1760595822.351244 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595822.381700 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595822.383094 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:42] "POST / HTTP/1.1" 200 -
+1760595826.648576 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595826.677107 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595826.678591 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:46] "POST / HTTP/1.1" 200 -
+1760595829.525342 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595829.557130 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595829.558806 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:49] "POST / HTTP/1.1" 200 -
+1760595835.413083 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595835.446510 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595835.448339 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:55] "POST / HTTP/1.1" 200 -
+1760595836.863636 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595836.898232 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595836.899899 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:56] "POST / HTTP/1.1" 200 -
+1760595838.322502 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595838.350692 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595838.352940 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:58] "POST / HTTP/1.1" 200 -
+1760595839.827683 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595839.860482 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595839.863300 - INFO - 127.0.0.1 - - [16/Oct/2025 06:23:59] "POST / HTTP/1.1" 200 -
+1760595842.760215 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595842.797799 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595842.799751 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:02] "POST / HTTP/1.1" 200 -
+1760595845.677185 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595845.709380 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595845.711488 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:05] "POST / HTTP/1.1" 200 -
+1760595847.169177 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595847.201715 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595847.204774 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:07] "POST / HTTP/1.1" 200 -
+1760595848.662360 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595848.691094 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595848.693424 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:08] "POST / HTTP/1.1" 200 -
+1760595850.123147 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595850.149812 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595850.150797 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:10] "POST / HTTP/1.1" 200 -
+1760595851.518813 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595851.541285 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595851.542705 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:11] "POST / HTTP/1.1" 200 -
+1760595852.937114 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595852.959209 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595852.961014 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:12] "POST / HTTP/1.1" 200 -
+1760595858.723543 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595858.760709 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595858.764031 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:18] "POST / HTTP/1.1" 200 -
+1760595860.183948 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595860.218062 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595860.219226 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:20] "POST / HTTP/1.1" 200 -
+1760595861.642569 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595861.674068 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595861.676755 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:21] "POST / HTTP/1.1" 200 -
+1760595866.019051 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595866.048648 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595866.051223 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:26] "POST / HTTP/1.1" 200 -
+1760595868.904135 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595868.927358 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595868.928822 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:28] "POST / HTTP/1.1" 200 -
+1760595871.781489 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595871.812971 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595871.815785 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:31] "POST / HTTP/1.1" 200 -
+1760595874.680143 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595874.708632 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595874.710481 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:34] "POST / HTTP/1.1" 200 -
+1760595877.547070 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595877.577524 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595877.579484 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:37] "POST / HTTP/1.1" 200 -
+1760595881.905339 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595881.936016 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595881.937722 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:41] "POST / HTTP/1.1" 200 -
+1760595883.331509 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595883.356717 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595883.359628 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:43] "POST / HTTP/1.1" 200 -
+1760595886.170265 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595886.202056 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595886.203974 - INFO - 127.0.0.1 - - [16/Oct/2025 06:24:46] "POST / HTTP/1.1" 200 -
+1760595903.740697 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595903.770492 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595903.773165 - INFO - 127.0.0.1 - - [16/Oct/2025 06:25:03] "POST / HTTP/1.1" 200 -
+1760595912.396926 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595912.423001 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595912.425661 - INFO - 127.0.0.1 - - [16/Oct/2025 06:25:12] "POST / HTTP/1.1" 200 -
+1760595919.597130 - DEBUG - Starting new HTTP connection (1): result.mofaas-sample-workflow.svc.cluster.local:80
+1760595919.636751 - DEBUG - http://result.mofaas-sample-workflow.svc.cluster.local:80 "POST / HTTP/1.1" 200 22
+1760595919.641467 - INFO - 127.0.0.1 - - [16/Oct/2025 06:25:19] "POST / HTTP/1.1" 200 -

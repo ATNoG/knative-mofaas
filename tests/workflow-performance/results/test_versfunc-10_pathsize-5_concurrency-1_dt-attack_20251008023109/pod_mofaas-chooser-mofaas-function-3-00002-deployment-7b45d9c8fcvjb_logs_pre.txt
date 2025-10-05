@@ -1,0 +1,18 @@
+1759890729.353141 - DEBUG - ======== Starting MoFaaS Chooser ========
+           Services: function-p3-v0, function-p3-v1, function-p3-v2, function-p3-v3, function-p3-v4, function-p3-v5, function-p3-v6, function-p3-v7, function-p3-v8, function-p3-v9
+           Services URLs: http://function-p3-v0.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v1.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v2.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v3.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v4.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v5.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v6.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v7.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v8.mofaas-sample-workflow.svc.cluster.local, http://function-p3-v9.mofaas-sample-workflow.svc.cluster.local
+           Concurrency: 1
+           Ignore headers: ce-id, Date, x-envoy-upstream-service-time, Content-Length, x-powered-by
+           Egress URL: None
+           =========================================
+1759890729.354032 - DEBUG - Using selector: EpollSelector
+1759891588.622746 - DEBUG - Chosen functions for id <ead9a090-0a2e-49c7-ad4d-19da2c3031a3>: ['function-p3-v5']
+1759891588.623053 - WARNING - Will not send a request to the egress, as there is none
+1759891588.623978 - DEBUG - Doing a request to: http://function-p3-v5.mofaas-sample-workflow.svc.cluster.local/
+1759891588.740450 - DEBUG - Sending response with status <200>, body <{"forwarded-response": {"forwarded-response": {"message": "success"}}}>, headers {'Content-Type': 'application/json', 'Date': 'Wed, 08 Oct 2025 02:46:28 GMT', 'Server': 'envoy', 'x-envoy-upstream-service-time': '85'}
+1759891588.740860 - WARNING - Will not send a request to the egress, as there is none
+1759891588.741877 - INFO - 127.0.0.1 [08/Oct/2025:02:46:28 +0000] "POST / HTTP/1.1" 200 228 "-" "curl/8.5.0"
+1759891589.951857 - DEBUG - Chosen functions for id <79a5b8aa-d863-4b9f-b497-9c878e974834>: ['function-p3-v9']
+1759891589.951980 - WARNING - Will not send a request to the egress, as there is none
+1759891589.952559 - DEBUG - Doing a request to: http://function-p3-v9.mofaas-sample-workflow.svc.cluster.local/
+failed to create fsnotify watcher: too many open files

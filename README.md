@@ -28,6 +28,9 @@ Before launching the MoFaaS Controller, ensure you have the following installed:
    - Install Knative [Serving](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/) and [Eventing](https://knative.dev/docs/install/yaml-install/eventing/install-eventing-with-yaml/) following the official documentation.
         - Ensure the Kafka Channel and Broker are set up.
 
+3. **cert-manager**
+    - Install cert-namager following the [official documentation](https://cert-manager.io/docs/installation/helm/).
+
 ## Setup
 
 1. **Apply Kyverno Cluster Policy**:
@@ -42,6 +45,12 @@ Before launching the MoFaaS Controller, ensure you have the following installed:
    ```
 
 ## Testing Applications
+
+First, it is necessary to give permission to knative to access and manage the new `mofaas.atnog` API Group. Simply run the following command:
+
+```bash
+./patch.sh
+```
 
 The repository includes two applications used for testing:
 
