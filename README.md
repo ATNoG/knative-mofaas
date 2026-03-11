@@ -1,4 +1,4 @@
-# MoFaaS Controller Repository
+# MoFaaS
 
 This repository contains the implementation and evaluation of the MoFaaS (Multi-variant Function as a Service) as described in our paper. The repository is organized into two branches:
 
